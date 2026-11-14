@@ -148,7 +148,7 @@ Make a channel (a client, a game, a show) from one sentence on what it is. Retur
 
 Access: PAGE.
 
-What the person has open in the composition editor right now: the composition, its version file, the playhead (seconds), the part they picked in the frame (id, name, box as fractions of the frame, any unsaved move/scale), and how many unsaved changes there are. Read it when they say "this", "here" or "the selected one".
+What the person has open in the composition editor right now: the composition, its version file, the playhead (seconds), the part they picked in the frame (id, name, box as fractions of the frame, any unsaved move/scale), and how many unsaved changes there are. Read it when they say "this", "here" or "the selected one". With a timeline open under a film, a scene or a sound, it also gives `timeline`: the item, fps, the playhead and length in frames, each track and its clips by id (start and length in frames, their speed and keyed properties), the picked clips, and how many edits stand unsent.
 
 No input.
 
@@ -156,7 +156,7 @@ No input.
 
 Access: PAGE.
 
-Change the composition open in the editor, the way the person does, in the version they're editing: it shows on their picture and their undo takes it back, and it's saved with their changes. Move, scale or fade a part on the picture (`part`: an id from editor_selection's parts; dx/dy in pixels, scale/opacity as multipliers), or move, trim, split or delete a <Sequence> on the timeline (`clip`: an i from editor_selection's clips; from/to/split in seconds, delete: true). One change a call. Read editor_selection first.
+Change the composition open in the editor, the way the person does, in the version they're editing: it shows on their picture and their undo takes it back, and it's saved with their changes. Move, scale or fade a part on the picture (`part`: an id from editor_selection's parts; dx/dy in pixels, scale/opacity as multipliers), or move, trim, split or delete a <Sequence> on the timeline (`clip`: an i from editor_selection's clips; from/to/split in seconds, delete: true). Or, on the open timeline, make any of its edits as one step with `ops`: a list of raea/editor operations on the clip ids and frames editor_selection's `timeline` gives (`{ op: "split", at: 90, ids: ["seq-2"] }`, `{ op: "move", ids, by }`, `{ op: "trim", id, edge: "start"|"end", to }`, `{ op: "remove", ids }`, `{ op: "set", id, set: { speed, volume, props } }`, `{ op: "key", id, prop, at, value, ease }`, `{ op: "transition", ... }`); they land in the person's undo history, the clips they touch light up, and Send carries them with the person's. One change a call (one `ops` list is one change). Read editor_selection first.
 
 | input | | |
 |---|---|---|
@@ -170,6 +170,7 @@ Change the composition open in the editor, the way the person does, in the versi
 | `to` | optional | the clip's new end, seconds |
 | `split` | optional | split the clip here, seconds |
 | `delete` | optional | delete the clip |
+| `ops` | optional | raea/editor operations on the open timeline's clip ids (editor_selection's timeline), made as one step |
 
 ## feed_items
 
@@ -277,6 +278,49 @@ Change a live review link: its title, how many more days it works (from now), do
 | `reply` | optional | an answer to show on the link's page |
 | `parent` | optional | the comment it answers |
 | `resolve` | optional | a comment's id to mark resolved |
+
+## storage_status
+
+Access: HOST.
+
+What raea keeps on this Mac and in its cloud: every byte by place (projects' files, Git LFS's second copies, the feed's renders, drafts, light copies, playback copies), the cloud's room on the person's plan, and this project's media files each with its state: synced (here and in raea's cloud), upload (committed, not sent yet), uncommitted (new or changed), cloud (only in raea's cloud: a pointer here, back when opened), local (this Mac only: Free, or not saved to raea), unchecked (raea's cloud couldn't be asked). Read it before rendering big or when the person asks where space went.
+
+| input | | |
+|---|---|---|
+| `max` | optional | how many of the project's files to list, biggest first (50 when left out) |
+
+## storage_plan
+
+Access: HOST.
+
+A dry run of old and unused files: feed renders no item mentions (class render; unowned for ones posted before raea recorded who posted them, which a workspace outside raea's folder could still name), earlier versions (NAME-v1 beside a newer NAME-v2) in a project's out/ that nothing mentions, frame folders and half-written .part files a render left. Each with its path, size, class and why, how many files in which workspaces raea read for their names (written out, URL-encoded, or fitting a template like out/shot-${i}.mp4), and the list's id. Never listed: anything mentioned, final work (final, master, export, deliver, approved anywhere in its name), a file without an explicit -vN in out/ (shot-1, spot-30 are different files), the newest of a name's versions, anything opened or changed in the last week, a project's sources. Moves nothing.
+
+| input | | |
+|---|---|---|
+| `max` | optional | how many candidates to list, biggest first (300 when left out) |
+
+## storage_trash
+
+Access: HOST, then PERSON (they confirm in Settings › Storage).
+
+Ask the person to move files from a storage_plan list to the Trash. Moves nothing itself: the list shows in Settings › Storage › Old and unused, ticked, and the person moves it (each file checked again, then to the Trash, where Put Back returns it) or keeps it. Show the person the list in your reply first, and call this only with the paths they agreed to. Never rm or overwrite a render or a project's file yourself.
+
+| input | | |
+|---|---|---|
+| `plan` | required | the list's id, from storage_plan |
+| `paths` | required | the paths from that list the person agreed to |
+| `why` | optional | one line the person sees with the list |
+
+## footage_add
+
+Access: HOST.
+
+Bring footage, sounds or stills into this project's assets/footage/ by their paths (files, or folders of them). Without go, a dry run: each clip, where it lands, and whether it's a clone (same APFS disk: takes no space) or a copy (another disk: its full size), refused if a copy would leave the Mac under its reserve. With go: true, the clips are cloned in. For a drive or an archive that should stay where it is, ask the person to link it as a library instead (Library → New library).
+
+| input | | |
+|---|---|---|
+| `files` | required | absolute paths of the clips or folders |
+| `go` | optional | true: add them (after a dry run you've read); left out: the dry run only |
 
 ## project_collaborators
 
