@@ -70,7 +70,8 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/fingerprints/default` |  | apps/app/host/fingerprint.ts |
 | `~/.raea/inbox` | `RAEA_INBOX_DIR` | apps/app/host/inbox.ts, engine/cli/src/show.ts |
 | `~/.raea/inbox/INBOX.jsonl` |  | engine/cli/src/cli.rs |
-| `~/.raea/library` | `RAEA_LIBRARY_HOME` | apps/app/host/library/local.ts |
+| `~/.raea/library` | `RAEA_LIBRARY_HOME` | apps/app/host/library/fast.ts, apps/app/host/library/local.ts |
+| `~/.raea/library/fast` |  | apps/app/host/library/fast.ts |
 | `~/.raea/library/granted.json` | `RAEA_LIBRARY_GRANTS` | apps/app/host/library/service.ts |
 | `~/.raea/library/hashes.json` | `RAEA_LIBRARY_STATE` | apps/app/host/library/scan.ts |
 | `~/.raea/library/requests.json` | `RAEA_LIBRARY_REQUESTS` | apps/app/host/library/service.ts |
