@@ -15,7 +15,8 @@ raea add three@0.185.0 @react-three/fiber@9.8.2   # and @react-three/drei, @reac
 ## An R3F scene: `<R3F>`
 
 R3F's JSX goes inside, as it would inside `<Canvas>`, and `<R3F>` takes `<Canvas>`'s settings (`camera`,
-`orthographic`, `shadows`, `flat`, `linear`, `scene`).
+`orthographic`, `shadows`, `flat`, `linear`, `scene`). In a box smaller than the frame, it's framed by its box, as
+`<Canvas>` is by its element; give it the box's `width` and `height` (frame px) so R3F's own size is the box's too.
 
 ```tsx
 import { R3F } from "raea/r3f";
@@ -47,6 +48,13 @@ Inside `<R3F>`, `useFrame`, refs and mutation are fine, unlike the rest of a com
 a frame from the composition's frame, never the wall clock, and a seek back starts the scene again from frame 0, so
 a render still equals its play. `Math.random()` is seeded for the scene. raea's hooks (`useCurrentFrame`) work inside
 too. Two scenes in one composition that come and go each take a `name`.
+
+Played live (raea 0.1.5), R3F's pointer events work as they do in a browser: `onClick`, `onPointerOver`,
+`onPointerOut`, `onPointerMove`, `onPointerDown`, `onPointerUp`, `onWheel` and `onPointerMissed` fire on the mesh under
+the pointer, and drei's `<OrbitControls>` turn and zoom the camera from the pointer and the wheel. They come from the
+play's input frame by frame, so a render given the input the play logged (`raea render --input`) draws the same
+frames, and a render with no input draws as before. An `<R3F>` in a box smaller than the frame takes the pointer in
+its box: give it the box's `width` and `height`.
 
 ## A plain three.js page: `<Three program>` (raea 0.1.5)
 
@@ -109,7 +117,6 @@ What raea can't draw is named once in the render's output (`raea/r3f: ...`), and
   (one first dispatched after the first frame isn't run either, and points and sprites don't read its buffers yet)
 - a cube or 3D render target, or a target's depth texture: the target stays empty (a depth texture reads white)
 - three's EffectComposer in a plain program: the scene is drawn without its passes
-- pointer events and OrbitControls in a live play: not wired yet
 - an `onBeforeCompile` patch to a material other than standard or physical, or the part of one past three's lighting
   (its light, its output colour): drawn without it
 
