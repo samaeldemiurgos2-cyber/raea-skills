@@ -89,7 +89,7 @@ task needs.
 | a cut of real footage: takes cut by words, faces framed, captions, cuts to a song | [footage.md](footage.md) |
 | motion graphics and type: cards, stats, logos, end cards | [graphics.md](graphics.md) |
 | sound: voice, beds, foley, music for picture, the mix | [sound.md](sound.md) |
-| a 3D scene: lights, materials, models, people, rooms, splats | [3d.md](3d.md) |
+| a 3D scene: lights, materials, models, people, rooms, splats; three.js or React Three Fiber work | [3d.md](3d.md) |
 | a game, 2D or 3D | [games.md](games.md) |
 | an app's interface (web or native) | [apps.md](apps.md) |
 | generated images, video, sound or meshes | [gen.md](gen.md) |
