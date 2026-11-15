@@ -61,7 +61,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/app-prefs.json` | `RAEA_APP_PREFS` | apps/app/host/app-prefs.ts |
 | `~/.raea/avatars` | `RAEA_AVATARS` | apps/app/host/avatars.ts |
 | `~/.raea/bin` |  | io/assets/src/lib.rs, runtime/bundle/lib/src/lib.rs, runtime/page/src/faces.rs |
-| `~/.raea/cache` |  | apps/app/host/take.ts |
+| `~/.raea/cache` | `RAEA_EMOJI3D_CACHE` | apps/app/host/emoji3d.ts, apps/app/host/take.ts |
 | `~/.raea/env` | `RAEA_ENV_FILE` | apps/app/host/director.ts, apps/app/host/plugins.ts, io/gen-core/src/fal.rs, io/gen-core/src/fish.rs, io/gen-core/src/made.rs, io/gen-core/src/modal.rs, io/gen-core/src/openrouter.rs, io/gen-core/src/replicate.rs, io/gen-core/src/tripo.rs, io/home/src/lib.rs |
 | `~/.raea/evals/skills` |  | apps/app/host/evals/skills.ts |
 | `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/storage/owners.ts |
