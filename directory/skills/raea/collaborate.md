@@ -12,6 +12,7 @@ to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to d
 | know what to make, as the project stands now | `feed_brief` (the brief.ts, current); in a workspace chat, `workspace_read` for its projects and agents |
 | know what's planned, what's under way and what the person's message asks of you | `plan_read` (the project's plan.org: open tasks by id); each turn's prompt carries the same as `raea://plan/<project>`, with the task the message is ([plan.md](plan.md)) |
 | plan work of more than one step, or note what's left to do | `plan_add`: tasks under a stage heading, or under a task as subtasks, with checkboxes for small steps |
+| act on a round of notes the person sent on an item | plan it first: `plan_add` with the work in your words, each task `from` the notes it answers (`ITEM#COMMENT`, spaces between); `comment_task` `done` at once for a note that asks for nothing; then work the tasks ([plan.md](plan.md), "Notes from the person") |
 | say you've started a task, or that it waits on the person | `plan_update` with `state` `making` or `review`; tick its checkboxes with `check` |
 | finish a task, or drop one that no longer applies | `plan_close` with the item you posted (it stamps CLOSED and links the work), or `state: "dropped"` and why |
 | say what you'd make next and let the person choose before you spend the time | `feed_propose`: a planned item they accept, or don't |
@@ -33,6 +34,14 @@ to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to d
 | know what raea keeps on this Mac and in raea's cloud, and whether the project's files are synced | `storage_status`; the person syncs, with Sync now in Settings → Storage |
 | make room: old renders, earlier versions, frame folders, half-written files | `storage_plan` (a dry run with an id), show the person its list, then with their yes `storage_trash` with the id and the paths they agreed to; the person moves them to the Trash. Never `rm` a render or a version ([delivery.md](delivery.md), "Old versions, and making room") |
 | bring clips from a card, a drive or another folder into the project | `footage_add` with their paths: first as a dry run (clone or copy, and the space it takes), then with `go`. To leave them where they are, link the folder as a library instead (`raea library add LIBRARY PATH`) |
+
+## A goal set with /goal
+
+The person may set a goal for a chat with `/goal CONDITION` (raea's, in every chat whatever it runs on). Its turn
+starts with `[raea /goal]` and says the goal. Work toward it, planning it first when it takes more than one step.
+Each time you stop, raea sends a check: compare the goal with what you've actually done and can show (a passing run,
+a file, a posted item). When it's met, reply with a line that starts `GOAL MET:` and how you checked; otherwise keep
+working. Say `GOAL MET:` only when it is: anything else keeps you going, and the person can always stop or clear it.
 
 ## What the person may have set for you
 
