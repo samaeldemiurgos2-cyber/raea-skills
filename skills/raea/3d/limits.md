@@ -62,8 +62,9 @@ The router's eight, plus:
 - Bevy's own AnimationEvent (use `clipEvents(events, prev, now, duration)` from `raea/3d`).
 - A looked model (`look="pixel"`/`"site"`) is drawn over the scene: parts in front of it don't hide it. At most 30.
 - A shader of your own on a standard material or a Model (the looks are the engine's own; a shader you write draws
-  its own shape, as `<ShaderMesh>`, below); react-three-fiber's `useFrame`, refs, `<primitive>` and drei helpers: none
-  of them exist here.
+  its own shape, as `<ShaderMesh>`, below). react-three-fiber's `useFrame`, refs, `<primitive>` and drei helpers
+  don't drive raea's own components; inside `<R3F>` they work, and a plain three.js page runs in `<Three program>`
+  (`bevy/r3f`, with what three.js work doesn't draw yet).
 
 Since 2026-10-22: `emissive_texture`, `alpha_mode`, `cull_mode`, real glass (`specular_transmission ior thickness`
 on StandardMaterial), `receiveShadow={false}`, `<Capsule3d>`, and any of Bevy's own reflected components inside a
