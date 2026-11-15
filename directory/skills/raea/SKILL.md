@@ -261,9 +261,10 @@ least sure of. Once they've answered, `--tally` makes the answers evidence.
   browser: show it. raea's hook (`raea skills install --agent A` adds it
   to any of them) stops such an open once and names the `raea show` command; run the same command again only when the
   person asked for the viewer. What the person sends on it (notes, edits, picks, answers, an artifact's `app.result`)
-  comes back as JSON lines in the inbox file `raea show` prints; follow it (`tail -n0 -F FILE`, or your harness's
-  monitor) and answer each. Without the app, `raea show` opens the file in the Mac's own viewer and says so; take the
-  person's notes as text then.
+  comes back as JSON lines in the inbox file `raea show` prints. raea's hook hands each new line to you after your
+  next tool call and keeps your turn from ending until you have it (where there is no hook, follow the file with
+  `tail -n0 -F FILE` or your harness's monitor). Answer each: it may change what you're doing. Without the app,
+  `raea show` opens the file in the Mac's own viewer and says so; take the person's notes as text then.
 - When you need the person to choose or fill something in (pick an opening, rank cuts, set a price), post an artifact:
   a React `.tsx` of your own, `feed_post` with `type: "artifact"`, the file, and an `ask` line. The app builds it and
   runs it sandboxed in the feed. Its default export is the component. It imports `react`, `@raea/app` and its own
