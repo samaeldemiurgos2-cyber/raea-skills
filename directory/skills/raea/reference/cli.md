@@ -127,6 +127,16 @@ raea show FILE... [--title T] [--ask LINE] [--project P] [--replaces ITEM] [--as
 
 Flags: `--as` (1), `--ask` (1), `--choice` (1), `--clip` (1), `--done` (1), `--inbox` (1), `--note` (1), `--on` (1), `--open`, `--preview` (1), `--project` (1), `--question` (1), `--render` (1), `--replaces` (1), `--role` (1), `--sign` (1), `--states` (1), `--status` (1), `--sub` (1), `--title` (1), `--working` (1).
 
+## raea clothes
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea clothes [make NAME "WHAT IT IS, AS WORN" [--over UNDER[,UNDER...]] [--max-cents N] | remeasure NAME | cover NAME --parts PART[:SHARE],... --colour #RRGGBB [--stand MM] [--over UNDER] | wear OUT_DIR GARMENT... [--body DIR]]   (clothes for SOMA's body from words: make has an image model (flux_2_pro, one picture a view, at most N cents each, 10 unless said) dress SOMA's grey mannequin from the front, back, left and right, then measures the pictures onto SOMA's own vertices as assets/clothes/NAME.json, its pictures in assets/clothes/NAME/; --over draws it over garments already made (innermost first), as the next layer, a garment made by procedure drawn on the mannequin first; remeasure measures a garment again from its kept pictures (after raea's measuring changed), nothing drawn or paid for; cover makes one by procedure in the same file, no picture: the skin of the parts named (hips, waist, torso, chest, neck, head, upperArm, foreArm, hand, thigh, shin, foot, toes; a limb's SHARE is how far along it from its top), in one colour, MM off the skin (6 unless said); wear puts garments on a body, innermost first (each GARMENT a name or its .json): OUT_DIR/NAME.glb each, with OUT_DIR/body.glb the body without the skin wholly under cloth; --body DIR another SOMA body folder (a headless one for a head part); alone, the project's garments. The first use fetches SOMA's body (NVlabs/SOMA-X, Apache-2.0) into raea's models folder and needs Blender: raea setup blender)
+```
+
+Flags: `--body` (1), `--colour` (1), `--max-cents` (1), `--over` (1), `--parts` (1), `--stand` (1).
+
 ## raea spec
 
 Access: HEADLESS. Arguments besides flags: 1.
