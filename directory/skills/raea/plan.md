@@ -66,18 +66,44 @@ Graded warm; the window stays cold. [[item:i-hall-2]]
   three share that one line; Org reads no second planning line, and a drawer under one is lost to it.
 - **Properties**, in the drawer: `:ID:` (every task has one, and it never changes), `:ITEM:` the feed item it stands
   on or made, `:AGENT:` who has it by agent id (an `@name` while no agent has that name), `:FROM:` what asked for it
-  (a message id, or `ITEM#COMMENT` for a comment). Anything else you add is kept.
+  (a message id, or `ITEM#COMMENT` for each note it answers, separated by spaces). Anything else you add is kept.
 - **Links** by id, never by title: `[[item:i-hall-2]]` for a feed item, `[[id:t-k3x9q2ab]]` for another task.
 
 ## When to plan
 
+Planning is part of the work, not a step you may skip: the plan is how the person sees what you're doing, and the
+list they act on. Plan before you make anything that takes more than one step, and keep the plan true as you go.
+
 - **Before work of more than one step**: write its steps as tasks under a stage, each one small enough to finish in
   a turn or two. One-step asks need no plan of their own, but the message is already a task (the composer writes it,
   `:FROM:` the message), so mark and close that one.
+- **When the person sends you notes** (a round of comments on an item, or a list of fixes in a message): plan them
+  before you touch anything. See the next section.
 - **At the start of a project**: its stages (Look, Script, Make, Sound, Deliver, or what fits), with the first few
   tasks under each. A long plan nobody will reach is noise: plan the next stretch in detail and the rest as stages.
 - **When you find more to do** (a fix a critique asks for, a shot you need, a question for the person): add it where
   it belongs, instead of keeping it in your head or in a chat message.
+
+## Notes from the person: plan them first
+
+A round of notes is what the person saw, in their words ("jaw looks broken", "splats here", "approved! looks
+good!"). It isn't a plan, and copied into the to-do list it tells nobody what will be done. So before you change
+anything:
+
+1. **Read every note in the round**, with where it's pinned and what's on the item there.
+2. **Write the work as tasks, in your words**: what you'll change, where, and what done looks like. "Rebuild the jaw
+   hinge so the mouth opens without tearing at the corners", not "jaw looks broken". Several notes that are one fix
+   are one task (its steps as checkboxes); one note that is several fixes is several tasks.
+3. **Link each task to the notes it answers**: `:FROM:` the item and comment ids as `ITEM#COMMENT`, as many as it
+   answers, separated by spaces (`:FROM: i-head-5#c-a1 i-head-5#c-a4`). In the app that's `plan_add` with
+   `"from": "i-head-5#c-a1 i-head-5#c-a4"`. The person's to-do list then shows your tasks in place of their notes;
+   a note no task names stays listed as waiting for you.
+4. **A note that asks for nothing** (an approval, a thank-you, a question you answer in a line) gets no task: settle
+   it at once (`comment_task` with `state: "done"` and a line; outside the app `raea show --on ITEM --done ID --note
+   LINE`).
+5. **Then work the tasks in order**: mark each `MAKING` as you start it, mark the notes it answers working, and close
+   both when the version that settles them is posted (`feed_post` with `answers`, or `raea show FILE --replaces ITEM
+   --done ID...`).
 
 ## As you work
 
@@ -103,6 +129,8 @@ The calls, as the app's tools take them (every task by its id, from `plan_read` 
 plan_read   {}                                    or {"full": true} for the whole file
 plan_add    {"tasks": [{"title": "Light the oil door", "under": "Look", "checks": ["warm key", "cool fill"]},
                        {"title": "Rim on the handle", "under": "t-k3x9q2ab"}]}
+plan_add    {"tasks": [{"title": "Rebuild the jaw hinge so the mouth opens without tearing", "under": "Fixes",
+                        "from": "i-head-5#c-a1 i-head-5#c-a4", "checks": ["hinge pivot", "corner weights"]}]}
 plan_update {"changes": [{"id": "t-k3x9q2ab", "state": "making"}, {"id": "t-k3x9q2ab", "check": 0}]}
 plan_update {"changes": [{"id": "t-k3x9q2ab", "state": "review", "item": "i-door-2"}]}
 plan_close  {"id": "t-k3x9q2ab", "item": "i-door-3", "note": "Warm key at 3200K, cool fill from the window."}
@@ -125,8 +153,9 @@ is refused, not made into a stage. Each answer lists the open tasks again, with 
 The to-do list in the app (the checkbox in a feed's header, and the Inbox's for every project) is this file: one line
 a task with its checkbox, its words and who has it; subtasks under their parents; done tasks folded under a count.
 They add, tick, reword, reorder and remove tasks there, and those are edits to `plan.org` too, so read the plan before
-you change it rather than trusting what you read earlier. The edits sent on items (comments to work) are listed with
-the plan's tasks; those you mark with `comment_task` ([collaborate.md](collaborate.md)), not in the plan.
+you change it rather than trusting what you read earlier. A round of notes sent on an item shows as one line ("6
+notes on “Head v5”") until you plan it; then your tasks stand in its place. The notes themselves you mark with
+`comment_task` ([collaborate.md](collaborate.md)).
 
 ## Extending it: @raea/task
 

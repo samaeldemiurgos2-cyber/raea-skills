@@ -39,10 +39,12 @@ go wrong by starting to make things first and finding a home for them later, or 
    `cd` into the project's folder and read its context (section 3). Everything you make goes in it: compositions in
    `compositions/`, footage and media in `assets/`, renders in `out/`. Never in the home folder, the Desktop, a temp
    folder or wherever the shell happened to start.
-5. **Open or start the project's plan.** `plan.org` at the top of the project's folder is its to-do list, the one the
-   person sees in the app. Read it, find the task this work is (or add it), and keep it as you go: mark tasks as you
-   start them, close them with what you made, add what's left. In the app, the plan tools; anywhere else, the file as
-   Org text. [plan.md](plan.md) says how.
+5. **Plan before you make.** `plan.org` at the top of the project's folder is its to-do list, the one the person
+   sees in the app. Read it, find the task this work is (or add it), and for work of more than one step write the
+   steps as tasks first. Notes from the person (a round of comments, a list of fixes) are planned first too: the work
+   they ask for as tasks in your own words, each linked to the notes it answers, never the notes pasted in. Keep it as
+   you go: mark tasks as you start them, close them with what you made, add what's left. In the app, the plan tools;
+   anywhere else, the file as Org text. [plan.md](plan.md) says how.
 
 In the raea app, a chat opened from a project's feed is already in its workspace and project: work there. If the
 person's request turns out to be for another project partway through, stop, say so, and move to it before going on.
@@ -259,9 +261,10 @@ least sure of. Once they've answered, `--tally` makes the answers evidence.
   browser: show it. raea's hook (`raea skills install --agent A` adds it
   to any of them) stops such an open once and names the `raea show` command; run the same command again only when the
   person asked for the viewer. What the person sends on it (notes, edits, picks, answers, an artifact's `app.result`)
-  comes back as JSON lines in the inbox file `raea show` prints; follow it (`tail -n0 -F FILE`, or your harness's
-  monitor) and answer each. Without the app, `raea show` opens the file in the Mac's own viewer and says so; take the
-  person's notes as text then.
+  comes back as JSON lines in the inbox file `raea show` prints. raea's hook hands each new line to you after your
+  next tool call and keeps your turn from ending until you have it (where there is no hook, follow the file with
+  `tail -n0 -F FILE` or your harness's monitor). Answer each: it may change what you're doing. Without the app,
+  `raea show` opens the file in the Mac's own viewer and says so; take the person's notes as text then.
 - When you need the person to choose or fill something in (pick an opening, rank cuts, set a price), post an artifact:
   a React `.tsx` of your own, `feed_post` with `type: "artifact"`, the file, and an `ask` line. The app builds it and
   runs it sandboxed in the feed. Its default export is the component. It imports `react`, `@raea/app` and its own
