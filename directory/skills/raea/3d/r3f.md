@@ -88,8 +88,10 @@ normal, matcap, shadow, points and line materials; ShaderMaterial and RawShaderM
 by raea); TSL node materials, unlit and lit (0.1.5); textures, environment maps, fog, the background, shadows; drei's
 `<Text>`, `<Sky>`, `<Stars>`, `<Clouds>`, `<ContactShadows>`, `<Environment>`; @react-three/postprocessing's effects
 that raea has (bloom, vignette, depth of field and bokeh, chromatic aberration, lens distortion, SSAO,
-anti-aliasing, pixelation, tone mapping, brightness, contrast, hue and saturation). Close, not exact:
-hemisphere lights, light probes, Phong and toon materials.
+anti-aliasing, pixelation, tone mapping, brightness, contrast, hue and saturation), and, as raea frame passes running
+the effect's own shader (0.1.5), noise, scanlines, sepia, dot screen, colour average and depth, grid, glitch, shock
+wave, LUT, ASCII and `<TiltShift2>`. Close, not exact: hemisphere lights, light probes, Phong and toon materials,
+`<TiltShift>` and `<GodRays>`.
 
 What raea can't draw is named once in the render's output (`raea/r3f: ...`), and the frame draws without it:
 
