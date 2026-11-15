@@ -416,6 +416,16 @@ raea fingerprint new NAME [--who W] [--about TEXT] [--extends FP] [--kinds K,K] 
 
 Flags: `--about` (1), `--against` (1), `--as` (1), `--ask` (1), `--at` (1), `--axis` (1), `--bad`, `--box` (1), `--by` (1), `--extends` (1), `--fp` (1), `--from` (1), `--good`, `--in` (1), `--json`, `--kinds` (1), `--per` (1), `--profile` (1), `--project` (1), `--sheet` (1), `--source` (1), `--span` (1), `--tags` (1), `--tally`, `--then` (1), `--timeline`, `--to` (1), `--was` (1), `--who` (1), `--words` (1).
 
+## raea index
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea index add FOLDER|photos:... [--json] | raea index search WORDS... [--k N] [--source ID|FOLDER] [--json] | raea index status [--json] | raea index remove ID|FOLDER | raea index serve   [--home DIR]   (every picture and video on a folder, a drive or Apple Photos (photos:) made searchable by words on this Mac, fast: add lists it and embeds each picture's small copy with SigLIP 2 on the Neural Engine, a counter as it goes, JSON lines with --json; search gives the best for the words; status lists the sources and what each holds; remove takes one out; serve keeps the index open for the raea app, one JSON ask a line on stdin; the index lives in ~/.raea/library/fast, or --home / RAEA_INDEX_HOME)
+```
+
+Flags: `--home` (1), `--json`, `--k` (1), `--source` (1).
+
 ## raea play
 
 Access: HEADLESS. Arguments besides flags: 1.
