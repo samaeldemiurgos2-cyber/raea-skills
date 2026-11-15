@@ -90,8 +90,11 @@ by raea); TSL node materials, unlit and lit (0.1.5); textures, environment maps,
 that raea has (bloom, vignette, depth of field and bokeh, chromatic aberration, lens distortion, SSAO,
 anti-aliasing, pixelation, tone mapping, brightness, contrast, hue and saturation), and, as raea frame passes running
 the effect's own shader (0.1.5), noise, scanlines, sepia, dot screen, colour average and depth, grid, glitch, shock
-wave, LUT, ASCII and `<TiltShift2>`. Close, not exact: hemisphere lights, light probes, Phong and toon materials,
-`<TiltShift>` and `<GodRays>`.
+wave, LUT, ASCII and `<TiltShift2>`; three/webgpu's `PostProcessing` (`RenderPipeline`, 0.1.5): its
+`pass(scene, camera)` is the frame, its bloom, GTAO, depth of field, FXAA, SMAA and pixelation nodes are raea's, and
+its film, dot screen, RGB shift, chromatic aberration, LUT, sepia and bleach nodes are frame passes; an `Fn` of the
+chain's own isn't run. Close, not exact: hemisphere lights, light probes, Phong and toon materials, `<TiltShift>` and
+`<GodRays>`, and bloom (raea's, added on top as three's is).
 
 What raea can't draw is named once in the render's output (`raea/r3f: ...`), and the frame draws without it:
 
