@@ -84,6 +84,15 @@ its hands, feet, gaze and seat on the scene's real things, said in the scene's c
   carry the speed through: `{ walk, speed, enter: fit.vOut, leave: next.vIn }`. CMU subject 127 is an obstacle run
   (hurdle 127_25-28, run over a box 127_33-36, duck under 127_29-32, dive and roll 127_23-24, runs, quick stops);
   49_04-05 leap a gap. `examples/character/course.tsx` is a side-scrolling course.
+- Clothes are made for SOMA's body with `raea clothes`, never modelled by hand:
+  - `raea clothes cover tee --parts chest,torso,waist,upperArm:0.45 --colour "#e8e4da"` makes one by procedure, for
+    nothing.
+  - `raea clothes make overshirt "a flannel overshirt, worn open" --over tee` has an image model draw it over the
+    mannequin's four views (about 20 cents), then measures it onto SOMA's vertices. Look at its pictures in
+    `assets/clothes/overshirt/views` before you wear it.
+  - `raea clothes wear assets/characters/dressed tee overshirt` writes a dressed body folder (innermost layer first).
+    Register that folder with `registerBody`, and give each garment's glb to `<Character>` as one of its `parts`.
+  - A garment lies on the skin, so a shirt drawn hanging over the hips wraps them instead.
 
 ```tsx
 const perf = perform(lib, { at: [0.4, 0, 2], facing: Math.PI / 2, frames: 450, steps: [
