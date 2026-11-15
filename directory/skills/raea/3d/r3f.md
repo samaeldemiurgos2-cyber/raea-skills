@@ -48,7 +48,7 @@ a frame from the composition's frame, never the wall clock, and a seek back star
 a render still equals its play. `Math.random()` is seeded for the scene. raea's hooks (`useCurrentFrame`) work inside
 too. Two scenes in one composition that come and go each take a `name`.
 
-## A plain three.js page: `<Three program>`
+## A plain three.js page: `<Three program>` (raea 0.1.5)
 
 A single-file demo's script, wrapped in a function, is the program. It makes its renderer as it always did
 (`new THREE.WebGLRenderer({ canvas })` with the canvas it's given, or `document.body.appendChild(renderer.domElement)`,
