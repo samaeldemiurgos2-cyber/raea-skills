@@ -85,7 +85,9 @@ function. A program may return a function that undoes it. `<Three>` needs three 
 
 Drawn: meshes, groups, instanced and batched meshes, points, lines, sprites; standard, physical, basic, Lambert,
 normal, matcap, shadow, points and line materials; ShaderMaterial and RawShaderMaterial (their GLSL translated and run
-by raea); TSL node materials, unlit and lit (0.1.5); textures, environment maps, fog, the background, shadows; drei's
+by raea); TSL node materials, unlit and lit, and TSL compute (`renderer.compute`, `computeAsync`: run on raea's GPU,
+its storage buffers shared with the node materials that read them, an InstancedMesh with a node material drawn as one
+mesh of copies; 0.1.5); textures, environment maps, fog, the background, shadows; drei's
 `<Text>`, `<Sky>`, `<Stars>`, `<Clouds>`, `<ContactShadows>`, `<Environment>`; @react-three/postprocessing's effects
 that raea has (bloom, vignette, depth of field and bokeh, chromatic aberration, lens distortion, SSAO,
 anti-aliasing, pixelation, tone mapping, brightness, contrast, hue and saturation), and, as raea frame passes running
@@ -98,7 +100,8 @@ chain's own isn't run. Close, not exact: hemisphere lights, light probes, Phong 
 
 What raea can't draw is named once in the render's output (`raea/r3f: ...`), and the frame draws without it:
 
-- a TSL compute (`renderer.compute(node)`): not run yet; the scene is drawn without what it computes
+- a TSL compute with an indirect dispatch, a texture or a matrix uniform: the scene is drawn without what it computes
+  (one first dispatched after the first frame isn't run either, and points and sprites don't read its buffers yet)
 - a pass drawn into a render target other than drei's contact shadows' (an FBO, a portal): the target stays empty
 - three's EffectComposer in a plain program: the scene is drawn without its passes
 - pointer events and OrbitControls in a live play: not wired yet
