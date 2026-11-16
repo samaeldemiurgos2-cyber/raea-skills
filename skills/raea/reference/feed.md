@@ -108,7 +108,7 @@ Change tasks in the project's plan by id: mark one MAKING as you start it or REV
 
 Access: PAGE.
 
-Close a task in the project's plan when its work is done: DONE with the time (CLOSED) and the feed item it made, or dropped when it no longer applies. Close each task you finish in the turn you finish it, with the item you posted. Answers with the open tasks.
+Close a task in the project's plan when its work is done: DONE with the time (CLOSED) and the feed item it made, or dropped when it no longer applies. Close each task you finish in the turn you finish it, with the item you posted. Done with checkboxes unticked or subtasks open is refused, naming them, unless all is true. Answers with the open tasks.
 
 | input | | |
 |---|---|---|
@@ -116,6 +116,7 @@ Close a task in the project's plan when its work is done: DONE with the time (CL
 | `state` | optional | done (the default) or dropped |
 | `item` | optional | the feed item that did it: feed_post's answer |
 | `note` | optional | one line on what was done, or why it was dropped |
+| `all` | optional | every checkbox and subtask under it is done too: they are ticked and closed with it |
 
 ## workspace_read
 
