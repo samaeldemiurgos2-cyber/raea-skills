@@ -96,7 +96,7 @@ task needs.
 | the export, the share copy, platform specs, posting a deliverable | [delivery.md](delivery.md) |
 | working with the person in the raea app: the feed, controllers, the editor, boards | [collaborate.md](collaborate.md) |
 | planning the work and keeping its tasks: the project's plan.org, the person's to-do list | [plan.md](plan.md) |
-| checking a cut against the person's taste, reading their notes on a sound, or teaching their fingerprint | [fingerprint.md](fingerprint.md) |
+| checking a cut against the person's taste and rules, reading their notes on a sound, or teaching their fingerprint | [fingerprint.md](fingerprint.md) |
 
 Across all of them, `craft/`: [craft/ROUTER.md](craft/ROUTER.md) is how to decide what to make (the order of work and
 reading notes); [craft/floor.md](craft/floor.md) is read right before every edit; `craft/modes/` says what a pitch,
@@ -123,7 +123,8 @@ holding projects and controllers. In the raea app a project shows as a channel.
 
 - `raea context .` in the project prints everything to read first, in order: the person's taste
   (`~/.raea/taste/taste.ts`; a line there beats any guide's default), the workspace's taste, the brief, the look, the
-  workspace's controllers, the craft floor and each of the brief's modes' guides. Read all of it.
+  workspace's controllers, the craft floor and each of the brief's modes' guides. Read all of it. In the raea app,
+  `rules_read` lists every rule the work follows, the project's own `taste.ts` first ([collaborate.md](collaborate.md)).
 - Run it once a session. If it refuses, say so in one line ("raea context failed: its message; reading the brief and
   controllers directly") and read `brief.ts`, any `*.script.ts`, `~/.raea/taste/taste.ts` and `raea controller ls`
   yourself. A `CONTEXT_STALE` line means `raea doctor` finds files from another version: run `raea doctor --fix`.
@@ -140,7 +141,8 @@ holding projects and controllers. In the raea app a project shows as a channel.
   `controller_post` (its id, the fields as group.field, a line on what you need decided) rather than asking in prose;
   a controller you make with `controller_write` reaches their feed on its own. Fields are typed (toggle, choice,
   number, text, list, agents, channels, workflow, servers, skills, rule; reference/files.md), so put what they'll
-  adjust in fields, one controller per concern.
+  adjust in fields, one controller per concern. A style preference with no fields to set ("words never cover the
+  action") is a rule instead: `rule_add` in the app, or a line in the project's `taste.ts`.
 - A `rule` field is a line every piece is held to and the check that holds it: one of raea's by name with its values,
   or a `.ts` check written with `raea/check` (craft/ROUTER.md, step 7). `raea check PROJECT` runs every rule that
   applies, with raea's floor and the person's taste, and says what waits for a render.
@@ -222,9 +224,11 @@ also says where in the frame and, on a render with a layer pass, the layers ther
 with that layer. Fix each gating moment, or say why you didn't, and
 score the fix against the cut before: `raea fingerprint score out/v2.mp4 --was out/v1.mp4` says whether each flag is
 fixed, still there, or looks disguised (nearer the axis's disguised defects than clean work, so the fix hid the defect
-rather than removing its cause); only a fixed flag is fixed. `raea fingerprint which out/piece.mp4` names the fingerprint that judges this piece (the
-project's, the workspace's, then the person's own) and why. Tell the person the axis and the moment, never a score. [fingerprint.md](fingerprint.md) has the rest: reading a
-note's box on the sound, teaching the fingerprint, and keeping one with a project.
+rather than removing its cause); only a fixed flag is fixed. `raea fingerprint which out/piece.mp4` names the
+fingerprint that judges this piece (the project's, the workspace's, then the person's own) and why. Tell the person
+the axis and the moment, never a score. In the app, `rule_check` scores it and holds it to every rule in one call.
+[fingerprint.md](fingerprint.md) has the rest: the person's rules, reading a note's box on the sound, teaching the
+fingerprint, and keeping one with a project.
 `raea fingerprint report` says what each axis has learned and what it can't judge yet. A fingerprint's axes are
 ~/.raea/fingerprints/NAME/fingerprint.ts, typed by `raea/fingerprint`: add, remove or reword an axis there, never its
 evidence. A script or brief scores on text axes only, and raea's own axes read pictures and sound, so a script scores

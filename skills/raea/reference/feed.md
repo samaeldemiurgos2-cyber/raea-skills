@@ -366,6 +366,42 @@ Bring footage, sounds or stills into this project's assets/footage/ by their pat
 | `files` | required | absolute paths of the clips or folders |
 | `go` | optional | true: add them (after a dry run you've read); left out: the dry run only |
 
+## rules_read
+
+Access: HOST.
+
+Read every rule this project's work follows, nearest first: the project's own (its taste.ts), the workspace's house rules, then the person's taste (taste.ts for everything, then motion, games, sound and ui). Each rule has its words, its section, and when known: when it applies, what checks it (a check raea measures, a script in the project, a fingerprint axis), and who wrote it (an agent's rule the person hasn't kept yet says waiting). With the fingerprint that judges the project and its axes. Read it before you start, and again before you post: the person changes rules in Fingerprint › Rules while you work.
+
+No input.
+
+## rule_add
+
+Access: HOST.
+
+Add a standing rule to the project's rules (or the workspace's house rules, level workspace), when the person states a preference that should hold for all of this work from now ("make this a rule", "always…", "never again…", "note that for later"), not a fix for one item. One plain sentence that holds for future work, with when it applies. It holds at once, written to the project's taste.ts and committed; the person sees it under Waiting for you in Fingerprint › Rules, where they keep, change or drop it, or move it into their own taste. Never for the person's own taste: they move a rule up themselves. check only when raea can measure the rule; axis when one of the fingerprint's axes (rules_read lists them) names what it guards against; run for a script in the project that exits 0 while the rule holds.
+
+| input | | |
+|---|---|---|
+| `text` | required | the rule, one plain sentence in the person's terms ("Words never cover the action.") |
+| `when` | optional | when it applies, the "if this" ("a line is on screen in a 9:16 ad"); left out, always |
+| `why` | required | one line: what the person said or did that makes it a rule |
+| `section` | optional | its section: a topic (Sound, Captions, Camera) or Always or Never; Always when left out |
+| `check` | optional | a check raea measures, as FORM VALUE: text-hold S, text-above P%, text-below P%, text-margin N, loudness L, still-max S |
+| `run` | optional | a script in the project's (or workspace's) folder, by its path there, that takes the file and exits 0 while the rule holds |
+| `axis` | optional | the fingerprint axis that holds it (clip, dark…), from rules_read |
+| `level` | optional | project (the default) or workspace |
+
+## rule_check
+
+Access: HOST.
+
+Hold a file (a render, a still, a sound, a game) to every rule that applies, before you post it: rules with a measured check run through raea check --taste, rules linked to a fingerprint axis through raea fingerprint score, rules with a script by running it, and the rest by your own eye, which you pass as verdicts after looking. Answers each rule held, broken (and where), flagged (the fingerprint points at moments it only advises on) or unchecked, with how it was checked, and a summary line the person sees in the chat. Never a score: say what broke and where. Fix what's broken and check again before feed_post.
+
+| input | | |
+|---|---|---|
+| `file` | required | the file to check, absolute or in the project's folder |
+| `verdicts` | optional | your own look at rules nothing measures: each { text (the rule's words, as rules_read gives them), held (true or false), at (a moment, 0:06), how (one line on what you looked at) } |
+
 ## project_collaborators
 
 Access: PAGE, when the person allows agents to share.

@@ -43,6 +43,25 @@ raea fingerprint score out/v2.mp4 --was out/v1.mp4 # after a fix: each of v1's f
 - References the person admires: `raea fingerprint profile REFS... --as NAME`, then `score --profile NAME` says which
   measures fall outside their ranges, where, and which way to move.
 
+## The person's rules
+
+Their standing rules are taste files, nearest first: the project's own `taste.ts`, the workspace's house rules
+(`taste.ts` at the workspace's root), then their own (`~/.raea/taste/taste.ts`, and `motion.ts`, `games.ts`,
+`sound.ts`, `ui.ts` for each kind of work). A rule may say when it applies and what holds it: a check raea measures, a
+script in the project, a fingerprint axis, or nothing but an eye. The file's `about` export keeps these (raea reads
+only its default export).
+
+- In the app, `rules_read` lists every rule with the fingerprint that judges the project and its axes, and
+  `rule_check out/cut.mp4` holds a file to all of them before `feed_post`: measured rules through
+  `raea check --taste`, rules linked to an axis through `raea fingerprint score`, a script by running it, and the
+  rest by your own look, which you pass as `verdicts`. Say what broke and where. Headless, run
+  `raea check FILE --taste taste.ts` and the score yourself, and look at the rest.
+- When the person states a preference for all the work from now, add it with `rule_add` (the project's rules, or the
+  workspace's): one plain sentence, why, when it applies, and the axis when one guards against it. It waits in
+  Fingerprint › Rules, where they keep, reword, move or drop it (PERSON).
+- A rule linked to an axis is only as sure as the axis: one that is **learning** only advises. Linking a rule to an
+  axis, or teaching the axis from the notes a rule came from, is the person's (Fingerprint › Rules), not yours.
+
 ## Reading their notes
 
 - A note on the picture can carry a mark (a pin, a box, a lasso): fix what's inside it.
