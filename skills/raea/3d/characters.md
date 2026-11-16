@@ -98,6 +98,17 @@ its hands, feet, gaze and seat on the scene's real things, said in the scene's c
   - `raea clothes wear assets/characters/dressed trousers tee --body assets/characters/NAME --head HEAD_DIR` writes
     a dressed body folder. Register that folder with `registerBody`, and give each garment's glb to `<Character>`
     as one of its `parts`.
+- An act no capture holds (wave at the camera, shrug, look at a watch) is made from its words on this Mac with
+  `raea motion`, Kimodo on MLX (no cloud GPU):
+  - `raea motion "A person waves at the camera" --keys stand.json --seconds 4 --seed 2 -o wave.clip.json` takes about
+    8 seconds. Say who moves ("A person ..."), as Kimodo's captions do. `--keys` holds the body to poses or places
+    on given frames: `bun sdk/body/tools/between.ts` writes standing keys at both ends, so the act starts and ends
+    where the walks around it can join it.
+  - Each seed is another take, and a take can stand still through its line. `bun sdk/body/tools/makedo.ts SKELETON
+    LIBDIR OUTDIR "wave at the camera" ...` makes a stage's `do` lines with three seeds each, and keeps the take
+    that passes the body's checks and moves most.
+  - The first use fetches the motion model (1.1 GB), and the first new line the text encoder (8.8 GB). A line's
+    words are read once and kept.
 
 ```tsx
 const perf = perform(lib, { at: [0.4, 0, 2], facing: Math.PI / 2, frames: 450, steps: [
