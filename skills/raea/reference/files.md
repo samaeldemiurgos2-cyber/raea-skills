@@ -62,7 +62,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/avatars` | `RAEA_AVATARS` | apps/app/host/avatars.ts |
 | `~/.raea/bin` |  | io/assets/src/lib.rs, runtime/bundle/lib/src/lib.rs, runtime/page/src/faces.rs |
 | `~/.raea/cache` | `RAEA_EMOJI3D_CACHE` | apps/app/host/emoji3d.ts, apps/app/host/take.ts |
-| `~/.raea/env` | `RAEA_ENV_FILE` | apps/app/host/director.ts, apps/app/host/plugins.ts, io/gen-core/src/fal.rs, io/gen-core/src/fish.rs, io/gen-core/src/made.rs, io/gen-core/src/modal.rs, io/gen-core/src/openrouter.rs, io/gen-core/src/replicate.rs, io/gen-core/src/tripo.rs, io/home/src/lib.rs |
+| `~/.raea/env` | `RAEA_ENV_FILE` | apps/app/host/director.ts, apps/app/host/plugins.ts, engine/page/host/Cargo.toml, engine/page/host/src/main.rs, io/gen-core/src/fal.rs, io/gen-core/src/fish.rs, io/gen-core/src/made.rs, io/gen-core/src/modal.rs, io/gen-core/src/openrouter.rs, io/gen-core/src/replicate.rs, io/gen-core/src/tripo.rs, io/home/src/lib.rs |
 | `~/.raea/evals/skills` |  | apps/app/host/evals/skills.ts |
 | `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/rules-asks.ts, apps/app/host/rules-train.ts, apps/app/host/storage/owners.ts |
 | `~/.raea/feed/i-taste-` |  | apps/app/host/rules-asks.ts |
