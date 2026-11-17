@@ -111,6 +111,19 @@ chain's own isn't run. Close, not exact: hemisphere lights, light probes, Phong 
 `<GodRays>`, bloom (raea's, added on top as three's is), and a very dark surface, which reads a little lighter than
 three's.
 
+Ambient light is where a three.js scene most often comes out wrong. Three has no ambient light unless the scene adds
+one, while Bevy lights every camera with a white ambient of 80 cd/m² unless it's told otherwise. A three.js scene's
+metals and dark surfaces then glow evenly where three draws them black (a product shot on black: crop SSIM 0.83 against
+0.996 with the ambient matched). Since 0.1.6, `<R3F>` sends an ambient of 0 for a scene that has none, so nothing needs
+doing there. Apply the compensation yourself in two cases:
+
+- on raea 0.1.5 and earlier: put `<ambientLight intensity={0} />` in the R3F scene that has no ambient light
+- in a three.js scene rebuilt with raea's own components (`<Camera3d>`, `<Mesh3d>`): add
+  `<AmbientLight brightness={0} />` from `raea/light` (or the scene's own level) beside its other lights
+
+Three's ambient, hemisphere and light-probe lights light only the diffuse; raea's ambient lights the specular too, so a
+glossy surface under one reads a little brighter than three's.
+
 What raea can't draw is named once in the render's output (`raea/r3f: ...`), and the frame draws without it:
 
 - a TSL compute with an indirect dispatch, a texture or a matrix uniform: the scene is drawn without what it computes
