@@ -25,6 +25,7 @@ Post an item to the project's feed: a render to watch (.mp4), a still to look at
 | `changed` | optional | with replaces: one short line on what this version changed ("title bigger, cut the second shot"); the card shows it beside the new picture |
 | `answers` | optional | with replaces: the ids of the person's comments on that item this version settles; each shows done, linked to this version |
 | `export` | optional | true when this is a deliverable (an export for the client or a platform): it shows under Exports in the project's Table |
+| `final` | optional | true when this version is ready to share with reviewers, as you'd send it: it's tagged final and offered first when the person makes a review link. Say so only when it is, after the person's notes on it are settled |
 | `tags` | optional | tags; key:value tags (platform:tiktok, aspect:9x16, cut:15s, market:uk) become the Table's columns, so use the same keys across a project's exports |
 | `uses` | optional | the library files it was made from (footage, stills, music) |
 | `controls` | optional | play: the game's controls |
@@ -59,7 +60,7 @@ Mark the person's comments on an item as you work them: each edit comment they s
 
 Access: PAGE.
 
-Set the tags of an item already in the project's feed (feed_items lists them with their tags), to give the project's Table its structure: key:value tags (platform:tiktok, aspect:9x16) are its columns, and the tag export makes the item a deliverable. Replaces the item's own tags.
+Set the tags of an item already in the project's feed (feed_items lists them with their tags), to give the project's Table its structure: key:value tags (platform:tiktok, aspect:9x16) are its columns, the tag export makes the item a deliverable, and the tag final says this version is ready to share (it's offered first for a review link; put it on the newest version only, once it is). Replaces the item's own tags.
 
 | input | | |
 |---|---|---|
@@ -322,6 +323,20 @@ Change a live review link: its title, how many more days it works (from now), do
 | `reply` | optional | an answer to show on the link's page |
 | `parent` | optional | the comment it answers |
 | `resolve` | optional | a comment's id to mark resolved |
+
+## bug_report
+
+Access: HOST.
+
+Tell raea about a bug you found in raea itself: a raea command that fails or hangs, a wrong result, help or a guide that says one thing while raea does another. Not for a bug in your own composition. Words only: paths, emails and keys are taken out before it's sent, and the same bug again is counted on the first report. Then carry on with a workaround.
+
+| input | | |
+|---|---|---|
+| `title` | required | what's wrong, in a line |
+| `text` | required | what you did, what you expected, what happened |
+| `command` | optional | the raea command that went wrong, when there was one |
+| `error` | optional | what it printed |
+| `dry_run` | optional | show what would be sent, and send nothing |
 
 ## storage_status
 

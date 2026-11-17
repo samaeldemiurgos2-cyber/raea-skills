@@ -132,10 +132,30 @@ Flags: `--as` (1), `--ask` (1), `--choice` (1), `--clip` (1), `--done` (1), `--i
 Access: HEADLESS. Arguments besides flags: any number.
 
 ```
-raea clothes [make NAME ["WHAT IT IS"] [--plain] [--set PATH=VALUE,...] [--colour #RRGGBB] | settings | cover NAME --parts PART[:SHARE],... --colour #RRGGBB [--stand MM] [--over UNDER] | wear OUT_DIR GARMENT... [--body DIR] [--head HEAD_DIR]]   (clothes for SOMA's body from words: make has an image model (flux_2_pro, one picture a view, at most N cents each, 10 unless said) dress SOMA's grey mannequin from the front, back, left and right, then measures the pictures onto SOMA's own vertices as assets/clothes/NAME.json, its pictures in assets/clothes/NAME/; --over draws it over garments already made (innermost first), as the next layer, a garment made by procedure drawn on the mannequin first; remeasure measures a garment again from its kept pictures (after raea's measuring changed), nothing drawn or paid for; cover makes one by procedure in the same file, no picture: the skin of the parts named (hips, waist, torso, chest, neck, head, upperArm, foreArm, hand, thigh, shin, foot, toes; a limb's SHARE is how far along it from its top), in one colour, MM off the skin (6 unless said); wear puts garments on a body, innermost first (each GARMENT a name or its .json): OUT_DIR/NAME.glb each, with OUT_DIR/body.glb the body without the skin wholly under cloth; --body DIR another SOMA body folder (a headless one for a head part); --head HEAD_DIR the head that joins it (head.json), whose skin the body's is graded to at the collar; alone, the project's garments. The first use fetches SOMA's body (NVlabs/SOMA-X, Apache-2.0) into raea's models folder and needs Blender: raea setup blender)
+raea clothes [make NAME ["WHAT IT IS"] [--plain] [--set PATH=VALUE,...] [--colour #RRGGBB] | settings | cover NAME --parts PART[:SHARE],... --colour #RRGGBB [--stand MM] [--over UNDER] [--hard [--sole MM] [--sole-colour #RRGGBB] [--panels #RRGGBB,...]] | wear OUT_DIR GARMENT... [--body DIR] [--head HEAD_DIR]]   (clothes for SOMA's body from words: make sews a garment: a sewing pattern (GarmentCode, MIT) from the words, or the plain base with --plain, its settings changed by --set PATH=VALUE (settings lists them and what each may be), cut to SOMA's measurements, draped by raea's own cloth and baked, as assets/clothes/NAME.json and its .glb, in --colour or the palette's next; the first make sets up GarmentCode and its Python in raea's models folder; cover makes one by procedure in the same file, no picture: the skin of the parts named (hips, waist, torso, chest, neck, head, upperArm, foreArm, hand, thigh, shin, foot, toes; a limb's SHARE is how far along it from its top), in one colour, MM off the skin (6 unless said), --over a garment already made as the one under it; wear puts garments on a body, innermost first (each GARMENT a name or its .json): OUT_DIR/NAME.glb each, with OUT_DIR/body.glb the body without the skin wholly under cloth; --body DIR another SOMA body folder (a headless one for a head part); --head HEAD_DIR the head that joins it (head.json), whose skin the body's is graded to at the collar; alone, the project's garments. The first use fetches SOMA's body (NVlabs/SOMA-X, Apache-2.0) into raea's models folder and needs Blender: raea setup blender)
 ```
 
-Flags: `--body` (1), `--colour` (1), `--head` (1), `--over` (1), `--parts` (1), `--plain`, `--set` (1), `--stand` (1).
+Flags: `--body` (1), `--colour` (1), `--hard`, `--head` (1), `--over` (1), `--panels` (1), `--parts` (1), `--plain`, `--set` (1), `--sole` (1), `--sole-colour` (1), `--stand` (1).
+
+## raea motion
+
+Access: HEADLESS. Arguments besides flags: 1.
+
+```
+raea motion "LINE" [--keys KEYS.json] [--seconds 5 | --frames N] [--seed 1] [--steps 100] [-o CLIP.json]   (body motion made on this Mac by Kimodo (NVIDIA, on MLX): a SOMA clip from a line of words and, with --keys, Kimodo constraints (full-body keyframes, hand or foot targets, a root path, as sdk/body/tools/between.ts writes them), as the clip sdk/body/tools/fromkimodo.ts reads; the first use fetches the motion model (1.1 GB) into raea's models folder, and the first new line its text encoder (8.8 GB: Llama 3 8B in 8 bits with LLM2Vec's adapters); a line's words are read once and kept. Licences: Kimodo's weights NVIDIA's Open Model License, Meta Llama 3 the Meta Llama 3 Community License, LLM2Vec's adapters MIT)
+```
+
+Flags: `--frames` (1), `--keys` (1), `--seconds` (1), `--seed` (1), `--steps` (1), `-o` (1).
+
+## raea bug
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea bug TITLE... --text TEXT [--command CMD] [--error TEXT] [--agent NAME] [--dry-run]   (a bug in raea itself, not in your own composition, sent to raea's server with raea's version and the OS, no account needed: words only, paths, emails and keys taken out before it goes; five a day from a machine, the same bug again counted on the first report; --dry-run prints what would go and sends nothing)
+```
+
+Flags: `--agent` (1), `--command` (1), `--dry-run`, `--error` (1), `--text` (1).
 
 ## raea spec
 

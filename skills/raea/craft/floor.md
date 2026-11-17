@@ -61,6 +61,8 @@ direction asks for it by name, and the direction then says why in a line.
 - **Template captions.** White bold text with one yellow word, an emoji pop, a zoom on every sentence, a whoosh on
   every entrance.
 - **The same move everywhere.** One entrance, one zoom or one sound on every beat makes every beat weaker.
+- **Music by default.** A bed under every second, or a held pad and drone standing in for a score. Decide what each
+  scene is heard as, and compose what it needs (`motion/music`).
 - **Copy that sounds like an ad.** Buzzwords, "Not X. Y." cadences, aphorisms, a label above every headline.
 
 ## Never

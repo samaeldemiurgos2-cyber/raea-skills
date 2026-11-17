@@ -64,9 +64,10 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/cache` | `RAEA_EMOJI3D_CACHE` | apps/app/host/emoji3d.ts, apps/app/host/take.ts |
 | `~/.raea/env` | `RAEA_ENV_FILE` | apps/app/host/director.ts, apps/app/host/plugins.ts, io/gen-core/src/fal.rs, io/gen-core/src/fish.rs, io/gen-core/src/made.rs, io/gen-core/src/modal.rs, io/gen-core/src/openrouter.rs, io/gen-core/src/replicate.rs, io/gen-core/src/tripo.rs, io/home/src/lib.rs |
 | `~/.raea/evals/skills` |  | apps/app/host/evals/skills.ts |
-| `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/storage/owners.ts |
+| `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/rules-asks.ts, apps/app/host/rules-train.ts, apps/app/host/storage/owners.ts |
+| `~/.raea/feed/i-taste-` |  | apps/app/host/rules-asks.ts |
 | `~/.raea/feed/media` |  | apps/app/host/paths.ts |
-| `~/.raea/fingerprints` | `RAEA_FINGERPRINTS` | apps/app/host/fingerprint.ts |
+| `~/.raea/fingerprints` | `RAEA_FINGERPRINTS` | apps/app/host/fingerprint.ts, apps/app/host/rules-train.ts, apps/app/host/taste.ts |
 | `~/.raea/fingerprints/default` |  | apps/app/host/fingerprint.ts |
 | `~/.raea/inbox` | `RAEA_INBOX_DIR` | apps/app/host/inbox.ts, engine/cli/src/show.ts |
 | `~/.raea/inbox/INBOX.jsonl` |  | engine/cli/src/cli.rs |
@@ -87,12 +88,13 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/plugins.json` | `RAEA_PLUGINS_FILE` | apps/app/host/plugins.ts |
 | `~/.raea/publish/drive.json` | `RAEA_DRIVE_PICKS` | apps/app/host/publish-source.ts |
 | `~/.raea/publish/ready.json` | `RAEA_PUBLISH_READY` | apps/app/host/publish-ready.ts |
-| `~/.raea/sessions` | `RAEA_SESSIONS_DIR` | apps/app/host/sessions.ts |
+| `~/.raea/renders` |  | apps/app/host/renderProgress.ts, runtime/encode/src/progress.rs |
+| `~/.raea/sessions` | `RAEA_SESSIONS_DIR` | apps/app/host/fingerprint-uses.ts, apps/app/host/sessions.ts |
 | `~/.raea/storage-log.jsonl` | `RAEA_STORAGE_LOG` | apps/app/host/storage/trash.ts |
 | `~/.raea/storage-used.json` | `RAEA_STORAGE_USED` | apps/app/host/storage/back.ts |
 | `~/.raea/storage.json` | `RAEA_STORAGE_FILE` | apps/app/host/storage/plan.ts, apps/app/host/storage/service.ts |
-| `~/.raea/taste` | `RAEA_TASTE` | apps/app/host/taste.ts, engine/cli/src/spec.rs |
-| `~/.raea/taste/corrections.jsonl` |  | apps/app/host/taste.ts |
+| `~/.raea/taste` | `RAEA_TASTE` | apps/app/host/rules.ts, apps/app/host/taste.ts, engine/cli/src/spec.rs |
+| `~/.raea/taste/corrections.jsonl` |  | apps/app/host/rules-asks.ts, apps/app/host/rules-file.ts, apps/app/host/taste.ts |
 | `~/.raea/taste/taste.ts` |  | engine/cli/src/guide.rs |
 | `~/.raea/trash` | `RAEA_TRASH_DIR` | apps/app/host/storage/trash.ts, apps/app/host/storage/usage.ts |
 | `~/.raea/update` | `RAEA_UPDATE_DIR` | apps/app/host/onboard.ts, apps/app/host/update.ts |
