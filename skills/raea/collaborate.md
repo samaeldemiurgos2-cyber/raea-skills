@@ -1,9 +1,9 @@
 # Working in the raea app
 
 When the raea app launches you, its feed is where you and the person work together: you post what you make, they
-look, play and leave notes, and the workspace's standing decisions live in controllers. Every tool here is PAGE (it
-needs the person's feed open) and is listed in full in [reference/feed.md](reference/feed.md); this file says when
-to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to do instead.
+look, play and leave notes, and the workspace's standing decisions live in controllers. Most tools here are PAGE (they
+need the person's feed open); the rules tools are HOST (the app answers them with no page open). All are listed in
+full in [reference/feed.md](reference/feed.md); this file says when to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to do instead.
 
 ## When you need to...
 
@@ -23,6 +23,9 @@ to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to d
 | read the workspace's standing decisions (delivery specs, who reviews what) | `controllers_read`, before you start |
 | have the person decide something that should hold for every piece from now on | `controller_post` with the fields and a line on why; a decision about one piece is a note on it, not a controller |
 | add a standing decision the person asked for, change one field, or retire one | `controller_write`, `controller_set`, `controller_remove`, only when the person asks |
+| know the rules this project's work follows (the project's own, the workspace's house rules, the person's taste) and which fingerprint judges it | `rules_read`, before you start and again before you post: the person changes rules in Fingerprint › Rules while you work |
+| keep a style preference the person states for all the work from now ("make this a rule", "always…", "never again…", "note that for later") | `rule_add` to the project's rules, with `why` and `when` it applies, and `axis` when a fingerprint axis guards against it. It holds at once and waits in Fingerprint › Rules for them to keep. A setting with fields (delivery sizes, who reviews) is a controller instead, and their own taste they change themselves |
+| hold a render, a still, a sound or a game to every rule before you post it | `rule_check` with the file, and your `verdicts` on the rules nothing measures after you've looked; fix what it says broke and where, then `feed_post` |
 | work on what the person has open in the composition editor ("this", "here", "the selected one") | `editor_selection` first, then `editor_edit`: their undo takes it back, and it saves with their changes |
 | show a plan before making it | previz first: a rough raea render of blocking, timing and camera, `feed_post` watch. Else a storyboard: key frames as one `feed_post` look with `files` in order. Else the script: `feed_post` read with its `NAME.script.ts`, which the feed shows as a screenplay and as an A/V table (give each beat its `seconds` and the table is timed); a `.md` reads as prose |
 | map how ideas, options and references connect, a structure to rearrange together | `whiteboard_write` (say what's on it and how it's grouped; the feed lays it out), `whiteboard_read` for what the person drew back. Not for the plan itself: show that as previz, a storyboard or a script |
