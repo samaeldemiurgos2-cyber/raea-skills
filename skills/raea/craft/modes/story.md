@@ -33,8 +33,9 @@ they want the whole film.
   moves. The easy default is choosing a look shot by shot from references, and that ends up as several films.
 - **Each shot's subject.** Choose the person, object or action each shot is about. The easy default is a wide
   establishing shot, so question every one.
-- **What the music does.** It either leads, and you cut to its map, or it sits under the picture as a score. The easy
-  default is a cut on every bar.
+- **What the music does.** It either leads, and you cut to its map, or it scores the picture, written to the cut, or a
+  scene has none and belongs to its own sound or to silence. The easy defaults are a cut on every bar and a score
+  that is one held chord.
 - **The poster frame.** Choose it before anything renders, and build the edit toward it.
 
 ## The rut
