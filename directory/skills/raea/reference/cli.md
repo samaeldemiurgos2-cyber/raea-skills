@@ -142,7 +142,7 @@ Flags: `--body` (1), `--colour` (1), `--hard`, `--head` (1), `--over` (1), `--pa
 Access: HEADLESS. Arguments besides flags: 1.
 
 ```
-raea motion "LINE" [--keys KEYS.json] [--seconds 5 | --frames N] [--seed 1] [--steps 100] [-o CLIP.json]   (body motion made on this Mac by Kimodo (NVIDIA, on MLX): a SOMA clip from a line of words and, with --keys, Kimodo constraints (full-body keyframes, hand or foot targets, a root path, as sdk/body/tools/between.ts writes them), as the clip sdk/body/tools/fromkimodo.ts reads; the first use fetches the motion model (1.1 GB) into raea's models folder, and the first new line its text encoder (8.8 GB: Llama 3 8B in 8 bits with LLM2Vec's adapters); a line's words are read once and kept. Licences: Kimodo's weights NVIDIA's Open Model License, Meta Llama 3 the Meta Llama 3 Community License, LLM2Vec's adapters MIT)
+raea motion "LINE" [--keys KEYS.json] [--seconds 5 | --frames N] [--seed 1] [--steps 100] [-o CLIP.json]   (body motion made on this machine by Kimodo (NVIDIA): a SOMA clip from a line of words and, with --keys, Kimodo constraints (full-body keyframes, hand or foot targets, a root path, as sdk/body/tools/between.ts writes them), as the clip sdk/body/tools/fromkimodo.ts reads. On a Mac it runs on MLX (Apple silicon's GPU): the first use fetches the motion model (1.1 GB) into raea's models folder, and the first new line its text encoder (8.8 GB: Llama 3 8B in 8 bits with LLM2Vec's adapters). On Linux and Windows it runs upstream Kimodo on PyTorch, set up once by raea setup motion: on an NVIDIA GPU with CUDA (the text encoder, 16 GB in bf16, on the CPU unless the card has 18 GB or more), else on the CPU alone; reading a new line on the CPU takes about 18 GB of memory. A line's words are read once and kept. Licences: Kimodo's weights NVIDIA's Open Model License, Meta Llama 3 the Meta Llama 3 Community License, LLM2Vec's adapters MIT, Kimodo's code Apache-2.0)
 ```
 
 Flags: `--frames` (1), `--keys` (1), `--seconds` (1), `--seed` (1), `--steps` (1), `-o` (1).
@@ -271,6 +271,7 @@ Access: HEADLESS. Arguments besides flags: 1.
 
 ```
 raea setup blender [--check] [--download]   (find Blender or download the LTS into ~/.raea/tools/blender, and install raea's add-on and the MCP add-on)
+raea setup motion [--check]   (what raea motion runs on, made where missing (--check only says): on a Mac the MLX models in raea's models folder (the motion model 1.1 GB, the text encoder 8.8 GB); on Linux and Windows, in raea's models folder's kimodo-torch, a Python 3.11 environment made by uv (which it needs on PATH: https://docs.astral.sh/uv) with PyTorch (its CUDA build where there is an NVIDIA driver, about 8 GB, else CPU only, about 2 GB) and upstream Kimodo (nv-tlabs/kimodo at e1c219c, Apache-2.0), then the weights: Kimodo-SOMA-RP-v1 (1.1 GB, NVIDIA Open Model License), LLM2Vec's two adapters (0.3 GB, MIT) and Meta Llama 3 8B Instruct in bf16 (16 GB, Meta Llama 3 Community License, from NousResearch's ungated copy, checked file by file against Meta's SHA-256); about 26 GB in all. It says what this machine has and where each network runs: the denoiser on CUDA when there is an NVIDIA GPU, else the CPU; the text encoder beside it on a GPU of 18 GB or more, else the CPU)
 raea setup godot [--check]   (download Godot 4.6.1 with GodotJS, its TypeScript bindings (MIT), into ~/.raea/tools/godot: JavaScriptCore on the Mac, QuickJS on Windows and Linux; raea's own build (the Mac's notarized), else GodotJS's, each checked against its pinned sha256)
 ```
 
@@ -496,6 +497,16 @@ raea physics bake REQUEST.json [-o OUT.json] | physics goo SPEC.json | physics p
 
 Flags: `-o` (1).
 
+## raea wear
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea wear bake REQUEST.json [-o OUT.json]   (a .glb's weathering causes for raea/wear: the model with a second UV set and its cause maps, made once in the asset store)
+```
+
+Flags: `-o` (1).
+
 ## raea splat
 
 Access: HEADLESS. Arguments besides flags: 2.
@@ -534,6 +545,16 @@ raea neural mlxdlss DIR -o OUT [--model M.dlssmodel] [--intensity X] [--profile 
 ```
 
 Flags: `--intensity` (1), `--local-structure` (1), `--model` (1), `--profile` (1), `--skin-structure` (1), `--steady` (1), `-o` (1).
+
+## raea light
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea light check SCENES.json -o DIR [--scene NAME] [--paths raster,traced-ao,solari,gi] [--spp N] [--fresh]   (each scene on each light path against its path-traced reference: distance in stops, the worst tile, a moving shot's flicker, a frame's cost; DIR/report.json)
+```
+
+Flags: `--fresh`, `--paths` (1), `--scene` (1), `--spp` (1), `-o` (1).
 
 ## raea mezz
 

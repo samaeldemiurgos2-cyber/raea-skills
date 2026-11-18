@@ -98,17 +98,28 @@ its hands, feet, gaze and seat on the scene's real things, said in the scene's c
   - `raea clothes wear assets/characters/dressed trousers tee --body assets/characters/NAME --head HEAD_DIR` writes
     a dressed body folder. Register that folder with `registerBody`, and give each garment's glb to `<Character>`
     as one of its `parts`.
-- An act no capture holds (wave at the camera, shrug, look at a watch) is made from its words on this Mac with
-  `raea motion`, Kimodo on MLX (no cloud GPU):
+- An act no capture holds (wave at the camera, shrug, look at a watch) is made from its words with `raea motion`:
+  Kimodo, run on the machine itself (no cloud GPU). On a Mac it runs on MLX. On Linux and Windows it runs upstream
+  Kimodo on PyTorch. Both write the same clip file.
   - `raea motion "A person waves at the camera" --keys stand.json --seconds 4 --seed 2 -o wave.clip.json` takes about
-    8 seconds. Say who moves ("A person ..."), as Kimodo's captions do. `--keys` holds the body to poses or places
-    on given frames: `bun sdk/body/tools/between.ts` writes standing keys at both ends, so the act starts and ends
-    where the walks around it can join it.
+    8 seconds on a Mac. Say who moves ("A person ..."), as Kimodo's captions do. `--keys` holds the body to poses or
+    places on given frames: `bun sdk/body/tools/between.ts` writes standing keys at both ends, so the act starts and
+    ends where the walks around it can join it.
   - Each seed is another take, and a take can stand still through its line. `bun sdk/body/tools/makedo.ts SKELETON
     LIBDIR OUTDIR "wave at the camera" ...` makes a stage's `do` lines with three seeds each, and keeps the take
-    that passes the body's checks and moves most.
-  - The first use fetches the motion model (1.1 GB), and the first new line the text encoder (8.8 GB). A line's
-    words are read once and kept.
+    that passes the body's checks and moves most. A seed is a different take on MLX and on PyTorch, because their
+    noise is drawn differently.
+  - On a Mac, the first use fetches the motion model (1.1 GB), and the first new line the text encoder (8.8 GB).
+  - On Linux and Windows, run `raea setup motion` once first. It needs uv (https://docs.astral.sh/uv) on PATH. It
+    makes a Python environment in raea's models folder with PyTorch and upstream Kimodo, then fetches the weights,
+    about 26 GB in all. With an NVIDIA GPU the motion runs on CUDA. The text encoder (16 GB in bf16) joins it on a
+    GPU of 18 GB or more; on a smaller card it runs on the CPU and needs about 18 GB of memory. Without an NVIDIA GPU
+    everything runs on the CPU, which is slower. `raea setup motion --check` says what is set up and where each part
+    runs.
+  - A line's words are read once and kept, so the text encoder loads once a line.
+  - Licences: Kimodo's code is Apache-2.0 and its weights are under NVIDIA's Open Model License (commercial use
+    allowed). The text encoder is Meta Llama 3 8B Instruct (Meta Llama 3 Community License) with LLM2Vec's adapters
+    (MIT).
 
 ```tsx
 const perf = perform(lib, { at: [0.4, 0, 2], facing: Math.PI / 2, frames: 450, steps: [
