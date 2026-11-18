@@ -497,6 +497,16 @@ raea physics bake REQUEST.json [-o OUT.json] | physics goo SPEC.json | physics p
 
 Flags: `-o` (1).
 
+## raea wear
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea wear bake REQUEST.json [-o OUT.json]   (a .glb's weathering causes for raea/wear: the model with a second UV set and its cause maps, made once in the asset store)
+```
+
+Flags: `-o` (1).
+
 ## raea splat
 
 Access: HEADLESS. Arguments besides flags: 2.
@@ -535,6 +545,16 @@ raea neural mlxdlss DIR -o OUT [--model M.dlssmodel] [--intensity X] [--profile 
 ```
 
 Flags: `--intensity` (1), `--local-structure` (1), `--model` (1), `--profile` (1), `--skin-structure` (1), `--steady` (1), `-o` (1).
+
+## raea light
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea light check SCENES.json -o DIR [--scene NAME] [--paths raster,traced-ao,solari,gi] [--spp N] [--fresh]   (each scene on each light path against its path-traced reference: distance in stops, the worst tile, a moving shot's flicker, a frame's cost; DIR/report.json)
+```
+
+Flags: `--fresh`, `--paths` (1), `--scene` (1), `--spp` (1), `-o` (1).
 
 ## raea mezz
 
