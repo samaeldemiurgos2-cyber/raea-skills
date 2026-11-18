@@ -270,6 +270,16 @@ least sure of. Once they've answered, `--tally` makes the answers evidence.
   next tool call and keeps your turn from ending until you have it (where there is no hook, follow the file with
   `tail -n0 -F FILE` or your harness's monitor). Answer each: it may change what you're doing. Without the app,
   `raea show` opens the file in the Mac's own viewer and says so; take the person's notes as text then.
+- When one picture holds several things (a contact sheet, a side by side, a before and after, a grid of props or
+  characters), label each instead of naming them by position in the title or your message. A label is a tag of a few
+  words that stands beside the picture, never on it, and points at its place when the person's pointer is on it; give
+  it a paragraph only where a tag isn't enough. In the app, `feed_post` takes `labels`: each `{ text, detail?, box:
+  [x0, y0, x1, y1] }` or `point: [x, y]` in the picture's own 0-1, with `frame` for a storyboard's still, `t` (and
+  `to`) for a film's seconds, or `part` for a scene's part. Outside it: `raea show sheet.png --label "0,0,.5,1 v1, hook
+  first" --label ".5,0,1,1 v2, product first" --detail "Opens on the product for two seconds, then the hook."` (each
+  `--label` is the place, then its tag; a `--detail` is the paragraph of the `--label` before it). A sheet `raea media
+  sheet` made comes labelled with each cell's time or file; to say more, edit the tags and paragraphs in its
+  `OUT.labels.json` before you show it.
 - When you need the person to choose or fill something in (pick an opening, rank cuts, set a price), post an artifact:
   a React `.tsx` of your own, `feed_post` with `type: "artifact"`, the file, and an `ask` line. The app builds it and
   runs it sandboxed in the feed. Its default export is the component. It imports `react`, `@raea/app` and its own
