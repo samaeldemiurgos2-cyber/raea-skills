@@ -29,6 +29,7 @@ Post an item to the project's feed: a render to watch (.mp4), a still to look at
 | `tags` | optional | tags; key:value tags (platform:tiktok, aspect:9x16, cut:15s, market:uk) become the Table's columns, so use the same keys across a project's exports |
 | `uses` | optional | the library files it was made from (footage, stills, music) |
 | `controls` | optional | play: the game's controls |
+| `labels` | optional | what each part of it is, shown as tags beside the picture that point at their place on hover: when one still holds several things (a contact sheet, a side by side, before and after, a grid of props), label each instead of naming them by position in the title. A few words each, a detail paragraph only when a tag isn't enough. Places are fractions of the picture, 0-1 from its top left |
 
 ## feed_propose
 
