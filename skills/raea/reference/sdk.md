@@ -19,7 +19,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/app` (sdk/raea/src/app.ts)
 
-`App`, `BevyApp`, `Composition`, `First`, `FixedFirst`, `FixedLast`, `FixedPostUpdate`, `FixedPreUpdate`, `FixedUpdate`, `Last`, `PluginGroup`, `PostStartup`, `PostUpdate`, `PreStartup`, `PreUpdate`, `RunFixedMainLoop`, `SpawnScene`, `Startup`, `StateTransition`, `Update`, `clearRegistry`, `conditions`, `definePlugin`, `getCompositions`, `registerRoot`, `useControl`, `validControls`
+`App`, `BevyApp`, `Composition`, `First`, `FixedFirst`, `FixedLast`, `FixedPostUpdate`, `FixedPreUpdate`, `FixedUpdate`, `Last`, `PluginGroup`, `PostStartup`, `PostUpdate`, `PreStartup`, `PreUpdate`, `RunFixedMainLoop`, `SpawnScene`, `Startup`, `StateTransition`, `Update`, `clearRegistry`, `conditions`, `definePlugin`, `getCompositions`, `registerRoot`, `useControl`
 
 ## `raea/asset` (sdk/raea/src/asset.ts)
 
