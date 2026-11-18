@@ -88,6 +88,7 @@ task needs.
 |---|---|
 | a cut of real footage: takes cut by words, faces framed, captions, cuts to a song | [footage.md](footage.md) |
 | motion graphics and type: cards, stats, logos, end cards | [graphics.md](graphics.md) |
+| a short product film (a launch, a demo, a brand film) made like a good film of its kind, or one you were handed ("make me one like this") | the video-decompiler skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
 | sound: voice, beds, foley, music for picture, the mix | [sound.md](sound.md) |
 | a 3D scene: lights, materials, models, people, rooms, splats; three.js or React Three Fiber work | [3d.md](3d.md) |
 | a game, 2D or 3D | [games.md](games.md) |
