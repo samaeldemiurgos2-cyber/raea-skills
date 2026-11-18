@@ -10,6 +10,10 @@ a game, or renders single frames to check. This plugin teaches Claude to use rae
   kind of work needs: footage cut by its words, motion graphics and type, sound and music, 3D scenes (Bevy materials,
   lights, physics, Gaussian splats), games, app interfaces, generated media, and delivery. Its `reference/` files are
   generated from raea's code, so they list the real verbs, flags and SDK imports.
+- **The video-decompiler skill** (`video-decompiler/`), by James Dimachkie, MIT. It makes a short product film (a
+  launch film, a demo, a brand film) as raea code: take a good film of its kind apart, write yours on one page, build
+  picture and sound on one clock, have it read blind, then show a person. Its tools are Python, in an environment of
+  their own; `video-decompiler/UPSTREAM.md` says where it comes from, what it runs and how it's updated.
 - **Two hooks** (`hooks/`), for Claude Code and Cowork. Before Claude runs a shell command, a command that opens a
   still, a video or a sound in the Mac's viewer is stopped once and Claude is told to use `raea show`, which puts it in
   the raea app where you can answer it; the same command again goes through. This happens only while the raea app is
@@ -59,7 +63,10 @@ The plugin itself sends nothing anywhere and stores nothing. Its hook script (`h
 saved file, and keeps a small marker under `~/.raea/hooks` so a command it stopped goes through when tried again. It
 reads `~/.claude/settings.json` only to see whether raea's hooks are already there.
 
-The skill tells Claude to run the `raea` command, which works on your computer. A few of raea's verbs reach the
+The video-decompiler skill's tools run on your computer too (Python, `ffmpeg`, `ffprobe` and `raea`) and reach no
+network; they write under `~/.vd` and in the film's folder (`video-decompiler/UPSTREAM.md`).
+
+The raea skill tells Claude to run the `raea` command, which works on your computer. A few of raea's verbs reach the
 network when you ask for them: the installer downloads raea from raea.io, `raea gen` calls the generation providers you
 set up with your own keys (and spends your money there, so the skill has Claude quote the cost first), and a review
 link made in the raea app uploads the cut you choose to share. raea's privacy policy is at https://raea.io/privacy/.
@@ -68,5 +75,7 @@ link made in the raea app uploads the cut you choose to share. raea's privacy po
 
 This folder is the `skills/` folder of
 [shinyobjectz/raea-skills](https://github.com/shinyobjectz/raea-skills), where the skill is written and checked.
-Apache-2.0; the copied guides keep their notices (`raea/3d/NOTICE`, `raea/craft/NOTICE`). Questions and bugs:
+Apache-2.0; the copied guides keep their notices (`raea/3d/NOTICE`, `raea/craft/NOTICE`). `video-decompiler/` is MIT,
+copied from [JimGHTB12/video-decompiler](https://github.com/JimGHTB12/video-decompiler) with its `LICENSE` and
+`NOTICE`; the fonts, pictures and sounds in its `library/` keep their own licences, listed there. Questions and bugs:
 [issues](https://github.com/shinyobjectz/raea-skills/issues).
