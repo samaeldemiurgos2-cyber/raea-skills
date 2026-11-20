@@ -36,11 +36,14 @@
 - Narration over the picture, when the footage has no voice for it, is
   `<Speech text="the words" start={frame} />` from `raea/speech` (Pocket TTS, on this computer; `voice` picks a
   Pocket voice or a WAV of one).
-- Master the sum with one `<Mix lufs={-14} ceiling={-1.5} />` per composition. It brings the whole mix to -14 LUFS
-  integrated and limits true peaks under the ceiling, which is what the floor's loudness defect asks for.
+- raea mixes and masters every render: each line of dialogue (the `voice` bus, or footage on no bus) comes to the same
+  loudness, a join into dead silence gets the room's tone, and the whole mix comes to -14 LUFS integrated with true
+  peaks under -1 dBTP, which is what the floor's loudness defect asks for. Don't level lines with `gainDb` or master
+  the voice outside raea. One `<Mix lufs={…} ceiling={…} />` per composition sets another target.
 - Put the sounds in the tree in time order. The engine keys a sound's stretch by its place in the tree, so adding a
   sound in the middle of the list can split the ones after it.
-- Balance relative to the voice. The approved pieces, mastered by `<Mix>` to -14 LUFS, sit like this:
+- Balance relative to the voice. The approved pieces, mastered to -14 LUFS, sit like this (each a `gainDb` on top of
+  raea's level for the voice, or on the sound's own level for the rest):
 
   | sound | with a voice | without one (promo, deck, game) |
   |---|---|---|
@@ -110,7 +113,6 @@ ends up shouting over the narrator while another is inaudible.
 - `loop` on an `<Audio>` without `endAt` to stretch a short ambience: nothing loops, it plays once and stops dead
   (the render warns). With `endAt` it repeats with a hard jump at each loop; tile copies with crossfades instead.
 - Two `<Mix>` in one composition: it throws.
-- No `<Mix>`: the sum plays as it is, at whatever loudness it adds up to.
 - Rewording a `sao()` prompt on every pass. Each new prompt makes a new sound.
 - `style` on an `<Audio>`: Audio has no picture and takes no style.
 - Hand-placing dozens of game sounds from a log. Cue them from `useGameEvents` (`motion/games`).

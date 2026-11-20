@@ -18,8 +18,8 @@
   `raea check out/launch-9x16.mp4 --manifest out/render.json --shape 9:16 --platform tiktok`.
 - Captions: burn them in for feeds that play without sound, unless the delivery controller says captions off; then
   burn none, and leave the words file beside the export for the platform's own captions.
-- Sound to -14 LUFS integrated with true peak at or below -1 dBTP: one `<Mix lufs={-14} ceiling={-1.5} />` per
-  composition does it (`motion/sound`). A spec that names another number wins.
+- Sound to -14 LUFS integrated with true peak at or below -1 dBTP: raea's mix and master do it on every render
+  (`motion/sound`). A spec that names another number wins: `<Mix lufs={…} ceiling={…} />` sets it.
 - Render the export at `--quality master` (motion graphics and type) or `--quality high` (a film), and versions made
   for notes with no `--quality` flag; name it in lowercase letters, digits and hyphens, with its shape and length:
   `spring-launch-9x16-15s.mp4`. Each version is a new file beside the last, never written over it.
