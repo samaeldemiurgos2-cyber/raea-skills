@@ -4,7 +4,7 @@
 
 The tools the raea app offers every agent it launches, as the MCP server `feed` (apps/app host/acp/feed-mcp.ts).
 PAGE: the feed's page answers it, so the app must be open (or a windowless page); PERSON: a click finishes it.
-With no page, use the CLI instead: `raea controller` for the controllers, `raea context .` for the brief.
+With no page, use the CLI instead: `raea context .` for the brief and the taste, `raea check` for the rules.
 
 ## feed_post
 
@@ -80,7 +80,7 @@ No input.
 
 Access: PAGE.
 
-Read the project's plan, plan.org at the top of its folder (Org mode): its open tasks under their stage headings, each with its id, keyword (TODO, MAKING, REVIEW), priority, tags, dates, progress, the feed item it stands on and who has it, and how many are closed. full: the whole file as well. Read it before you plan or change a task; the ids are how the other plan tools name tasks.
+Read the project's plan, plan.org at the top of its folder (Org mode): its open tasks under their stage headings, each with its id, keyword (one of the plan's own #+TODO: words), priority, tags, dates, progress, the feed item it stands on and who has it, and how many are closed. full: the whole file as well. Read it before you plan or change a task; the ids are how the other plan tools name tasks.
 
 | input | | |
 |---|---|---|
@@ -100,7 +100,7 @@ Add tasks to the project's plan, in order: before work of more than one step, it
 
 Access: PAGE.
 
-Change tasks in the project's plan by id: mark one MAKING as you start it or REVIEW when it waits on the person, tick a checkbox (check: its place, 0 first) or add one, change its words, priority, tags, dates, item or who has it, add a note, move it, or remove it (a mistake only: drop work that no longer applies with plan_close). Answers with the open tasks.
+Change tasks in the project's plan by id: set its keyword (one of the plan's #+TODO: words; where an open task stands is read from its item and the work on it, so it needn't be marked as you go), tick a checkbox (check: its place, 0 first) or add one, change its words, priority, tags, dates, item or who has it, add a note, move it, or remove it (a mistake only: drop work that no longer applies with plan_close). Answers with the open tasks.
 
 | input | | |
 |---|---|---|
@@ -127,58 +127,6 @@ Access: PAGE (Chat only).
 Read the workspace: its channels (id, name, logline), its agents, and its repo as raea keeps it (repo: its folder, layout, and each project's path, storage and id, from .raea/workspace). Workspace sessions (Chat) only.
 
 No input.
-
-## controllers_read
-
-Access: PAGE.
-
-Read the workspace's controllers: each controller's groups and fields with their paths (controller.group.field), types and values, as text and as JSON.
-
-No input.
-
-## controller_write
-
-Access: PAGE.
-
-Add a controller to the workspace, or replace the one with its id. A controller is { id?, title, help?, groups: [{ id?, title, help?, fields: [{ id?, label, help?, type, value, ... }] }] }; field types: toggle, choice (options), number (unit, min, max, step), text (placeholder, multiline), list, agents, channels, workflow (value: [{ name, by, back }], channels), servers, skills. The person sees it at once, and every agent works to it.
-
-| input | | |
-|---|---|---|
-| `controller` | required | the controller, whole |
-
-## controller_set
-
-Access: PAGE.
-
-Set one field's value by its path (controller.group.field), checked against its type.
-
-| input | | |
-|---|---|---|
-| `path` | required | controller.group.field |
-| `value` | required | the new value, of the field's type |
-
-## controller_remove
-
-Access: PAGE.
-
-Remove a controller from the workspace.
-
-| input | | |
-|---|---|---|
-| `id` | required | the controller's id |
-
-## controller_post
-
-Access: PAGE.
-
-Put one of the workspace's controllers in the project's feed, for the person to set. Use it when the work needs a decision that should hold for every piece from now on (a delivery spec, a caption style, who reviews what): a controller every agent reads. A decision about one piece of work is a note on that item, not a controller. Name the fields it's about (group.field, as controllers_read lists them) and say in a line what you need decided. A new controller is posted to the feed on its own; don't post it again.
-
-| input | | |
-|---|---|---|
-| `controller` | required | the controller's id |
-| `fields` | optional | the fields to set, as group.field (or controller.group.field); the whole controller when left out |
-| `why` | required | one line: what you need the person to decide, and why now |
-| `title` | optional | what the person sees on the card; the controller's title when left out |
 
 ## channel_create
 

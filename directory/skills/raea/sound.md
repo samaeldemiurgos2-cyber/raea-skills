@@ -29,5 +29,5 @@ whether they're there):
 
 ## Checks
 
-[motion/sound.md](motion/sound.md)'s "Check the sound before you call it done", and the controllers' loudness spec
-when the workspace sets one ([delivery.md](delivery.md)).
+[motion/sound.md](motion/sound.md)'s "Check the sound before you call it done", and the taste's loudness line when
+the workspace or project sets one ([delivery.md](delivery.md)).

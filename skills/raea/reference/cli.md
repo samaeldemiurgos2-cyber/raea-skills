@@ -163,7 +163,7 @@ Flags: `--agent` (1), `--command` (1), `--dry-run`, `--error` (1), `--text` (1).
 Access: HEADLESS. Arguments besides flags: 1.
 
 ```
-raea spec FILE.ts [--as brief|script|taste|plan|controller]   (a spec's default export as JSON, checked against its schema: brief.ts, script.ts, taste.ts, plan.ts, controllers/ID.ts)
+raea spec FILE.ts [--as brief|script|taste|parts]   (a spec's default export as JSON, checked against its schema: brief.ts, script.ts, taste.ts, NAME.parts.ts)
 ```
 
 Flags: `--as` (1).
@@ -173,7 +173,7 @@ Flags: `--as` (1).
 Access: HEADLESS. Arguments besides flags: 2.
 
 ```
-raea workspace init [NAME] [--layout LAYOUT] | raea workspace adopt DIR [--name NAME] | raea workspace [--json]   (a workspace: a git repo of projects and controllers under raea.root, ~/Documents/raea unless git config says)
+raea workspace init [NAME] [--layout LAYOUT] | raea workspace adopt DIR [--name NAME] | raea workspace [--json]   (a workspace: a git repo of projects under raea.root, ~/Documents/raea unless git config says)
 ```
 
 Flags: `--json`, `--layout` (1), `--name` (1).
@@ -188,23 +188,13 @@ raea project new NAME [--storage inline|submodule] | raea project split NAME [--
 
 Flags: `--json`, `--remote` (1), `--storage` (1).
 
-## raea controller
-
-Access: HEADLESS. Arguments besides flags: 3.
-
-```
-raea controller ls [--json] | raea controller get PATH [--json] | raea controller set PATH VALUE [--project] [--by NAME] | raea controller write FILE.ts [--by NAME] | raea controller rm ID [--by NAME]   (the workspace's controllers, controllers/ID.ts; PATH is controller.group.field; every change a commit)
-```
-
-Flags: `--by` (1), `--json`, `--project`.
-
 ## raea check
 
 Access: HEADLESS. Arguments besides flags: 1.
 
 ```
 raea check EDIT.tsx --quick [--shape S] [--platform P] [--taste T] [-o check.json]   (three stills of a composition checked for text: clipped, cramped, safe areas, sizes; about a second)
-raea check [PROJECT|EDIT.tsx] [--composition ID] [--only ID] [--taste T] [--render OUT | --no-render] [--json]   (every check that applies to each composition, over its frames: raea's floor on its newest render, the person's taste, the workspace's and the project's rules (a controller's rule fields: one of raea's checks by name, or a project's .ts check); what needs a render and has none waits, and says so)
+raea check [PROJECT|EDIT.tsx] [--composition ID] [--only ID] [--taste T] [--render OUT | --no-render] [--json]   (every check that applies to each composition, over its frames: raea's floor on its newest render, the person's, the workspace's and the project's taste.ts (each line's check: one of raea's forms or checks by name, or a project's .ts check); what needs a render and has none waits, and says so)
 raea check VIDEO.mp4 [--manifest render.json] [--words W.json] [--perception P.json] [--things T.json] [--shape 16:9|9:16|4:5|1:1] [--platform tiktok|reels|shorts] [--taste taste.ts|DIR] [-o check.json]   (an export against the floor: clipped text, contrast, safe areas, freezes, flashing, cues, loudness, blotching, a placeholder brand kit, and with --things what `raea fingerprint things --json` found: a thing floating or passing through another, the camera lurching mid-move, an empty frame; its findings errors, warns and notes)
 ```
 

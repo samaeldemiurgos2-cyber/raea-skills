@@ -1,20 +1,19 @@
 # Planning and tasks: the project's plan.org
 
 Every raea project keeps its work in one file, `plan.org` at the top of its folder. It is plain Org mode text (Emacs's
-outline format), and it is the to-do list the person sees in the raea app. You keep it: plan in it before work of
-more than one step, mark each task as you start it, close it with what you made, and add what you find left to do.
-Do this whether or not the person ever opens it; a plan nobody maintains is a blank list, and a blank list tells them
-nothing about where their project stands.
+outline format), and it is the to-do list the person sees in the raea app. It is the only list: the brief says what
+to make and holds no tasks, and a message from the person isn't a task until you plan one. You keep it: plan in it
+before work of more than one step, put on each task the feed item it waits on, close it with what you made, and add
+what you find left to do. Do this whether or not the person ever opens it; a plan nobody maintains is a blank list,
+and a blank list tells them nothing about where their project stands.
 
-Not the same file as a solid's `plan.ts` (the build plan a procedural object is checked against): `plan.org` is the
-project's tasks.
+An object's build plan (the parts a procedural object is checked against) is `NAME.parts.ts`, not this.
 
 ## Where it is, and how you reach it
 
 - In the raea app (it launched you): the plan tools, `plan_read`, `plan_add`, `plan_update` and `plan_close`
   ([reference/feed.md](reference/feed.md)). Each turn's prompt also carries `raea://plan/<project>`: the open tasks by
-  id, and which task the person's message is. Use the tools rather than writing the file yourself, so the person's
-  list changes at once.
+  id. Use the tools rather than writing the file yourself, so the person's list changes at once.
 - Anywhere else (a terminal in the project's folder, a headless run): open `plan.org` and edit it as text. Keep every
   `:ID:` as it is, and give a new task one (`t-` and eight lowercase letters and digits; the app gives one to a task
   that has none the next time an agent reads the plan). The app reads the file again while the person's to-do list is
@@ -26,15 +25,15 @@ project's tasks.
 
 ```org
 #+TITLE: Stay
-#+TODO: TODO MAKING REVIEW | DONE DROPPED
+#+TODO: TODO | DONE DROPPED
 
 * Look
-** MAKING [#A] Light the oil door [1/3]                                    :look:
+** TODO [#A] Light the oil door [1/3]                                      :look:
 DEADLINE: <2026-11-20 Fri>
 :PROPERTIES:
 :ID:       t-k3x9q2ab
 :AGENT:    a-light
-:FROM:     m-mwgv7a
+:ITEM:     i-door-2
 :END:
 - [X] warm key from the lamp
 - [ ] cool fill from the window
@@ -55,9 +54,11 @@ Graded warm; the window stays cold. [[item:i-hall-2]]
 
 - **Headings without a keyword are stages** (`* Look`, `* Sound`): they group the tasks under them. A task is a
   heading with a keyword.
-- **Keywords.** `TODO` not started, `MAKING` under way, `REVIEW` waiting on the person, `DONE` finished, `DROPPED` no
-  longer wanted. The `#+TODO:` line spells them out for Emacs. A plan may add its own sequence on another `#+TODO:`
-  line; raea reads it.
+- **Keywords are the file's own.** The `#+TODO:` line lists them, and its `|` splits the open words from the ones that
+  close a task. A plan the app makes has `TODO | DONE DROPPED`: `TODO` open, `DONE` finished, `DROPPED` no longer
+  wanted. A team's plan may have more (`TODO MAKING REVIEW | DONE DROPPED`, or its own words on another `#+TODO:`
+  line); raea reads any of them that way. Use the plan's own words and add none of yours. Where an open task stands
+  (under way, waiting on the person) is read from its item and from the work on it, so you needn't mark it as you go.
 - **Priority** `[#A]`, `[#B]` or `[#C]`, after the keyword. Use A for what blocks everything else, sparingly.
 - **Tags** after the words, between colons: `:look:sound:`. Letters, digits and `_`: write a dash as `_`
   (`act_one`). A task inherits its stage's tags. The feed's views and an item's tags read them.
@@ -66,7 +67,8 @@ Graded warm; the window stays cold. [[item:i-hall-2]]
   three share that one line; Org reads no second planning line, and a drawer under one is lost to it.
 - **Properties**, in the drawer: `:ID:` (every task has one, and it never changes), `:ITEM:` the feed item it stands
   on or made, `:AGENT:` who has it by agent id (an `@name` while no agent has that name), `:FROM:` what asked for it
-  (a message id, or `ITEM#COMMENT` for each note it answers, separated by spaces). Anything else you add is kept.
+  (`ITEM#COMMENT` for each note it answers, separated by spaces), `:LINK:` the same task in another tracker (below).
+  Anything else you add is kept.
 - **Links** by id, never by title: `[[item:i-hall-2]]` for a feed item, `[[id:t-k3x9q2ab]]` for another task.
 
 ## When to plan
@@ -75,8 +77,7 @@ Planning is part of the work, not a step you may skip: the plan is how the perso
 list they act on. Plan before you make anything that takes more than one step, and keep the plan true as you go.
 
 - **Before work of more than one step**: write its steps as tasks under a stage, each one small enough to finish in
-  a turn or two. One-step asks need no plan of their own, but the message is already a task (the composer writes it,
-  `:FROM:` the message), so mark and close that one.
+  a turn or two. A one-step ask needs no task: do it and answer.
 - **When the person sends you notes** (a round of comments on an item, or a list of fixes in a message): plan them
   before you touch anything. See the next section.
 - **At the start of a project**: its stages (Look, Script, Make, Sound, Deliver, or what fits), with the first few
@@ -101,27 +102,27 @@ anything:
 4. **A note that asks for nothing** (an approval, a thank-you, a question you answer in a line) gets no task: settle
    it at once (`comment_task` with `state: "done"` and a line; outside the app `raea show --on ITEM --done ID --note
    LINE`).
-5. **Then work the tasks in order**: mark each `MAKING` as you start it, mark the notes it answers working, and close
-   both when the version that settles them is posted (`feed_post` with `answers`, or `raea show FILE --replaces ITEM
-   --done ID...`).
+5. **Then work the tasks in order**: mark the notes each one answers working as you start it (`comment_task`), and
+   close both when the version that settles them is posted (`feed_post` with `answers`, or `raea show FILE --replaces
+   ITEM --done ID...`).
 
 ## As you work
 
 1. **Start**: read the plan (`plan_read`, or the turn's plan block). Find the task you're on, or add it.
-2. **Mark it `MAKING`** as you begin (`plan_update` with `state: "making"`). Tick its checkboxes as each step is done
-   (`check: N`, 0 first).
-3. **Waiting on the person** (a pick, an approval, a note): mark it `REVIEW`, and put the item they're to look at on it
-   (`item`).
-4. **Close it** as you finish, in the same turn: `plan_close` with the item you posted (feed_post's answer) and one
-   line on what was done. That stamps `CLOSED` and links the work. Outside the app: change the keyword to `DONE`, put
-   `CLOSED: [YYYY-MM-DD Day HH:MM]` at the start of the planning line (make one right under the heading when it has
-   no DEADLINE or SCHEDULED), and put the item's id in `:ITEM:`.
+2. **As you go**, tick its checkboxes as each step is done (`plan_update` with `check: N`, 0 first).
+3. **Waiting on the person** (a pick, an approval, a note): put the item they're to look at on the task (`plan_update`
+   with `item`). When they approve that item, or any later version of it, the task closes DONE on its own, stamped
+   `CLOSED`, with nobody asked. That's how the storyboard a gate waits on, a cut sent for approval or a question they
+   answer closes its task.
+4. **Close it** as you finish, in the same turn, when nothing waits on the person: `plan_close` with the item you
+   posted (feed_post's answer) and one line on what was done. That stamps `CLOSED` and links the work. Outside the
+   app: change the keyword to the plan's closing word (`DONE`), put `CLOSED: [YYYY-MM-DD Day HH:MM]` at the start of
+   the planning line (make one right under the heading when it has no DEADLINE or SCHEDULED), and put the item's id
+   in `:ITEM:`.
 5. **No longer wanted**: `plan_close` with `state: "dropped"` and why. Remove a task only when it was a mistake; a
    dropped task keeps the record of what was decided.
-6. **Before you end the turn**: no task of yours is left `MAKING` that isn't still under way.
-
-A task linked to a feed item stands where the item does: when the person approves it or a test passes, the list shows
-it done. You still close it in the plan, so the file says so too.
+6. **Before you end the turn**: every task you finished is closed, and every one that waits on the person has its
+   item on it.
 
 The calls, as the app's tools take them (every task by its id, from `plan_read` or the turn's plan block):
 
@@ -131,8 +132,8 @@ plan_add    {"tasks": [{"title": "Light the oil door", "under": "Look", "checks"
                        {"title": "Rim on the handle", "under": "t-k3x9q2ab"}]}
 plan_add    {"tasks": [{"title": "Rebuild the jaw hinge so the mouth opens without tearing", "under": "Fixes",
                         "from": "i-head-5#c-a1 i-head-5#c-a4", "checks": ["hinge pivot", "corner weights"]}]}
-plan_update {"changes": [{"id": "t-k3x9q2ab", "state": "making"}, {"id": "t-k3x9q2ab", "check": 0}]}
-plan_update {"changes": [{"id": "t-k3x9q2ab", "state": "review", "item": "i-door-2"}]}
+plan_update {"changes": [{"id": "t-k3x9q2ab", "check": 0}]}
+plan_update {"changes": [{"id": "t-k3x9q2ab", "item": "i-door-2"}]}    the person approving i-door-2 closes it
 plan_close  {"id": "t-k3x9q2ab", "item": "i-door-3", "note": "Warm key at 3200K, cool fill from the window."}
 plan_close  {"id": "t-k3xa0c4d", "state": "dropped", "note": "The person cut the scene."}
 ```
@@ -157,12 +158,38 @@ you change it rather than trusting what you read earlier. A round of notes sent 
 notes on “Head v5”") until you plan it; then your tasks stand in its place. The notes themselves you mark with
 `comment_task` ([collaborate.md](collaborate.md)).
 
+## The same task in another tracker: :LINK:
+
+A team that also tracks work in Linear, Asana, Jira, GitHub or its own system keeps a task in step with its item
+there. Nothing in raea is written per tracker: the file says it all.
+
+```org
+#+TODO: TODO MAKING REVIEW | DONE DROPPED
+#+LINK_STATES: linear In Progress=MAKING; In Review=REVIEW; Done=DONE; Canceled=DROPPED
+
+** REVIEW Hero cut
+:PROPERTIES:
+:ID:       t-k3xb7e2q
+:LINK:     linear:ENG-12 asana:1209876543
+:END:
+```
+
+- **`:LINK:`** names the task's item in each other tracker as `SYSTEM:ID`, one per system, separated by spaces. The ID
+  is the tracker's own key (`ENG-12`, `acme/site#12`, a Trello short link), never a URL; a URL goes in the task's text.
+  One tracker item is one task. Never change a `:LINK:` someone else wrote: a sync reads it.
+- **`#+LINK_STATES:`** in the head, one line a system, maps that tracker's statuses to the plan's keywords
+  (`Status=KEYWORD`, separated by `;`). A status coming in becomes its keyword; a keyword going out becomes the first
+  status listed for it. Each keyword must be one of the plan's `#+TODO:` words.
+- **Fix what's wrong yourself.** `checkPlan` (below) names each problem with its fix: an entry that isn't
+  `SYSTEM:ID`, a URL, a system twice on one task, one tracker item on two tasks, a mapped keyword the plan doesn't
+  have. Nothing else is required, so headings that only group, hold notes or hold settings are never flagged.
+
 ## Extending it: @raea/task
 
 `@raea/task` (raea's `sdk/task`) is the plan in TypeScript, and what the app itself uses. A plugin or a script can:
 
 ```ts
-import { readPlan, applyEdits, openTasks, definePlanKind, defineKeywords, defineProperty, checkPlan } from "@raea/task"
+import { readPlan, applyEdits, openTasks, definePlanKind, defineKeywords, defineProperty, checkPlan, trackersOf, keywordFor, statusFor } from "@raea/task"
 import { usePlan, PlanOutline, Agenda, BoardLanes } from "@raea/task/react"
 
 defineKeywords({ name: "shots", words: "SHOT LIT GRADED | APPROVED" })
@@ -174,7 +201,10 @@ const { text: next } = applyEdits(text, [         // edits by id; every line it 
   { op: "add", title: "Shot 12: the door", kind: "shot", props: { SHOT: "12" }, under: "Look" },
   { op: "state", ref: "t-k3x9q2ab", state: "done", item: "i-door-3" },
 ])
-checkPlan(readPlan(next))                         // what breaks the kinds' and properties' rules
+checkPlan(readPlan(next))                         // what's wrong, each with its fix: links, ids, kinds, properties
+trackersOf(plan.tasks[0])                         // [{ system: "linear", id: "ENG-12" }]: its :LINK: entries
+keywordFor(plan, "linear", "In Review")           // "REVIEW": a status coming in, by #+LINK_STATES:
+statusFor(plan, "linear", "DONE")                 // "Done": the status a keyword goes out as
 ```
 
 A word of a plugin's sequence written into a plan adds that sequence's `#+TODO:` line to the file's head, so Emacs
