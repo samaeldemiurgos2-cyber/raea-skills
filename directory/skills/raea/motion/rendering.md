@@ -8,7 +8,10 @@
   It measures clipped text, text under a platform's buttons, text over the face, captions on too briefly to read,
   caption contrast against the pixels behind them, frozen stretches, flashing past the limit, cues that miss their word, loudness, a sound that
   stops dead or (with `--words`) fights the voice, and encoder blotching in the darks. Each finding is ranked P0 to P3
-  with its fix; it exits 1 while a P0 or P1 stands, and `-o check.json` writes them for the critique. An
+  with its fix; it exits 1 while a P0 or P1 stands, and `-o check.json` writes them for the critique. Fix every error
+  in one pass before rendering again. A finding that ends `[also in …]` was in the earlier export too: what you changed
+  didn't move it, so don't repeat that change; try another, or say why it stands. A note is for the person, not a
+  reason to render again. An
   exception in the composition (an unclamped value going NaN, keyframes out of order, a phrase `word()` can't find, a
   missing prop) fails the render and names the line.
 - **Watch it as a viewer would once the piece is close.** `raea check` measures; it can't judge a frame cropped too
@@ -21,7 +24,10 @@
 - **Without `--manifest`**, `raea render` writes the export alone, without the measurements `raea check` reads. Render
   another deliverable from its own file the same way (`raea render NAME.tsx -o NAME.mp4 --manifest NAME.json`) and
   check it.
-- **Loudness** comes out at -14 LUFS integrated (±1) with true peak at or below -1 dBTP when `<Mix>` is in the tree.
+- **Loudness** comes out at -14 LUFS integrated (±1) with true peak at or below -1 dBTP: raea levels each line of
+  dialogue (the `voice` bus, or footage on no bus) to the same loudness and masters the piece, so don't measure lines
+  or set `gainDb` to level them, and don't master the voice outside raea. `gainDb` is for a deliberate change, on top
+  of raea's level. `<Mix lufs={…} ceiling={…}>` sets another target.
 
 ## Why
 
@@ -45,9 +51,10 @@ looking again, finds more than a still per change and costs less.
 A video's bitrate follows its size and frame rate (about 20 Mbit/s at 1080p30, 80 at 4K30; VideoToolbox spends less on
 flat pictures), and `--kbps N` sets it. `--quality draft|high|master` (or 0..1: 0.6, 0.85, 0.95) asks for constant
 quality instead, each frame getting the bits it needs: `master` keeps thin type and hard vector edges clean at 4K
-(about 31 Mbit/s on flat motion graphics). Blotching in dark areas is the encoder, not the composition: export dark
-material as PNG frames (`RAEA_READBACK=rgba raea render piece.tsx -o piece.frames/`) and encode them with more bits for
-the darks. A `NAME.frames/` folder is never committed, and raea's storage dry run lists it a day after
+(about 31 Mbit/s on flat motion graphics). Blotching in dark areas is the encoder's or the footage's own, and on a
+render made in a project `raea check` says which: the footage's is a note to pass on, never a reason to render again;
+for the encode's, render with `--quality master`. Dark material can also go out as PNG frames
+(`RAEA_READBACK=rgba raea render piece.tsx -o piece.frames/`). A `NAME.frames/` folder is never committed, and raea's storage dry run lists it a day after
 the render unless something names it.
 
 Which to ask for. A version made for notes (a cut to review, a shot that will be joined, a preview) takes no

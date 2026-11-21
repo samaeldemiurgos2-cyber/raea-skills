@@ -1,7 +1,7 @@
 # Working in the raea app
 
 When the raea app launches you, its feed is where you and the person work together: you post what you make, they
-look, play and leave notes, and the workspace's standing decisions live in controllers. Most tools here are PAGE (they
+look, play and leave notes, and their standing decisions are taste lines (the rules). Most tools here are PAGE (they
 need the person's feed open); the rules tools are HOST (the app answers them with no page open). All are listed in
 full in [reference/feed.md](reference/feed.md); this file says when to reach for each. Headless, with no app, SKILL.md's steps 5 and 6 say what to do instead.
 
@@ -10,21 +10,19 @@ full in [reference/feed.md](reference/feed.md); this file says when to reach for
 | ...then | Use |
 |---|---|
 | know what to make, as the project stands now | `feed_brief` (the brief.ts, current); in a workspace chat, `workspace_read` for its projects and agents |
-| know what's planned, what's under way and what the person's message asks of you | `plan_read` (the project's plan.org: open tasks by id); each turn's prompt carries the same as `raea://plan/<project>`, with the task the message is ([plan.md](plan.md)) |
+| know what's planned and what's under way | `plan_read` (the project's plan.org: open tasks by id); each turn's prompt carries the same as `raea://plan/<project>` ([plan.md](plan.md)) |
 | plan work of more than one step, or note what's left to do | `plan_add`: tasks under a stage heading, or under a task as subtasks, with checkboxes for small steps |
 | act on a round of notes the person sent on an item | plan it first: `plan_add` with the work in your words, each task `from` the notes it answers (`ITEM#COMMENT`, spaces between); `comment_task` `done` at once for a note that asks for nothing; then work the tasks ([plan.md](plan.md), "Notes from the person") |
-| say you've started a task, or that it waits on the person | `plan_update` with `state` `making` or `review`; tick its checkboxes with `check` |
+| say a task waits on the person (a pick, an approval) | `plan_update` with the `item` they're to look at: their approval of it, or of a later version, closes the task. Tick its checkboxes with `check` as you go |
 | finish a task, or drop one that no longer applies | `plan_close` with the item you posted (it stamps CLOSED and links the work), or `state: "dropped"` and why |
 | say what you'd make next and let the person choose before you spend the time | `feed_propose`: a planned item they accept, or don't |
 | show what you made | `feed_post`: a render, a still, audio or a game; a new version names the item it `replaces` and says in `changed` what changed |
 | let the person look around a 3D scene, a set of shots, or props and characters, and point at what is wrong in it | `feed_post` type `scene` with the scene's `.tsx` (or a component's, or a model); `files` adds more as a board (a storyboard's shots, a grid of props), `names` says what each is called. They move through it live, pin comments to points on its surfaces (marked mesh, shader, clipping or artifact; each tells you the point in the scene's space and where the part is written), and may move, draw and re-key parts in the file by hand: the next round you are sent lists what they changed, so read the file again and keep it |
 | read what's in the feed and the notes left on it | `feed_items` |
 | mark which items are deliverables, and for where | `item_tags` (key:value tags such as `platform:tiktok` become the project's Table columns; `export` makes it a deliverable), or `export`/`tags` on `feed_post` ([delivery.md](delivery.md)) |
-| read the workspace's standing decisions (delivery specs, who reviews what) | `controllers_read`, before you start |
-| have the person decide something that should hold for every piece from now on | `controller_post` with the fields and a line on why; a decision about one piece is a note on it, not a controller |
-| add a standing decision the person asked for, change one field, or retire one | `controller_write`, `controller_set`, `controller_remove`, only when the person asks |
+| have the person decide something before you go on | ask in the chat, with your best guess; or `feed_propose` what you'd make and let them accept it. Once they've answered, a decision that holds for every piece from now on is a rule (`rule_add`, below); one about this piece only is a note on it |
 | know the rules this project's work follows (the project's own, the workspace's house rules, the person's taste) and which fingerprint judges it | `rules_read`, before you start and again before you post: the person changes rules in Fingerprint › Rules while you work |
-| keep a style preference the person states for all the work from now ("make this a rule", "always…", "never again…", "note that for later") | `rule_add` to the project's rules, with `why` and `when` it applies, and `axis` when a fingerprint axis guards against it. It holds at once and waits in Fingerprint › Rules for them to keep. A setting with fields (delivery sizes, who reviews) is a controller instead, and their own taste they change themselves |
+| keep a standing decision the person states for all the work from now ("make this a rule", "always…", "never again…", "deliver 9:16 and 1:1", "note that for later") | `rule_add` to the project's rules, with `why` and `when` it applies, a check when one can hold it, and `axis` when a fingerprint axis guards against it. It holds at once and waits in Fingerprint › Rules for them to keep. Their own taste they change themselves |
 | hold a render, a still, a sound or a game to every rule before you post it | `rule_check` with the file, and your `verdicts` on the rules nothing measures after you've looked; fix what it says broke and where, then `feed_post` |
 | work on what the person has open in the composition editor ("this", "here", "the selected one") | `editor_selection` first, then `editor_edit`: their undo takes it back, and it saves with their changes |
 | show a plan before making it | previz first: a rough raea render of blocking, timing and camera, `feed_post` watch. Else a storyboard: key frames as one `feed_post` look with `files` in order. Else the script: `feed_post` read with its `NAME.script.ts`, which the feed shows as a screenplay and as an A/V table (give each beat its `seconds` and the table is timed); a `.md` reads as prose |

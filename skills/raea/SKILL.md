@@ -3,7 +3,7 @@ name: raea
 description: Make video, motion graphics, games and 3D scenes with raea, the Render Anything Engine, by writing React/TypeScript compositions with raea and rendering them on the GPU with the raea CLI (or playing games live). Use when the user names raea, or wants 3D scenes (Bevy materials, lights, physics, Gaussian splats), 3D placed into footage (matchmove), a playable game, footage cut by its words, cuts timed to a song's beat map, or foley and instruments made locally on the Mac. Also for writing or fixing 3D TSX (Camera3d, Mesh3d, lights, materials, glTF models, post effects, an ECS world), a 3D render or play that looks wrong, extending raea's Bevy SDK, rendered video, captions and motion graphics from code, and frames rendered headlessly.
 metadata:
   raea-tested-against: 0.1.0-rc1
-  raea-verbs: render play run check init cut song guide skill skills app controller workspace project spec doctor next library setup gen context brand scene splat blender
+  raea-verbs: render play run check init cut song guide skill skills app workspace project spec doctor next library setup gen context brand scene splat blender
 ---
 
 # raea
@@ -72,7 +72,7 @@ Generated from the code by `tools/skills.sh gen`, so they're current. Read the o
 - [reference/cli.md](reference/cli.md): every `raea` verb, its flags and where it runs (`raea help` prints the same).
 - [reference/feed.md](reference/feed.md): the raea app's tools for an agent it launches, and which need its page.
 - [reference/files.md](reference/files.md): a workspace's and a project's files, what lives in `~/.raea`, and each
-  spec's fields (brief.ts, NAME.script.ts, taste.ts, plan.ts, controllers/ID.ts).
+  spec's fields (brief.ts, NAME.script.ts, taste.ts, NAME.parts.ts).
 - [reference/sdk.md](reference/sdk.md): what each `raea` import gives a composition.
 - [reference/app.md](reference/app.md): driving the raea app's window over MCP, as a person would (HOST).
 - [reference/platforms.md](reference/platforms.md): each network the app publishes to: shapes, lengths, file and
@@ -95,7 +95,7 @@ task needs.
 | an app's interface (web or native) | [apps.md](apps.md) |
 | generated images, video, sound or meshes | [gen.md](gen.md) |
 | the export, the share copy, platform specs, posting a deliverable | [delivery.md](delivery.md) |
-| working with the person in the raea app: the feed, controllers, the editor, boards | [collaborate.md](collaborate.md) |
+| working with the person in the raea app: the feed, rules, the editor, boards | [collaborate.md](collaborate.md) |
 | planning the work and keeping its tasks: the project's plan.org, the person's to-do list | [plan.md](plan.md) |
 | checking a cut against the person's taste and rules, reading their notes on a sound, or teaching their fingerprint | [fingerprint.md](fingerprint.md) |
 
@@ -109,12 +109,12 @@ an explain, a story, a game or a tool has to do; `craft/verbs/` has one file per
 
 Work lives in a workspace: a git repo under raea.root (`git config --global raea.root`; unset, `~/Studio` where
 workspaces already are, else `~/Documents/raea`, or `~/raea` when iCloud keeps Documents), one per studio or client,
-holding projects and controllers. In the raea app a project shows as a channel.
+holding projects and the workspace's taste.ts. In the raea app a project shows as a channel.
 - `raea workspace init NAME` makes one; `raea workspace adopt DIR` makes an existing folder one. `raea workspace`
   shows it (`--json` for the projects and their paths).
 - `raea project new NAME` adds a project: its folder with `brief.ts`, `AGENTS.md`, `compositions/`, `components/`,
-  `controllers/`, `assets/`, `artifacts/` and `out/`. The workspace's `shared/` has the same five folders, which any
-  project imports from as `@shared/components/NAME`. A project can live inline or as its own repo
+  `assets/`, `artifacts/` and `out/`. The workspace's `shared/` has the same folders but `out/`, which any project
+  imports from as `@shared/components/NAME`. A project can live inline or as its own repo
   (`raea project split NAME`, `raea project join NAME`); both keep its history.
 - Work in the project's folder. Footage and other media go in `assets/` (`media/` in a project made before the
   layout), renders in `out/`.
@@ -124,34 +124,29 @@ holding projects and controllers. In the raea app a project shows as a channel.
 
 - `raea context .` in the project prints everything to read first, in order: the person's taste
   (`~/.raea/taste/taste.ts`; a line there beats any guide's default), the workspace's taste, the brief, the look, the
-  workspace's controllers, the craft floor and each of the brief's modes' guides. Read all of it. In the raea app,
+  craft floor and each of the brief's modes' guides. Read all of it. In the raea app,
   `rules_read` lists every rule the work follows, the project's own `taste.ts` first ([collaborate.md](collaborate.md)).
 - Run it once a session. If it refuses, say so in one line ("raea context failed: its message; reading the brief and
-  controllers directly") and read `brief.ts`, any `*.script.ts`, `~/.raea/taste/taste.ts` and `raea controller ls`
-  yourself. A `CONTEXT_STALE` line means `raea doctor` finds files from another version: run `raea doctor --fix`.
+  taste directly") and read `brief.ts`, any `*.script.ts`, `~/.raea/taste/taste.ts` and the workspace's and the
+  project's `taste.ts` yourself. A `CONTEXT_STALE` line means `raea doctor` finds files from another version: run `raea doctor --fix`.
 - With no request in hand, `raea next` lists the two or three useful next steps from the brief, the compositions,
   the renders and their checks. Offer them; never run one unasked.
-- The controllers (`raea controller ls`, `raea controller get PATH`) are the workspace's settings and workflows:
-  delivery specs, who reviews what, the tools every agent gets. Work to them. Change one only when the person asks:
-  `raea controller set PATH VALUE` (each change is a commit).
-- A controller is not a feed item. A feed item is one piece of work (a render, a still, a question): the person
-  reviews it once and a note on it is answered by its next version. A controller is a standing decision every agent
-  reads before it starts, so changing it changes all the work after. If the person would say it again on the next
-  piece ("always 9:16", "Grade checks every cut"), it belongs in a controller; if it's about this piece only, it's a
-  note. When the work needs such a decision from the person, put the controller in front of them with the feed's
-  `controller_post` (its id, the fields as group.field, a line on what you need decided) rather than asking in prose;
-  a controller you make with `controller_write` reaches their feed on its own. Fields are typed (toggle, choice,
-  number, text, list, agents, channels, workflow, servers, skills, rule; reference/files.md), so put what they'll
-  adjust in fields, one controller per concern. A style preference with no fields to set ("words never cover the
-  action") is a rule instead: `rule_add` in the app, or a line in the project's `taste.ts`.
-- A `rule` field is a line every piece is held to and the check that holds it: one of raea's by name with its values,
-  or a `.ts` check written with `raea/check` (craft/ROUTER.md, step 7). `raea check PROJECT` runs every rule that
-  applies, with raea's floor and the person's taste, and says what waits for a render.
+- Standing decisions are taste lines: the person's taste, the workspace's `taste.ts` and the project's `taste.ts` hold
+  what holds for every piece (the delivery spec, the loudness, "always 9:16", "words never cover the action"). A line
+  says it in words and, when something can hold it, names its check: one of raea's forms or checks by name with its
+  values, or a `.ts` check written with `raea/check` (craft/ROUTER.md, step 7). Work to them. Add or change one only
+  when the person says so: `rule_add` in the app, or a line in the project's (or workspace's) `taste.ts`.
+  `raea check PROJECT` runs every line that applies, with raea's floor, and says what waits for a render.
+- A taste line is not a note. A feed item is one piece of work (a render, a still, a question): the person reviews it
+  once and a note on it is answered by its next version. If the person would say it again on the next piece, it's a
+  taste line; if it's about this piece only, it's a note. When the work needs a decision from the person, ask it in
+  the chat with your best guess (or `feed_propose` what you'd make), rather than burying it in a long reply.
 - If the brief isn't shaped (no `believe`, no `mode`), shape it before making anything: ask who it's for and the one
   thing they should believe, or write your best guess and add its field to the brief's `assumed` list.
 - For a pitch, an explain or a story, plan first: write the deliverable's storyboard as `NAME.script.ts` beside the
   brief (`export default script({...})` from "raea/brief": scenes of beats, what's on screen and what each scene must
-  land; its fields are in reference/files.md), name it on the deliverable, and add a task "storyboard approved" tagged `gate`. `raea spec NAME.script.ts`
+  land; its fields are in reference/files.md), name it on the deliverable, and add its task to plan.org with the
+  storyboard's feed item on it once posted ([plan.md](plan.md)): their approval closes it. `raea spec NAME.script.ts`
   checks it. Render nothing until the person approves it (PERSON).
 - Show a plan as what it will be, in this order: previz (a rough, fast raea render of the blocking, timing and
   camera: grey shapes, placeholder type, no polish; it is the plan, not the piece, so the gate allows it), else a
@@ -343,7 +338,7 @@ least sure of. Once they've answered, `--tally` makes the answers evidence.
 - A render is a standard MP4 but large: H.264 High and AAC on a Mac (VideoToolbox), H.264 Constrained Baseline and
   Opus on Windows and Linux (openh264), yuv420p on all. Hand over a share copy too, which any player takes:
   `ffmpeg -i film.mp4 -c:v libx264 -preset slow -crf 23 -maxrate 2600k -bufsize 5200k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart film-share.mp4`.
-- Deliver to the controllers' specs (sizes, platforms, loudness) when the workspace sets them; each network's shapes,
+- Deliver to the taste's specs (sizes, platforms, loudness) when the workspace or project sets them; each network's shapes,
   lengths and UI zones are in [reference/platforms.md](reference/platforms.md), and [delivery.md](delivery.md) routes
   the rest (one composition per shape, cutdowns, tags, handing over).
 
