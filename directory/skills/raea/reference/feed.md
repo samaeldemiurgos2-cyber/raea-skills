@@ -287,6 +287,22 @@ Tell raea about a bug you found in raea itself: a raea command that fails or han
 | `error` | optional | what it printed |
 | `dry_run` | optional | show what would be sent, and send nothing |
 
+## ask
+
+Access: HOST.
+
+Ask the decision model (clef-omni) about a render's, a sound's or a still's picture and sound before you open its frames: yes or no questions in your own words ("Does the music fight the voice?"), or raea's standard ones (set: rubric, av, defects, platform or decide; std: ids from `raea ask list`). Every question about one file goes in one call, and many cost about what one does. It's paid from the person's raea plan, else their own Cloudflare keys. Each answer comes back in words with its probability, and says whether it's a finding (a calibrated question) or advice: look yourself at what it flags before you call it fixed or broken.
+
+| input | | |
+|---|---|---|
+| `file` | required | the file to ask about, absolute or in the project's folder |
+| `questions` | optional | yes or no questions in your own words, where yes means a problem |
+| `set` | optional | a standard set: rubric, av, defects, platform or decide |
+| `std` | optional | standard questions by id (raea ask list) |
+| `from` | optional | where to start looking, in seconds |
+| `to` | optional | where to stop looking, in seconds |
+| `with` | optional | files beside it, to pick between or compare (decide's questions) |
+
 ## storage_status
 
 Access: HOST.
