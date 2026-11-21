@@ -40,6 +40,14 @@ raea fingerprint score out/v2.mp4 --was out/v1.mp4 # after a fix: each of v1's f
 - A 3D shot: render it with `--layers` and `--aov -o out/shot.aov` beside it, run
   `raea fingerprint things out/shot.mp4 --json > things.json`, then `raea check out/shot.mp4 --things things.json`
   for a thing floating or passing through another, the camera lurching mid-move, or an empty frame.
+- A question about the picture and sound that nothing measures ("Does the music fight the voice?"): ask clef-omni
+  before you open frames. `raea ask out/cut.mp4 "QUESTION"` (or `--set av`, `--set rubric`, `--set defects`; `raea ask
+  list` names them) answers in words and a probability, and says what it looked at and what it cost, from the person's
+  plan or their own Cloudflare keys. `--dry` spends nothing. A script asks through `raea/ask` (`ask`, `askMany`), a
+  pipeline with `raea ask --batch FILE --json --gate`. Answers are advice until a question is calibrated on the
+  person's labels (`raea ask verdict`, `raea ask calibrate`); say so when you pass one on.
+- `raea fingerprint score out/cut.mp4 --ask flags` has clef-omni look again at just the moments the fingerprint flags
+  (`unsure` for the ones it's unsure of), and says beside each whether clef agrees.
 - References the person admires: `raea fingerprint profile REFS... --as NAME`, then `score --profile NAME` says which
   measures fall outside their ranges, where, and which way to move.
 

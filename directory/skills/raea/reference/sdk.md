@@ -21,6 +21,10 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 `App`, `BevyApp`, `Composition`, `First`, `FixedFirst`, `FixedLast`, `FixedPostUpdate`, `FixedPreUpdate`, `FixedUpdate`, `Last`, `PluginGroup`, `PostStartup`, `PostUpdate`, `PreStartup`, `PreUpdate`, `RunFixedMainLoop`, `SpawnScene`, `Startup`, `StateTransition`, `Update`, `clearRegistry`, `conditions`, `definePlugin`, `getCompositions`, `registerRoot`, `useControl`
 
+## `raea/ask` (sdk/raea/src/ask.ts)
+
+`SETS`, `ask`, `askMany`
+
 ## `raea/asset` (sdk/raea/src/asset.ts)
 
 `MEDIA_ROOT`, `fish`, `glbBytes`, `isGeneratedAsset`, `linearRgba`, `lyria`, `sao`, `staticFile`, `tokensynthNote`, `writeGlb`
