@@ -39,7 +39,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/camera` (sdk/raea/src/camera.ts)
 
-`Camera3d`, `Canvas3D`, `Hdr`, `Matchmove`, `TextureView`, `cameraPath`, `checkMatchmove`, `matchmoveIndex`, `matchmoveView`, `useMatchmove`
+`Camera3d`, `Canvas3D`, `Hdr`, `LABEL_MIN`, `Label`, `Matchmove`, `TextureView`, `cameraPath`, `checkMatchmove`, `matchmoveIndex`, `matchmoveView`, `useMatchmove`
 
 ## `raea/check` (sdk/raea/src/check.ts)
 
