@@ -99,7 +99,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/pbr` (sdk/raea/src/pbr.ts)
 
-`AmbientOcclusion`, `Decal`, `ExtendedMaterial`, `Fire`, `Fog`, `FogFalloff`, `FogVolume`, `GridExtension`, `Lightmap`, `PaintExtension`, `ProceduralExtension`, `Refinish`, `ShaderExtension`, `ShaderMesh`, `Splat`, `StandardMaterial`, `SurfaceShader`, `ThreeShaderMaterial`, `ToonExtension`, `ToonMaterial`, `Volume`, `VolumetricFog`, `WearExtension`, `volumeShadow`
+`AmbientOcclusion`, `Decal`, `ExtendedMaterial`, `Fire`, `Fog`, `FogFalloff`, `FogVolume`, `GridExtension`, `Lightmap`, `PaintExtension`, `ProceduralExtension`, `Refinish`, `ShaderConstants`, `ShaderExtension`, `ShaderMesh`, `Splat`, `StandardMaterial`, `SurfaceShader`, `ThreeShaderMaterial`, `ToonExtension`, `ToonMaterial`, `Volume`, `VolumetricFog`, `WearExtension`, `volumeShadow`
 
 ## `raea/picking` (sdk/raea/src/picking.ts)
 

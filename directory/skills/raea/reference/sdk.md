@@ -7,7 +7,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea` (sdk/raea/src/index.tsx)
 
-`ACTION_KEY`, `AbsoluteFill`, `Animate`, `Audio`, `Clock`, `Composition`, `EFFECTS`, `EFFECT_FNS`, `Easing`, `Effect`, `FEED_KEY`, `Freeze`, `HOLD_TIMEOUT_MS`, `Img`, `InputRegion`, `Loop`, `MEDIA_ROOT`, `Mix`, `Nudge`, `Overlay`, `Region`, `SPACE_KEY`, `Sequence`, `Series`, `SongPlot`, `Stagger`, `Transition`, `Video`, `actionsIn`, `applyActions`, `cancelRender`, `continueRender`, `curve`, `curveFn`, `delay`, `delayRender`, `effectAt`, `effectFilter`, `effectPartsError`, `fade`, `feedIn`, `fill`, `findPhrase`, `firstDecider`, `fish`, `getCompositions`, `gridDelay`, `inState`, `interpolate`, `isGeneratedAsset`, `keyEdges`, `lyria`, `machine`, `measureSpring`, `move`, `moves`, `overlays`, `parallel`, `partsFilter`, `pop`, `proofBoxes`, `propsFingerprint`, `pushIn`, `regionBand`, `registerRoot`, `replayDecider`, `reverse`, `rise`, `sampleAnimation`, `sao`, `sequence`, `sequenceGap`, `slam`, `slide`, `song`, `songAt`, `speedLength`, `speedPoints`, `speedSource`, `spring`, `stagger`, `stateOf`, `staticFile`, `stepAll`, `strike`, `tick`, `tickClocks`, `timeline`, `toMove`, `track`, `transitionOf`, `useControl`, `useCurrentFrame`, `useGameEvents`, `useGameState`, `useInput`, `useRegion`, `useSong`, `useVideoConfig`, `useWords`, `wipe`, `word`
+`ACTION_KEY`, `AbsoluteFill`, `Animate`, `Audio`, `Clock`, `Composition`, `EFFECTS`, `EFFECT_FNS`, `Easing`, `Effect`, `FEED_KEY`, `Freeze`, `HOLD_TIMEOUT_MS`, `Img`, `InputRegion`, `Loop`, `MEDIA_ROOT`, `Mix`, `Nudge`, `OffthreadVideo`, `Overlay`, `Region`, `SPACE_KEY`, `Sequence`, `Series`, `SongPlot`, `Stagger`, `Transition`, `Video`, `actionsIn`, `applyActions`, `cancelRender`, `continueRender`, `curve`, `curveFn`, `delay`, `delayRender`, `effectAt`, `effectFilter`, `effectPartsError`, `fade`, `feedIn`, `fill`, `findPhrase`, `firstDecider`, `fish`, `getCompositions`, `gridDelay`, `inState`, `interpolate`, `interpolateColors`, `isGeneratedAsset`, `keyEdges`, `lyria`, `machine`, `measureSpring`, `move`, `moves`, `overlays`, `parallel`, `partsFilter`, `pop`, `proofBoxes`, `propsFingerprint`, `pushIn`, `random`, `regionBand`, `registerRoot`, `replayDecider`, `reverse`, `rise`, `sampleAnimation`, `sao`, `sequence`, `sequenceGap`, `slam`, `slide`, `song`, `songAt`, `speedLength`, `speedPoints`, `speedSource`, `spring`, `stagger`, `stateOf`, `staticFile`, `stepAll`, `strike`, `tick`, `tickClocks`, `timeline`, `toMove`, `track`, `transitionOf`, `useControl`, `useCurrentFrame`, `useGameEvents`, `useGameState`, `useInput`, `useRegion`, `useSong`, `useVideoConfig`, `useWords`, `wipe`, `word`
 
 ## `raea/3d` (sdk/raea/src/3d.tsx)
 
@@ -39,7 +39,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/camera` (sdk/raea/src/camera.ts)
 
-`Camera3d`, `Canvas3D`, `Hdr`, `Matchmove`, `TextureView`, `checkMatchmove`, `matchmoveIndex`, `matchmoveView`, `useMatchmove`
+`Camera3d`, `Canvas3D`, `Hdr`, `LABEL_MIN`, `Label`, `Matchmove`, `TextureView`, `cameraPath`, `checkMatchmove`, `matchmoveIndex`, `matchmoveView`, `useMatchmove`
 
 ## `raea/check` (sdk/raea/src/check.ts)
 
@@ -91,7 +91,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/mesh` (sdk/raea/src/mesh.ts)
 
-`ATTRIBUTE_COLOR`, `ATTRIBUTE_NORMAL`, `ATTRIBUTE_POSITION`, `ATTRIBUTE_TANGENT`, `ATTRIBUTE_UV_0`, `ATTRIBUTE_UV_1`, `BufferMesh`, `Capsule`, `Capsule3d`, `Cone`, `ConicalFrustum`, `CrossSection`, `Cuboid`, `Cylinder`, `Instances`, `Mesh2d`, `Mesh3d`, `MeshSequence`, `MeshVertexAttribute`, `Plane3d`, `Solid`, `Sphere`, `Torus`, `crossSection`, `manifold`, `outline`, `scatter`
+`ATTRIBUTE_COLOR`, `ATTRIBUTE_NORMAL`, `ATTRIBUTE_POSITION`, `ATTRIBUTE_TANGENT`, `ATTRIBUTE_UV_0`, `ATTRIBUTE_UV_1`, `BufferMesh`, `Capsule`, `Capsule3d`, `Cone`, `ConicalFrustum`, `CrossSection`, `Cuboid`, `Cylinder`, `Instances`, `Line3d`, `Mesh2d`, `Mesh3d`, `MeshSequence`, `MeshVertexAttribute`, `Plane3d`, `Solid`, `Sphere`, `Torus`, `Tube`, `crossSection`, `manifold`, `outline`, `scatter`
 
 ## `raea/note` (sdk/raea/src/note.ts)
 
@@ -99,7 +99,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/pbr` (sdk/raea/src/pbr.ts)
 
-`AmbientOcclusion`, `Decal`, `ExtendedMaterial`, `Fire`, `Fog`, `FogFalloff`, `FogVolume`, `GridExtension`, `Lightmap`, `PaintExtension`, `ProceduralExtension`, `Refinish`, `ShaderExtension`, `ShaderMesh`, `Splat`, `StandardMaterial`, `SurfaceShader`, `ThreeShaderMaterial`, `ToonExtension`, `ToonMaterial`, `Volume`, `VolumetricFog`, `WearExtension`, `volumeShadow`
+`AmbientOcclusion`, `Decal`, `ExtendedMaterial`, `Fire`, `Fog`, `FogFalloff`, `FogVolume`, `GridExtension`, `Lightmap`, `PaintExtension`, `ProceduralExtension`, `Refinish`, `ShaderConstants`, `ShaderExtension`, `ShaderMesh`, `Splat`, `StandardMaterial`, `SurfaceShader`, `ThreeShaderMaterial`, `ToonExtension`, `ToonMaterial`, `Volume`, `VolumetricFog`, `WearExtension`, `volumeShadow`
 
 ## `raea/picking` (sdk/raea/src/picking.ts)
 
@@ -108,6 +108,10 @@ with a capital, hooks with `use`. A component's props are in its file.
 ## `raea/post_process` (sdk/raea/src/post_process.ts)
 
 `AntiAliasing`, `Bloom`, `Compute`, `DepthOfField`, `Fisheye`, `FramePass`, `Grade`, `LensDistortion`, `Look`, `MotionBlur`, `Outline`, `ToneMapping`
+
+## `raea/random-colors` (sdk/raea/src/random-colors.ts)
+
+`OffthreadVideo`, `interpolateColors`, `random`
 
 ## `raea/remote` (sdk/raea/src/remote.ts)
 
