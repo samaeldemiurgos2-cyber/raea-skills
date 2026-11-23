@@ -1,5 +1,16 @@
 # Writing a story
 
+**Draft the script first, then the story.** Measured on eight prompts written five ways (docs/story.md, "Measured"):
+a script drafted straight into story data passes its checks and reads worst of all (fewer, more abstract beats, a
+narrator saying what the screen should show); a plain draft read back into story data, checked, and fixed by beat
+reads best, tied with a hard editing pass and well over the plain draft (26 of 32 judge votes). So:
+
+1. Write the script as a screenwriter would: what's on screen and what's said, beat by beat.
+2. Read it back into a story (below), recording only what the script shows: an event with no shown reason gets no
+   `because`, a beat that moves nothing gets no `turns`.
+3. `checkStory` and the brief's lenses: each finding names a beat. Fix the script there, so the screen shows it.
+4. Keep the story file. From then on it's what the composition's beats, `raea check` and the other cuts hold to.
+
 A story is a module, `NAME.story.ts`, with one default export made by `story()`. tsc checks its references: a beat
 that shows an event you didn't write, an agent you didn't declare, a setup nobody planted, won't compile.
 

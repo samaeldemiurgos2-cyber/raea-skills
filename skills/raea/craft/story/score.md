@@ -1,6 +1,14 @@
 # Scoring a story
 
-A story that passes its checks holds together. Whether it's good is a different question, answered three ways.
+A story that passes its checks holds together. Whether it's good is a different question, answered four ways.
+
+## 0. Read a draft back, then check it
+
+The best use, measured: a draft script read back into story data (only what it shows), checked, and fixed by beat.
+On eight prompts it tied a hard editing pass and beat the plain draft 26 of 32 judge votes; it came first where
+there's most to track (a 40-shot film, a whodunit's fair-play clues). Treat the findings as a list for the rewrite,
+not a score: reading a script back is noisy (a story that passes its own checks still reads back with about one
+finding a beat).
 
 ## 1. Read it through lenses
 
