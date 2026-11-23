@@ -35,11 +35,11 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/brief` (sdk/raea/src/brief.ts)
 
-`brief`, `fingerprint`, `parts`, `script`, `taste`
+`brief`, `fingerprint`, `kit`, `parts`, `scene`, `script`, `shot`, `taste`
 
 ## `raea/camera` (sdk/raea/src/camera.ts)
 
-`Camera3d`, `Canvas3D`, `Hdr`, `LABEL_MIN`, `Label`, `Matchmove`, `TextureView`, `cameraPath`, `checkMatchmove`, `matchmoveIndex`, `matchmoveView`, `useMatchmove`
+`Camera3d`, `Canvas3D`, `Hdr`, `LABEL_MIN`, `LENSES`, `Label`, `Matchmove`, `STEP_HZ`, `TextureView`, `WALK`, `cameraPath`, `checkMatchmove`, `focusAt`, `handheld`, `lens`, `matchmoveIndex`, `matchmoveView`, `shotMove`, `useMatchmove`, `walkPath`
 
 ## `raea/check` (sdk/raea/src/check.ts)
 
@@ -107,7 +107,7 @@ with a capital, hooks with `use`. A component's props are in its file.
 
 ## `raea/post_process` (sdk/raea/src/post_process.ts)
 
-`AntiAliasing`, `Bloom`, `Compute`, `DepthOfField`, `Fisheye`, `FramePass`, `Grade`, `LensDistortion`, `Look`, `MotionBlur`, `Outline`, `ToneMapping`
+`AntiAliasing`, `Bloom`, `Compute`, `DepthOfField`, `Fisheye`, `FramePass`, `GRADES`, `Grade`, `LensDistortion`, `Look`, `MotionBlur`, `Outline`, `ToneMapping`, `gradeLook`
 
 ## `raea/random-colors` (sdk/raea/src/random-colors.ts)
 

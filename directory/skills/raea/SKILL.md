@@ -98,11 +98,12 @@ task needs.
 | working with the person in the raea app: the feed, rules, the editor, boards | [collaborate.md](collaborate.md) |
 | planning the work and keeping its tasks: the project's plan.org, the person's to-do list | [plan.md](plan.md) |
 | checking a cut against the person's taste and rules, reading their notes on a sound, or teaching their fingerprint | [fingerprint.md](fingerprint.md) |
+| a story as data: who wants what, what happens and why, each cut's beats, checked, sampled and scored before anything is drawn (raea/story) | [craft/story/router.md](craft/story/router.md) |
 
 Across all of them, `craft/`: [craft/ROUTER.md](craft/ROUTER.md) is how to decide what to make (the order of work and
 reading notes); [craft/floor.md](craft/floor.md) is read right before every edit; `craft/modes/` says what a pitch,
 an explain, a story, a game or a tool has to do; `craft/verbs/` has one file per move a note asks for;
-[craft/rubric.md](craft/rubric.md) is how a critique is judged and ranked.
+[craft/rubric.md](craft/rubric.md) is how a critique is judged and ranked. `craft/story/` is stories as data: a router, how to write, check, sample and score one, and a page per framework (McKee, the story spine, Storynomics, PAS, Campbell, Vogler, Harmon, Save the Cat, Kishōtenketsu, Propp, Bernays, and the launch film with priors measured on 156 real launch pairs).
 
 ## 2. The workspace and its projects — HEADLESS
 <!-- sources: apps/workspace/src -->
