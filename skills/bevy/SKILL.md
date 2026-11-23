@@ -17,6 +17,19 @@ that changed silently (`Tonemapping::None` became a raw passthrough in 0.20; blo
 This skill is for Rust. Scenes, films and games made with raea in TypeScript go through the raea skill
 (`raea/3d.md`), which maps raea's components onto Bevy's.
 
+## Known traps (found taking a glTF character through Bevy 0.20, 23 November 2026)
+
+- **A glTF's animation needs the loader's own player.** bevy-animation spawns a fresh entity with `AnimationPlayer`
+  and `AnimationGraphHandle`; that compiles but never moves a glTF's bones, which are bound to the
+  `AnimationPlayer` the loader created. Spawn the scene with `WorldAssetRoot`, observe `On<WorldInstanceReady>`,
+  find the `AnimationPlayer` among the scene's descendants, insert the `AnimationGraphHandle` there and play (Bevy's
+  own `examples/animation/animated_mesh.rs`).
+- **`EXT_meshopt_compression` isn't supported by Bevy 0.20's glTF loader**, and Blender's web export marks it
+  required. Export without meshopt for a GLB Bevy loads.
+- **Assets outside `assets/`:** set `AssetPlugin { file_path, .. }` (or `unapproved_path_mode`); bevy-assets
+  doesn't say so.
+- **No Khronos PBR Neutral tonemapper** in 0.20. To match a Blender or three.js look, use AgX in all three.
+
 | Skill | Use when |
 |---|---|
 | [bevy-a11y](pack/bevy-a11y/SKILL.md) | designing or auditing high-standard video-game accessibility in Bevy 0.20, integrating screen readers and focus navigation, supporting adaptive controllers and complete … |

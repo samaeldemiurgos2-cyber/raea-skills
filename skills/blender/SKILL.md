@@ -19,6 +19,21 @@ chains them end to end (a game prop, a rigged and animated character). Any mesh 
 raea opens .blend files and runs saved Blender scripts itself (`raea blender`; see `raea/3d/blender.md` and
 `raea/3d/blend-files.md`). Use those for a raea project's assets, and this skill for the Blender work behind them.
 
+## Known traps (found rigging and exporting a character on Blender 5.2.1, 23 November 2026)
+
+- **`turntable.py`'s studio rig overexposes by about two stops under AgX** (the key scales with distance squared).
+  Lower `view_settings.exposure` (about -2) or the lights' power, and check the 18% grey backdrop reads grey. It also
+  resets the scene's frame range to 1-120.
+- **A web GLB with meshopt doesn't load in Bevy** (Blender writes `EXT_meshopt_compression` into
+  `extensionsRequired`). Export with `--set export_meshopt_compression_enable=false` for anything but three.js.
+- **Clips start one frame late** unless exported with `export_anim_slide_to_zero=true`; a loop then holds its first
+  pose for a frame at every seam.
+- **A loop needs cyclic handles.** Add a `CYCLES` F-curve modifier before baking so auto-clamped handles don't flatten
+  at the ends (what `loop_check` reports as a dip); `bake_action` and the glTF exporter read the evaluated curve.
+- **Looking at frames headless:** the skills' `look(mode="frames")` is the Blender MCP's. Headless, call
+  `review_shots.run()` once per frame.
+- `bake_action` names clips `RIG|Clip`; rename the action before export if code finds clips by name.
+
 | Skill | What it covers |
 |---|---|
 | [blender-addon-development](pack/blender-addon-development/SKILL.md) | Write Blender 5.3 add-ons as extensions - blender_manifest.toml, operators/panels/menus/property groups/preferences, bpy.props rules after 5.0, undo/redo, modal and … |
