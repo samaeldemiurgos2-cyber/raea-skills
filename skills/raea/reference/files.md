@@ -145,7 +145,12 @@ assumed?: Array<string>,
 /**
  * prose sections beyond the fields above (Goal, Background), in order
  */
-sections?: Array<Section>, deliver?: Array<Deliverable>, references?: Array<Reference>, agents?: Array<Agent>, };
+sections?: Array<Section>, deliver?: Array<Deliverable>, references?: Array<Reference>, agents?: Array<Agent>, 
+/**
+ * the project's stories, imported explicitly (raea/story, docs/story.md): one, or several by name. Kept as written:
+ * raea reads nothing in it, the story SDK and the checks that import it do
+ */
+story?: unknown, };
 export type Section = { heading: string, text: string, };
 export type Deliverable = { name: string, 
 /**
@@ -175,7 +180,11 @@ heading?: string, beats: Array<Beat>,
 /**
  * what the scene must land
  */
-payoff?: string, };
+payoff?: string, 
+/**
+ * the story beat it plays, by its id (raea/story's compileScript writes it; docs/story.feature ST0c)
+ */
+beat?: string, };
 export type Beat = { 
 /**
  * what's seen (a screenplay's action)
