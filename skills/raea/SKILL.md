@@ -91,6 +91,9 @@ task needs.
 | a short product film (a launch, a demo, a brand film) made like a good film of its kind, or one you were handed ("make me one like this") | the video-decompiler skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
 | sound: voice, beds, foley, music for picture, the mix | [sound.md](sound.md) |
 | a 3D scene: lights, materials, models, people, rooms, splats; three.js or React Three Fiber work | [3d.md](3d.md) |
+| Rust that uses Bevy 0.20 directly: raea's engine and its Bevy SDK, a Bevy game or tool, Bevy code that no longer compiles | the bevy skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
+| work inside Blender itself: modeling, UVs, materials and baking, rigging and skinning, shape keys, look-dev, rendering, export | the blender skill, installed beside this one (not in the plugin directory's edition) |
+| a plain three.js page or scene outside raea | the threejs skill, installed beside this one (not in the plugin directory's edition) |
 | a game, 2D or 3D | [games.md](games.md) |
 | an app's interface (web or native) | [apps.md](apps.md) |
 | generated images, video, sound or meshes | [gen.md](gen.md) |

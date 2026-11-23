@@ -91,6 +91,9 @@ task needs.
 | a short product film (a launch, a demo, a brand film) made like a good film of its kind, or one you were handed ("make me one like this") | the video-decompiler skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
 | sound: voice, beds, foley, music for picture, the mix | [sound.md](sound.md) |
 | a 3D scene: lights, materials, models, people, rooms, splats; three.js or React Three Fiber work | [3d.md](3d.md) |
+| Rust that uses Bevy 0.20 directly: raea's engine and its Bevy SDK, a Bevy game or tool, Bevy code that no longer compiles | the bevy skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
+| work inside Blender itself: modeling, UVs, materials and baking, rigging and skinning, shape keys, look-dev, rendering, export | the blender skill, installed beside this one (not in the plugin directory's edition) |
+| a plain three.js page or scene outside raea | the threejs skill, installed beside this one (not in the plugin directory's edition) |
 | a game, 2D or 3D | [games.md](games.md) |
 | an app's interface (web or native) | [apps.md](apps.md) |
 | generated images, video, sound or meshes | [gen.md](gen.md) |
@@ -98,11 +101,12 @@ task needs.
 | working with the person in the raea app: the feed, rules, the editor, boards | [collaborate.md](collaborate.md) |
 | planning the work and keeping its tasks: the project's plan.org, the person's to-do list | [plan.md](plan.md) |
 | checking a cut against the person's taste and rules, reading their notes on a sound, or teaching their fingerprint | [fingerprint.md](fingerprint.md) |
+| a story as data: who wants what, what happens and why, each cut's beats, checked, sampled and scored before anything is drawn (raea/story) | [craft/story/router.md](craft/story/router.md) |
 
 Across all of them, `craft/`: [craft/ROUTER.md](craft/ROUTER.md) is how to decide what to make (the order of work and
 reading notes); [craft/floor.md](craft/floor.md) is read right before every edit; `craft/modes/` says what a pitch,
 an explain, a story, a game or a tool has to do; `craft/verbs/` has one file per move a note asks for;
-[craft/rubric.md](craft/rubric.md) is how a critique is judged and ranked.
+[craft/rubric.md](craft/rubric.md) is how a critique is judged and ranked. `craft/story/` is stories as data: a router, how to write, check, sample and score one, and a page per framework (McKee, the story spine, Storynomics, PAS, Campbell, Vogler, Harmon, Save the Cat, Kishōtenketsu, Propp, Bernays, and the launch film with priors measured on 156 real launch pairs).
 
 ## 2. The workspace and its projects — HEADLESS
 <!-- sources: apps/workspace/src -->
