@@ -61,14 +61,13 @@
   faces. The bounce cache's cells are 15 cm, so a wall thinner than that next to a bright light leaks too.
 - Keep an interior under about 50 m across. A bounce ray that goes 50 m without hitting anything counts as sky, so a
   bigger hall gets sky light in its bounce.
-- Put every light in the tree from the first frame, and change brightness with the sky, the glows and the exposure
-  rather than the sun's `illuminance`. As of raea 0.1.2:
-  - a `DirectionalLight` that appears after the first frame lights nothing directly;
-  - the traced sun keeps its first frame's strength (its direction does follow);
-  - one `--at` render that jumps more than about 4.5 s between two frames loses the traced sun for every frame
-    after.
-
-  So render stills one per process (`--frame N`), and a film a shot a chunk.
+- Lights may come, go and change. Under Solari a sun that appears after the first frame, a change of its strength or
+  colour, the exposure and a long `--at` jump all follow the frame (0.1.9, measured: a frame matches the same frame
+  rendered alone). Reset at each cut (`reset`), so the next place doesn't start from the last one's light.
+- Render a film whole, in one process. Up to 0.1.9 a part a frame left out stayed in the traced scene, unseen, and
+  shaded what was on screen, so a film's later places drew darker than the same frames alone. From the next release it
+  leaves, and `raea render` holds a film's frames to the same frames alone (`frame-pure`). On 0.1.9, render a film
+  that changes place a scene a process.
 - In a surface hook (`fn surface`), write `emissive` with alpha 1.0. Bevy reads that alpha as how much the camera's
   exposure applies, so 1.0 puts the hook's glow in the traced light's units. At 0.0 the glow skips the exposure and
   comes out about 1,000 times brighter at the default.
