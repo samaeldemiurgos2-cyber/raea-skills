@@ -60,6 +60,10 @@ Ask one question of each object: **is it defined by numbers, by a rule, or by it
 The TSX is always the scene. Blender is only a workshop an asset passes through on its way into `media/`, when a
 check names a script (`bevy/blender`). It never places, lights, frames, materials or animates the scene.
 
+Every row ends as a component: `<Shelf>`, `<Kettle>`, `<Fern>`, each with its size, a fixture that renders it alone,
+and its materials as jobs (`<Mat job="steel" />`), so a note can name it and the next scene can reuse it
+(`raea guide components`).
+
 | the object | made by | then in Blender when |
 |---|---|---|
 | **numbers**: walls, counters, shelves, boxes, frames, pipes, sign boards, anything a hinge must fit | Manifold solids (`manifold.*`, `<Mesh3d shape={solid}>`, `bevy/meshes`) | it needs real UVs or baked AO (`raea solid info` names bake.py when the file's `needs.textured` is set), a cloth falls on it (cloth.py), or a fillet solids can't make: `raea solid export` first, and log the gap |

@@ -86,6 +86,7 @@ task needs.
 
 | Making... | Open |
 |---|---|
+| anything, built as components that fit together: what each one owns, where each kind gets made (TSX, solids, a generator, Blender, Godot, Rust), materials and shaders as components, shadcn's components on screens, registries | [components.md](components.md) |
 | a cut of real footage: takes cut by words, faces framed, captions, cuts to a song | [footage.md](footage.md) |
 | motion graphics and type: cards, stats, logos, end cards | [graphics.md](graphics.md) |
 | a short product film (a launch, a demo, a brand film) made like a good film of its kind, or one you were handed ("make me one like this") | the video-decompiler skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
@@ -182,6 +183,10 @@ registerRoot(() => (
 ```
 
 Rules that keep renders right (`raea guide motion` has all ten, under "The core rules"; every file needs these):
+- **Components first.** List the components the piece needs (each object, surface, effect and card), look in
+  `raea component list` and the workspace's `shared/components/` before writing one, and write what's missing as a
+  component with a fixture that renders it alone. The composition owns the camera, the look and the mix; a component
+  owns only what it draws. [components.md](components.md) says how they fit together and where each kind is made.
 - **Frame-pure.** Everything that moves reads `useCurrentFrame()`; `useState`, `useEffect` and timers don't animate a
   render. `Math.random()` is seeded per frame, so seed what should hold still from an index.
 - **Clamp every interpolate.** Do it unless you mean the line to run on past its ends.
@@ -237,6 +242,11 @@ it. Then run `raea fingerprint things out/shot.mp4 --json > things.json` and
 lurching mid-move, and an empty frame. When the person says a project is finished,
 `raea fingerprint postmortem PROJECT` asks them at most ten yes/no questions in the app about what the fingerprint is
 least sure of. Once they've answered, `--tally` makes the answers evidence.
+
+When a frame looks wrong (black, washed out, a shadow cut off, a glow missing, a part gone) or a command prints an
+error, look it up before guessing: `raea fix "what you see"`, or the error text in quotes (`--domain bevy`, `blender`,
+`threejs`, `shaders` or `ffmpeg` narrows it). Entries marked `raea` were found and fixed in raea work; numbered ones
+come from community skills and docs and weren't checked in raea, so confirm the fix on a frame.
 
 `raea guide rendering` covers stills, the check, bitrate and quality; `raea guide rubric` covers judging the rest.
 
