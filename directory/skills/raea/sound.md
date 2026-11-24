@@ -22,7 +22,9 @@ whether they're there):
 - `raea sao "PROMPT"`: foley.
 - `raea tokensynth "TIMBRE" --notes C2,C3,C4`: an instrument's notes, to build a library from (a take isn't trusted;
   [motion/music.md](motion/music.md) says why).
-- `raea sounds [WORDS]`, `raea sounds get PACK/INSTRUMENT`: open sample libraries for a Sampler.
+- Instruments: cast each part from the thousands of free sampled instruments (Pianobook, Karoryfer, the SFZ index,
+  Decent Samples; [motion/music.md](motion/music.md) "Cast the instruments", [motion/sources.md](motion/sources.md)).
+  `raea sounds [WORDS]`, `raea sounds get PACK/INSTRUMENT` fetch raea's four packs for a sketch.
 - `raea song FILE`: a song's energy map (beats, sections, builds, drops) to cut to.
 - `raea media loudness FILE`: the mix's loudness against a delivery spec.
 - `raea gen music|sfx|speech "PROMPT"`: generated audio from a provider ([gen.md](gen.md)).
