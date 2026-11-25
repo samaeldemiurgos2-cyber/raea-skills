@@ -104,6 +104,35 @@ frames path-traced (FLIP, bias, flicker, blotches, lag after a doorway opens or 
 looks wrong as a case. A take's own passes after the denoiser (a lens, a grade) aren't evidence about it: bench the
 view without them.
 
+## Boiling: soft patches that crawl
+
+Boiling is what real-time path tracing's leftover noise looks like once a denoiser has smoothed it: soft patches tens of
+pixels across that crawl over floors, walls and reflections in a shot that should hold still, each frame a little
+different. A still frame can look clean while the shot boils, so judge it held, never from one frame. It's the industry's
+word (NVIDIA's NRD and RTXDI, AMD's GI-1.0, the ReSTIR papers, Lumen's guides), and raea uses it for this alone. A toon
+look's line boil (`boil`, a drawn line wobbling on twos) is a different thing; say "light boiling" when both are about.
+
+Tell it from its neighbours:
+- **flicker**: a region's brightness jumps (a light count changing, exposure hunting), rather than patches crawling;
+- **fireflies**: lone bright pixels, from a tiny, very bright emitter;
+- **grain**: pixel-sized noise, which a denoiser removes and boiling is what it leaves;
+- **sparkle**: thin edges and fine texture aliasing under the camera's jitter.
+
+Measure it: `raea light steady FILE --composition ID --frame N --frames 150` holds frame N and measures its second
+half. blotch is boiling's size (the 32 px patches' movement, limit 1.5%), grain the pixel-sized part, and spread their
+ratio (near 0.25 is pure grain; 0.5 and up is boiling).
+
+What it comes from, measured on MALL RAT's sunlit mall court (blotch 3.0 at one path a pixel), largest first:
+1. **Too few paths.** One path's bounce light at a pixel is as noisy as its mean, and ReSTIR's reuse and the denoiser
+   turn that into patches. `<SolariLighting paths={4} />` traces 4 paths a pixel and halves it, at about 1.7x the
+   frame (8 paths: a little more, at 2.2x). This is the fix to reach for first, on any sunlit interior.
+2. **ReSTIR's reuse.** Neighbouring pixels and frames share a few good samples, so their errors move together (the
+   papers' "correlation artifacts"). Its radius and confidence cap don't fix it.
+3. **The world cache's young cells.** A frozen, converged cache reads 0.1-0.3 lower than any live one; `cache.steady`
+   doesn't close the gap yet.
+Not the cause there: the denoiser (it passes the patches through), the number of small lights, the direct light's
+samples, the camera's jitter.
+
 ## Why
 
 Solari is real-time path tracing in three parts. Direct light picks among the emissive triangles and the sun with
@@ -129,6 +158,8 @@ WESL), not a post written for an older one.
 - Walls of `Plane3d`: light leaks along their edges. Use boxes.
 - No `reset` at a cut made by moving the one camera: the new shot's first frames carry the old shot's light.
 - A tiny, very bright emitter (a 1 cm LED at 100,000): fireflies. Make it bigger and dimmer, or turn on `restir`.
+- A sunlit interior at one path a pixel: it boils (Boiling, above). Set `paths={4}` and hold a frame with
+  `raea light steady` before the whole render.
 - Judging reflections from one still. Check a moving shot for smearing.
 - A glow pitched for raster (`emissive` 2) in a traced scene: it's black. Pitch it in the traced light's units.
 - Following a 0.17 or 0.18 example: the API and the defaults have changed since.
