@@ -11,20 +11,20 @@ or an argument its usage doesn't name, so these lists are what it takes.
 Access: HEADLESS. Arguments besides flags: 1.
 
 ```
-raea render EDIT.tsx -o OUT.mp4|OUT.png|OUT.wav|DIR [--audio OUT.wav] [--frame N | --at A,B] [--composition ID] [--w W] [--h H] [--fps FPS] [--frames N] [--words W.json] [--perception P.json] [--input I.json|inputs.rrl] [--manifest render.json] [--layers] [--stage WxH] [--10bit] [--aov] [--alpha [--alpha-codec prores|hevc|rle|png]] [--kbps N | --quality draft|high|master|0..1] [--clay] [--despite CHECK WHY]   (also: --lite --comps)
+raea render EDIT.tsx -o OUT.mp4|OUT.png|OUT.wav|DIR [--audio OUT.wav] [--frame N | --at A,B] [--composition ID] [--w W] [--h H] [--fps FPS] [--frames N] [--words W.json] [--perception P.json] [--input I.json|inputs.rrl] [--props JSON|P.json] [--scale S] [--hold FRAME[:FRAMES]] [--manifest render.json] [--layers] [--stage WxH] [--10bit] [--aov] [--alpha [--alpha-codec prores|hevc|rle|png]] [--kbps N | --quality draft|high|master|0..1] [--clay] [--despite CHECK WHY]   (also: --lite --comps)
 raea render EDIT.tsx --review DIR [--frame N]   (fixed cameras hero, front, right, top, iso, low in colour and clay: DIR/colour.png, clay.png, review.json)
 raea render PAGE.html -o OUT.mp4|OUT.png|DIR [--at A,B] [--alpha]   (an HTML composition)
 raea render --bundle NAME.comp.js -o OUT.png|DIR [--dir DIR] [--frame N]   (a bundle from raea bundle, as render_bundle draws it)
 ```
 
-Flags: `--10bit`, `--alpha`, `--alpha-codec` (1), `--aov`, `--at` (1), `--audio` (1), `--bundle` (1), `--clay`, `--composition` (1), `--comps`, `--despite` (2), `--dir` (1), `--fps` (1), `--frame` (1), `--frames` (1), `--h` (1), `--input` (1), `--kbps` (1), `--layers`, `--lite`, `--manifest` (1), `--perception` (1), `--quality` (1), `--review` (1), `--stage` (1), `--w` (1), `--words` (1), `-o` (1).
+Flags: `--10bit`, `--alpha`, `--alpha-codec` (1), `--aov`, `--at` (1), `--audio` (1), `--bundle` (1), `--clay`, `--composition` (1), `--comps`, `--despite` (2), `--dir` (1), `--fps` (1), `--frame` (1), `--frames` (1), `--h` (1), `--hold` (1), `--input` (1), `--kbps` (1), `--layers`, `--lite`, `--manifest` (1), `--perception` (1), `--props` (1), `--quality` (1), `--review` (1), `--scale` (1), `--stage` (1), `--w` (1), `--words` (1), `-o` (1).
 
 ## raea media
 
 Access: HEADLESS. Its arguments go to a parser of its own: `raea media` alone lists them.
 
 ```
-raea media probe|still|sheet|audio|loudness|motion|cuts|freezes|proxy|lod|trim|concat FILE ... | ffmpeg ARGS | ffprobe ARGS   (media work, native: media help)
+raea media probe|still|sheet|audio|loudness|motion|cuts|freezes|proxy|share|lod|trim|concat FILE ... | ffmpeg ARGS | ffprobe ARGS   (media work, native: media help)
 raea show FILE... [--title T] [--ask LINE] [--project P] [--replaces ITEM] [--as NAME] [--role ROLE] [--inbox NAME] [--open] [--label LABEL] [--detail PARAGRAPH] [--labels FILE.json] [--despite CHECK WHY] | raea show --question Q --choice A --choice B [STILL...] | raea show [--title T] --question Q [--preview FILE] --choice A [--preview FILE] --choice B ... [--question Q2] ... | raea show --on ITEM [--working ID] [--ask TEXT] [--status S] [--states S1,S2] [--sign N --clip FILE --render HASH] [--done ID] [--note LINE] [--sub NAME]   (shown in the raea app as an item the person can use and answer, posted quietly with a notice, the window left where they are unless --open: stills (several, a storyboard), a video, a sound, a NAME.script.ts or .md, a .tsx (an interactive artifact; a project's composition opens in its editor), or questions, all of them one item; --label "PLACE TAG" a label beside the picture, never on it, that points at PLACE (x0,y0,x1,y1 or x,y in its 0-1, then #N the Nth file, @T or @T-TO a film's seconds, or part=KEY a scene's part; the tag the rest), --detail the paragraph of the --label before it, --labels a JSON list of them as feed_post takes them, and a sheet raea media sheet made comes labelled; each question and choice with a --preview to play or read while answering (a still, a video, a sound, a script or .md; after a --choice that choice's, else the question's); what they send comes to ~/.raea/inbox/INBOX.jsonl; their edit comments are tasks: --working ID as you start one (each --ask with it one ask you read it as, for the person to correct; --status and --states where the note and each ask stand: to restate, to check, failing, to sign, passing, signed; --sign N --clip FILE --render HASH a clip under ask N for them to sign; a note closes when they retire it, never with --done), --done ID when it's settled, or with the version that settles it, FILE --replaces ITEM --done ID; never open media in Preview while the app is installed)
 ```
 
@@ -158,6 +158,26 @@ raea bug TITLE... --text TEXT [--command CMD] [--error TEXT] [--agent NAME] [--d
 
 Flags: `--agent` (1), `--command` (1), `--dry-run`, `--error` (1), `--text` (1).
 
+## raea fix
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea fix SYMPTOM... [--domain DOMAIN] [--limit N] [--sources] [--notice]   (a problem looked up before you guess: what you see or the error text, "quoted" for an exact phrase; raea's own fixes first, then community skills' and docs')
+```
+
+Flags: `--domain` (1), `--limit` (1), `--notice`, `--sources`.
+
+## raea voice
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea voice [--voice NAME] [--duplex] [--over] [--pause MS] [--from IN.wav] [--to OUT.wav] [--room GAIN] [--fast] | raea voice hear FILE.wav | raea voice say "WORDS" -o OUT.wav [--voice NAME]   (speech in and out on this computer, as lines of JSON on stdin and stdout: what raea.app's Ideate hears and speaks with. While it speaks it doesn't listen, unless --duplex (headphones: it listens all the time) or --over (speakers: its own voice is taken out of the microphone's sound, new and not yet tried across real rooms); --room GAIN is a simulated room for checking --over with files; hear writes a recording's words, say speaks words to a file)
+```
+
+Flags: `--duplex`, `--fast`, `--from` (1), `--over`, `--pause` (1), `--room` (1), `--to` (1), `--voice` (1), `-o` (1).
+
 ## raea spec
 
 Access: HEADLESS. Arguments besides flags: 1.
@@ -183,10 +203,10 @@ Flags: `--json`, `--layout` (1), `--name` (1).
 Access: HEADLESS. Arguments besides flags: 2.
 
 ```
-raea project new NAME [--storage inline|submodule] | raea project split NAME [--remote URL] | raea project join NAME | raea project [--json]   (a project in the workspace: its folder, brief.ts, media/, out/; split and join keep its history)
+raea project new NAME [--storage inline|submodule] [--client NAME] | raea project tag [NAME] [--client NAME] [--no-client] | raea project split NAME [--remote URL] | raea project join NAME | raea project [--json]   (a project in the workspace: its folder, brief.ts, media/, out/; its client, what raea.app files every card shown from it under (raea cloud's tags: projects don't nest); split and join keep its history)
 ```
 
-Flags: `--json`, `--remote` (1), `--storage` (1).
+Flags: `--client` (1), `--json`, `--no-client`, `--remote` (1), `--storage` (1).
 
 ## raea check
 
@@ -299,10 +319,10 @@ Access: HEADLESS. Arguments besides flags: 2.
 
 ```
 raea scene export EDIT.tsx -o DIR [--composition ID] [--frame N | --at A-B]   (the composition's 3D as data other tools build: DIR/scene.json, each part placed (y up, metres) with its shape, material or light, and the camera; meshes/ and models/ beside it)
-raea scene lint|explain|light|stage EDIT.tsx [--composition ID] [--frame N] [--part NAME] [--from N] [--to N] [--json]   (what each 3D part rests on: floating, sunk and clipping parts; light: the scene's lighting)
+raea scene lint|explain|light|stage EDIT.tsx [--composition ID] [--frame N] [--part NAME] [--from N] [--to N] [--clearance M] [--json]   (what each 3D part rests on: floating, sunk and clipping parts; light: the scene's lighting)
 ```
 
-Flags: `--at` (1), `--composition` (1), `--frame` (1), `--from` (1), `--json`, `--part` (1), `--to` (1), `-o` (1).
+Flags: `--at` (1), `--clearance` (1), `--composition` (1), `--frame` (1), `--from` (1), `--json`, `--part` (1), `--to` (1), `-o` (1).
 
 ## raea init
 
@@ -393,20 +413,40 @@ Flags: `--colour` (1), `--expect` (1), `--json`, `--part` (1), `--set` (1), `--w
 Access: HEADLESS. Arguments besides flags: any number.
 
 ```
-raea judge DIR [--by clef|kimi|claude] [--brief brief.ts] [--target T.png] [--json] [--dry] | judge eye DIR (CATEGORY=SCORE ... [--pass yes|no] | --by kimi|claude) | judge calibrate [--json]   (a --review folder's sheets judged blind: clef-omni on the frozen rubric, or a fresh kimi or claude session on the judge prompt; the pass decided in code; clef advises until calibrated against your eye or an agent's)
+raea judge DIR [--kind scene|kit|shot] [--by clef|kimi|claude] [--brief brief.ts] [--target T.png] [--json] [--dry] | judge eye DIR (CATEGORY=SCORE ... [--pass yes|no] | --by kimi|claude) | judge calibrate [--kind scene|kit|shot] [--json]   (a --review folder's sheets judged blind: clef-omni on the frozen rubric, or a fresh kimi or claude session on the judge prompt; --kind asks a raea make job's own rubric (a shot list's framing.png); the pass decided in code; clef advises until calibrated against your eye or an agent's, each kind on its own)
 ```
 
-Flags: `--brief` (1), `--by` (1), `--dry`, `--json`, `--pass` (1), `--target` (1).
+Flags: `--brief` (1), `--by` (1), `--dry`, `--json`, `--kind` (1), `--pass` (1), `--target` (1).
 
 ## raea ask
 
 Access: HEADLESS. Arguments besides flags: any number.
 
 ```
-raea ask FILE [QUESTION...] [--choose A,B,C] [--grade] [--rate N] [--flag ANSWERS] [--set NAME] [--std ID] [--from S] [--to S] [--at S] [--with FILE2] [--brief brief.ts|none] [--words words.json] [--voice yes|no] [--state TEXT] [--dry] [--json] [--gate [any]] [--jobs N] | ask --batch FILE [--dry] [--json] [--gate [any]] [--jobs N] | ask list [SET] [--json] | ask verdict ANSWER WORD [--eye NAME] | ask calibrate [ID] [--json] | ask try WORDS --like ID [--dry] [--json] [--jobs N]   (questions about a piece's picture and sound, answered by clef-omni and paid from your raea plan's pool when the app is signed in, else RAEA_AGENT_KEY's, else your own Cloudflare keys: your own words, or the standard sets (rubric, av, defects, platform, decide); every question about one clip goes in one call, --batch (a JSON list or JSON lines, - for stdin) asks many clips in parallel; --dry says what would be sent and spends nothing; answers are advice until a question is calibrated: verdict labels an answer, calibrate holds each question to your verdicts, notes and approvals, try asks new words of its labelled clips)
+raea ask FILE [QUESTION...] [--choose A,B,C] [--grade] [--rate N] [--flag ANSWERS] [--set NAME] [--std ID] [--from S] [--to S] [--at S] [--with FILE2] [--brief brief.ts|none] [--words words.json] [--voice yes|no] [--state TEXT] [--dry] [--json] [--gate [any]] [--jobs N] | ask --batch FILE [--dry] [--json] [--gate [any]] [--jobs N] | ask list [SET] [--json] | ask verdict ANSWER WORD [--eye NAME] | ask calibrate [ID] [--json] | ask try WORDS --like ID [--dry] [--json] [--jobs N]   (questions about a piece's picture and sound, answered by clef-omni and paid from your raea plan's pool when the app is signed in, else RAEA_AGENT_KEY's, else your own Cloudflare keys: your own words, or the standard sets (rubric, av, defects, platform, decide, make); every question about one clip goes in one call, --batch (a JSON list or JSON lines, - for stdin) asks many clips in parallel; --dry says what would be sent and spends nothing; answers are advice until a question is calibrated: verdict labels an answer, calibrate holds each question to your verdicts, notes and approvals, try asks new words of its labelled clips)
 ```
 
 Flags: `--at` (1), `--batch` (1), `--brief` (1), `--choose` (1), `--dry`, `--eye` (1), `--flag` (1), `--from` (1), `--gate`, `--grade`, `--jobs` (1), `--json`, `--like` (1), `--rate` (1), `--set` (1), `--state` (1), `--std` (1), `--to` (1), `--voice` (1), `--with` (1), `--words` (1).
+
+## raea make
+
+Access: HEADLESS. Arguments besides flags: 5.
+
+```
+raea make status [DIR] [--json] [--plan]   (a scene, kit or shot held to its plan, `make` on brief.ts: what's missing, each gate (renders and checks, raea ask's calibrated questions, the critic on the kind's rubric), the judge's rounds, and whether it's done, decided in code; --plan writes the gates as check lines under the job's task in plan.org; the agent's Stop hook holds it there)
+raea make plan [DIR] [--no-review]   (the plan stop: review/plan/floor-plan.png, a grey-box blockout from the entrance and its review sheets, comparison.png beside reference 0)
+raea make refs [DIR] [--only ID,...] [--model M] [--dry]   (a kit: every object's reference from the style images, in the plan's style, then review/refs.png; --dry quotes it)
+raea make sheet refs [DIR]   (review/refs.png again: the style images, then every reference)
+raea make gen [DIR] [--only ID,...] [--tripo M] [--meshy M] [--dry]   (each reference to both generators, Tripo H3.1 and Meshy on fal: out/kit/gen/ID/)
+raea make pick-sheet [DIR] [--only ID,...]   (review/picks.png: reference | Tripo | Tripo clay | Meshy | Meshy clay, fitted to size)
+raea make pick ID tripo|meshy "why" [DIR]   (the pick and its reason, out/kit/picks.json)
+raea make prep [DIR] [--only ID,...]   (each pick fitted to its real size, a quarter-triangle _lod1 beside it, .glb.json sidecars)
+raea make kit [DIR] [--name KIT] [--to FOLDER]   (the kit as a component set: shared/components/KIT, lineup.tsx, cover.png, thumbs, kit.json)
+raea make framing [DIR] [--only NAME,...] [--out DIR]   (a shot list: each shot's first, middle and last frame on framing.png, stamped)
+raea make lenschart SHOT [DIR] [--out DIR]   (a shot's first frame at 18, 24, 35, 50, 85 and 135 mm on lens-SHOT.png)
+```
+
+Flags: `--dry`, `--json`, `--meshy` (1), `--model` (1), `--name` (1), `--no-review`, `--only` (1), `--out` (1), `--plan`, `--to` (1), `--tripo` (1).
 
 ## raea world
 
@@ -500,6 +540,16 @@ raea physics bake REQUEST.json [-o OUT.json] | physics goo SPEC.json | physics p
 
 Flags: `-o` (1).
 
+## raea bake
+
+Access: HEADLESS. Arguments besides flags: 2.
+
+```
+raea bake light EDIT.tsx [--composition ID] [--samples N] | raea bake light --compare DIR [--sets FILE] [--set NAME] [--samples N] [--fresh]   (bounce light baked into lightmaps on raea's ray tracer; --compare measures the test set against Cycles' bake and still, docs/bake.feature)
+```
+
+Flags: `--compare` (1), `--composition` (1), `--fresh`, `--samples` (1), `--set` (1), `--sets` (1).
+
 ## raea wear
 
 Access: HEADLESS. Arguments besides flags: 2.
@@ -554,10 +604,20 @@ Flags: `--intensity` (1), `--local-structure` (1), `--model` (1), `--profile` (1
 Access: HEADLESS. Arguments besides flags: 2.
 
 ```
-raea light check SCENES.json -o DIR [--scene NAME] [--paths raster,traced-ao,solari,gi] [--spp N] [--fresh]   (each scene on each light path against its path-traced reference: distance in stops, the worst tile, a moving shot's flicker, a frame's cost; DIR/report.json)
+raea light check SCENES.json -o DIR [--scene NAME] [--paths raster,traced-ao,solari,gi] [--spp N] [--fresh] | raea light steady EDIT.tsx --frame N [--composition ID] [--frames 96] [--run M] [--max 1.5] -o DIR | raea light steady DIR [--max 1.5]   (steady: frame N held, and whether its light holds still)   (each scene on each light path against its path-traced reference: distance in stops, the worst tile, a moving shot's flicker, a frame's cost; DIR/report.json)
 ```
 
-Flags: `--fresh`, `--paths` (1), `--scene` (1), `--spp` (1), `-o` (1).
+Flags: `--composition` (1), `--frame` (1), `--frames` (1), `--fresh`, `--max` (1), `--paths` (1), `--run` (1), `--scene` (1), `--spp` (1), `-o` (1).
+
+## raea bench
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea bench denoise [--backend raea,metalfx,dlss,off] [CASE...] [--cases FILE] [-o DIR] [--spp N] [--fresh]   (each case on each denoiser against its converged truth: FLIP, RMSE, bias, flicker, blotches, lag after a disocclusion or a light going out, a frame's cost, and how many of MetalFX's numbers each meets; DIR/report.json)
+```
+
+Flags: `--backend` (1), `--cases` (1), `--fresh`, `--spp` (1), `-o` (1).
 
 ## raea mezz
 

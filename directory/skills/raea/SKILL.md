@@ -27,8 +27,11 @@ go wrong by starting to make things first and finding a home for them later, or 
    new one.
 2. **The project.** `raea workspace --json` lists the workspace's projects and their folders, and `raea project --json`
    says which one you're in. Pick the one the request belongs to. When
-   none fits, say which project you'd make and make it (`raea project new NAME`) before any file of the work; ask
-   when it's unclear which one is meant.
+   none fits, say which project you'd make and make it (`raea project new NAME --client CLIENT`) before any file of
+   the work; ask when it's unclear which one is meant. Projects don't sit inside each other: they're related by their
+   client (who the work is for), as raea cloud tags them, and the raea app gathers a client's projects on its board.
+   Give a new project its client, one `raea workspace --json` already lists under `clients` when the work is for it
+   (the same spelling, never a near-twin); `raea project tag --client CLIENT` gives an existing one its client.
 3. **Name it by id.** A project's id is its folder's name, as `raea workspace --json` lists it. Titles repeat and
    drift, and agents that go by them post to the wrong project; ids don't. So name a project by `WORKSPACE/ID`
    everywhere (`raea show --project WORKSPACE/ID`, your notes, what you tell the person). When the person pastes a line
@@ -86,6 +89,7 @@ task needs.
 
 | Making... | Open |
 |---|---|
+| anything, built as components that fit together: what each one owns, where each kind gets made (TSX, solids, a generator, Blender, Godot, Rust), materials and shaders as components, shadcn's components on screens, registries | [components.md](components.md) |
 | a cut of real footage: takes cut by words, faces framed, captions, cuts to a song | [footage.md](footage.md) |
 | motion graphics and type: cards, stats, logos, end cards | [graphics.md](graphics.md) |
 | a short product film (a launch, a demo, a brand film) made like a good film of its kind, or one you were handed ("make me one like this") | the video-decompiler skill, installed beside this one by raea's installer and plugin (not in the plugin directory's edition) |
@@ -110,9 +114,14 @@ an explain, a story, a game or a tool has to do; `craft/verbs/` has one file per
 
 Work lives in a workspace: a git repo under raea.root (`git config --global raea.root`; unset, `~/Studio` where
 workspaces already are, else `~/Documents/raea`, or `~/raea` when iCloud keeps Documents), one per studio or client,
-holding projects and the workspace's taste.ts. In the raea app a project shows as a channel.
+holding projects and the workspace's taste.ts. In the raea app, what you show from a project's folder is a card on
+its client's board.
 - `raea workspace init NAME` makes one; `raea workspace adopt DIR` makes an existing folder one. `raea workspace`
   shows it (`--json` for the projects and their paths).
+- A project's client is who the work is for (`project.NAME.client` in `.raea/workspace`): `raea project new NAME
+  --client CLIENT`, or `raea project tag [NAME] --client CLIENT` (`--no-client` clears it). Every card `raea show`
+  makes from the folder is filed under it, on its board in the app; a folder with none is its own client, named for
+  it. A project never sits inside another one: two projects for one client share the client.
 - `raea project new NAME` adds a project: its folder with `brief.ts`, `AGENTS.md`, `compositions/`, `components/`,
   `assets/`, `artifacts/` and `out/`. The workspace's `shared/` has the same folders but `out/`, which any project
   imports from as `@shared/components/NAME`. A project can live inline or as its own repo
@@ -182,6 +191,10 @@ registerRoot(() => (
 ```
 
 Rules that keep renders right (`raea guide motion` has all ten, under "The core rules"; every file needs these):
+- **Components first.** List the components the piece needs (each object, surface, effect and card), look in
+  `raea component list` and the workspace's `shared/components/` before writing one, and write what's missing as a
+  component with a fixture that renders it alone. The composition owns the camera, the look and the mix; a component
+  owns only what it draws. [components.md](components.md) says how they fit together and where each kind is made.
 - **Frame-pure.** Everything that moves reads `useCurrentFrame()`; `useState`, `useEffect` and timers don't animate a
   render. `Math.random()` is seeded per frame, so seed what should hold still from an index.
 - **Clamp every interpolate.** Do it unless you mean the line to run on past its ends.
@@ -237,6 +250,11 @@ it. Then run `raea fingerprint things out/shot.mp4 --json > things.json` and
 lurching mid-move, and an empty frame. When the person says a project is finished,
 `raea fingerprint postmortem PROJECT` asks them at most ten yes/no questions in the app about what the fingerprint is
 least sure of. Once they've answered, `--tally` makes the answers evidence.
+
+When a frame looks wrong (black, washed out, a shadow cut off, a glow missing, a part gone) or a command prints an
+error, look it up before guessing: `raea fix "what you see"`, or the error text in quotes (`--domain bevy`, `blender`,
+`threejs`, `shaders` or `ffmpeg` narrows it). Entries marked `raea` were found and fixed in raea work; numbered ones
+come from community skills and docs and weren't checked in raea, so confirm the fix on a frame.
 
 `raea guide rendering` covers stills, the check, bitrate and quality; `raea guide rubric` covers judging the rest.
 
@@ -338,7 +356,8 @@ least sure of. Once they've answered, `--tally` makes the answers evidence.
   with lowercase letters, digits and hyphens only (`spring-launch-9x16.mp4`).
 - A render is a standard MP4 but large: H.264 High and AAC on a Mac (VideoToolbox), H.264 Constrained Baseline and
   Opus on Windows and Linux (openh264), yuv420p on all. Hand over a share copy too, which any player takes:
-  `ffmpeg -i film.mp4 -c:v libx264 -preset slow -crf 23 -maxrate 2600k -bufsize 5200k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart film-share.mp4`.
+  `raea media share film.mp4 -o film-share.mp4` (H.264 held to 2600 kbps, AAC, fast start; `--kbps` and `--height`
+  change it).
 - Deliver to the taste's specs (sizes, platforms, loudness) when the workspace or project sets them; each network's shapes,
   lengths and UI zones are in [reference/platforms.md](reference/platforms.md), and [delivery.md](delivery.md) routes
   the rest (one composition per shape, cutdowns, tags, handing over).
