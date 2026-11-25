@@ -27,8 +27,11 @@ go wrong by starting to make things first and finding a home for them later, or 
    new one.
 2. **The project.** `raea workspace --json` lists the workspace's projects and their folders, and `raea project --json`
    says which one you're in. Pick the one the request belongs to. When
-   none fits, say which project you'd make and make it (`raea project new NAME`) before any file of the work; ask
-   when it's unclear which one is meant.
+   none fits, say which project you'd make and make it (`raea project new NAME --client CLIENT`) before any file of
+   the work; ask when it's unclear which one is meant. Projects don't sit inside each other: they're related by their
+   client (who the work is for), as raea cloud tags them, and the raea app gathers a client's projects on its board.
+   Give a new project its client, one `raea workspace --json` already lists under `clients` when the work is for it
+   (the same spelling, never a near-twin); `raea project tag --client CLIENT` gives an existing one its client.
 3. **Name it by id.** A project's id is its folder's name, as `raea workspace --json` lists it. Titles repeat and
    drift, and agents that go by them post to the wrong project; ids don't. So name a project by `WORKSPACE/ID`
    everywhere (`raea show --project WORKSPACE/ID`, your notes, what you tell the person). When the person pastes a line
@@ -110,9 +113,14 @@ an explain, a story, a game or a tool has to do; `craft/verbs/` has one file per
 
 Work lives in a workspace: a git repo under raea.root (`git config --global raea.root`; unset, `~/Studio` where
 workspaces already are, else `~/Documents/raea`, or `~/raea` when iCloud keeps Documents), one per studio or client,
-holding projects and the workspace's taste.ts. In the raea app a project shows as a channel.
+holding projects and the workspace's taste.ts. In the raea app, what you show from a project's folder is a card on
+its client's board.
 - `raea workspace init NAME` makes one; `raea workspace adopt DIR` makes an existing folder one. `raea workspace`
   shows it (`--json` for the projects and their paths).
+- A project's client is who the work is for (`project.NAME.client` in `.raea/workspace`): `raea project new NAME
+  --client CLIENT`, or `raea project tag [NAME] --client CLIENT` (`--no-client` clears it). Every card `raea show`
+  makes from the folder is filed under it, on its board in the app; a folder with none is its own client, named for
+  it. A project never sits inside another one: two projects for one client share the client.
 - `raea project new NAME` adds a project: its folder with `brief.ts`, `AGENTS.md`, `compositions/`, `components/`,
   `assets/`, `artifacts/` and `out/`. The workspace's `shared/` has the same folders but `out/`, which any project
   imports from as `@shared/components/NAME`. A project can live inline or as its own repo
