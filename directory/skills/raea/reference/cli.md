@@ -158,6 +158,16 @@ raea bug TITLE... --text TEXT [--command CMD] [--error TEXT] [--agent NAME] [--d
 
 Flags: `--agent` (1), `--command` (1), `--dry-run`, `--error` (1), `--text` (1).
 
+## raea fix
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea fix SYMPTOM... [--domain DOMAIN] [--limit N] [--sources] [--notice]   (a problem looked up before you guess: what you see or the error text, "quoted" for an exact phrase; raea's own fixes first, then community skills' and docs')
+```
+
+Flags: `--domain` (1), `--limit` (1), `--notice`, `--sources`.
+
 ## raea spec
 
 Access: HEADLESS. Arguments besides flags: 1.
