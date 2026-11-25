@@ -58,15 +58,17 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/ask` | `RAEA_ASK_DIR` | io/clef/src/cache.rs |
 | `~/.raea/avatars` | `RAEA_AVATARS` | apps/app/host/avatars.ts |
 | `~/.raea/bin` |  | io/assets/src/lib.rs, runtime/bundle/lib/src/lib.rs, runtime/page/src/faces.rs |
-| `~/.raea/cache` | `RAEA_EMOJI3D_CACHE` | apps/app/host/emoji3d.ts, apps/app/host/take.ts |
+| `~/.raea/cache` | `RAEA_CLOUD_MEDIA` | apps/app/host/cloud-media.ts, apps/app/host/emoji3d.ts, apps/app/host/take.ts |
+| `~/.raea/cache/cloud-media` |  | apps/app/host/cloud-media.ts |
+| `~/.raea/cloud.json` | `RAEA_CLOUD_FILE` | apps/app/host/cloud.ts |
 | `~/.raea/env` | `RAEA_ENV_FILE` | apps/app/host/director.ts, apps/app/host/plugins.ts, engine/page/host/Cargo.toml, engine/page/host/src/main.rs, io/clef/src/route.rs, io/gen-core/src/fal.rs, io/gen-core/src/fish.rs, io/gen-core/src/made.rs, io/gen-core/src/modal.rs, io/gen-core/src/openrouter.rs, io/gen-core/src/replicate.rs, io/gen-core/src/tripo.rs, io/home/src/lib.rs |
 | `~/.raea/evals/skills` |  | apps/app/host/evals/skills.ts |
-| `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/rules-asks.ts, apps/app/host/rules-train.ts, apps/app/host/storage/owners.ts |
+| `~/.raea/feed` |  | apps/app/host/feed-items.ts, apps/app/host/fingerprint.ts, apps/app/host/local-cloud/migrate.ts, apps/app/host/rules-asks.ts, apps/app/host/rules-train.ts, apps/app/host/storage/owners.ts |
 | `~/.raea/feed/i-taste-` |  | apps/app/host/rules-asks.ts |
 | `~/.raea/feed/media` |  | apps/app/host/paths.ts |
-| `~/.raea/fingerprints` | `RAEA_FINGERPRINTS` | apps/app/host/fingerprint.ts, apps/app/host/rules-train.ts, apps/app/host/taste.ts |
+| `~/.raea/fingerprints` | `RAEA_FINGERPRINTS` | apps/app/host/fingerprint.ts, apps/app/host/local-cloud/migrate.ts, apps/app/host/rules-train.ts, apps/app/host/taste.ts |
 | `~/.raea/fingerprints/default` |  | apps/app/host/fingerprint.ts |
-| `~/.raea/inbox` | `RAEA_INBOX_DIR` | apps/app/host/inbox.ts, engine/cli/src/show.ts |
+| `~/.raea/inbox` | `RAEA_INBOX_DIR` | apps/app/host/inbox.ts, apps/app/host/local-cloud/shown.ts, engine/cli/src/show.ts |
 | `~/.raea/inbox/INBOX.jsonl` |  | engine/cli/src/cli.rs |
 | `~/.raea/install.json` |  | apps/app/host/telemetry.ts |
 | `~/.raea/library` | `RAEA_LIBRARY_HOME` | apps/app/host/library/fast.ts, apps/app/host/library/local.ts |
@@ -74,6 +76,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/library/granted.json` | `RAEA_LIBRARY_GRANTS` | apps/app/host/library/service.ts |
 | `~/.raea/library/hashes.json` | `RAEA_LIBRARY_STATE` | apps/app/host/library/scan.ts |
 | `~/.raea/library/requests.json` | `RAEA_LIBRARY_REQUESTS` | apps/app/host/library/service.ts |
+| `~/.raea/local-cloud` | `RAEA_LOCAL_CLOUD` | apps/app/host/local-cloud/run.ts, apps/app/host/local-cloud/serve.ts |
 | `~/.raea/logs/js-heap-` |  | runtime/jsengine/src/upkeep.rs |
 | `~/.raea/media` |  | apps/app/host/compositions.ts |
 | `~/.raea/models` | `RAEA_MODELS` | apps/app/host/library/embed.ts, apps/app/host/library/words.ts |
@@ -150,7 +153,12 @@ sections?: Array<Section>, deliver?: Array<Deliverable>, references?: Array<Refe
  * the project's stories, imported explicitly (raea/story, docs/story.md): one, or several by name. Kept as written:
  * raea reads nothing in it, the story SDK and the checks that import it do
  */
-story?: unknown, };
+story?: unknown, 
+/**
+ * a scene, kit or shot made to a frozen plan and held to the review loop (docs/make.feature): `scene()`, `kit()`
+ * or `shot()` from "raea/brief"; `raea make status` decides when it's done
+ */
+make?: Make, };
 export type Section = { heading: string, text: string, };
 export type Deliverable = { name: string, 
 /**
@@ -279,4 +287,110 @@ material?: string, style?: string,
  * what a near crop of it must show
  */
 near?: string, };
+export type Make = { kind: MakeKind, 
+/**
+ * the pictures the job answers to (paths beside the brief): what is in it and where for a scene, the style for a kit
+ */
+references?: Array<string>, 
+/**
+ * one paragraph every reference prompt carries: era, palette, materials, wear, and one fictional maker
+ */
+style?: string, 
+/**
+ * by name, from the kind's set (DIALS); one left out is read from the references
+ */
+dials?: { [key in string]: MakeDial }, objects?: Array<MakeObject>, shots?: Array<MakeShot>, 
+/**
+ * the compositions the job's checks hold (relative to the brief): each needs a clean render or check newer than it
+ */
+compositions?: Array<string>, 
+/**
+ * what must exist when it's done, relative to the brief; replaces the kind's own list (`deliverables`)
+ */
+deliverables?: Array<string>, 
+/**
+ * the most critic rounds the job gets; at the cap it is delivered with what's still missing (8 by default)
+ */
+rounds?: number, };
+export type MakeKind = "scene" | "kit" | "shot";
+export type MakeSource = "customer" | "reference";
+export type MakeDialValue = number | string;
+export type MakeDial = MakeDialValue | { value: MakeDialValue, source?: MakeSource, 
+/**
+ * what the value meant for this job, in one line
+ */
+means?: string, };
+export type MakeRoute = "solid" | "rule" | "gen" | "library" | "picture";
+export type MakeOrigin = "reference" | "invented";
+export type MakePick = { 
+/**
+ * "tripo-h31", "meshy", ...
+ */
+generator: string, 
+/**
+ * one line: why this one ("sharper dial numerals; Tripo fused the handset to the cradle")
+ */
+why: string, };
+export type MakeObject = { 
+/**
+ * snake_case, unique in the job
+ */
+id: string, label: string, 
+/**
+ * real height in metres
+ */
+h?: number, 
+/**
+ * [width, depth, height] in metres, for boxy things (generators invent depth)
+ */
+dims?: [number, number, number], 
+/**
+ * largest extent in metres, for things that lie flat (tools, papers)
+ */
+max?: number, route?: MakeRoute, 
+/**
+ * one object, its condition and its materials; never a real brand
+ */
+prompt?: string, source?: MakeOrigin, 
+/**
+ * where it is in reference 0: [x0, y0, x1, y1] in 0..1
+ */
+crop?: [number, number, number, number], 
+/**
+ * where it stands in a scene: metres, the floor's front-left corner at the origin, rot 0 = facing the entrance
+ */
+at?: [number, number, number], rot?: number, hero?: boolean, pick?: MakePick, 
+/**
+ * what was fixed by script ("glass made transmissive, label kept opaque")
+ */
+fixes?: Array<string>, };
+export type MakeShot = { 
+/**
+ * [a-z0-9_]: the file it lands as (out/shots/<name>.png or .mp4)
+ */
+name: string, 
+/**
+ * in a crew's words: "slow push along the counter, rack focus to the register"
+ */
+description?: string, 
+/**
+ * static, dolly, truck, pedestal, crane, pan, tilt, orbit, dollyZoom, path
+ */
+move?: string, seconds?: number, lens?: number, 
+/**
+ * none, subtle, walk
+ */
+handheld?: string, 
+/**
+ * a still rather than a move
+ */
+still?: boolean, 
+/**
+ * the composition that renders it (relative to the brief): `raea make framing` and `lenschart` draw it
+ */
+composition?: string, 
+/**
+ * its frame rate, for the frames `seconds` spans (30 when left out)
+ */
+fps?: number, };
 ```

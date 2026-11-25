@@ -158,6 +158,16 @@ raea bug TITLE... --text TEXT [--command CMD] [--error TEXT] [--agent NAME] [--d
 
 Flags: `--agent` (1), `--command` (1), `--dry-run`, `--error` (1), `--text` (1).
 
+## raea fix
+
+Access: HEADLESS. Arguments besides flags: any number.
+
+```
+raea fix SYMPTOM... [--domain DOMAIN] [--limit N] [--sources] [--notice]   (a problem looked up before you guess: what you see or the error text, "quoted" for an exact phrase; raea's own fixes first, then community skills' and docs')
+```
+
+Flags: `--domain` (1), `--limit` (1), `--notice`, `--sources`.
+
 ## raea spec
 
 Access: HEADLESS. Arguments besides flags: 1.
@@ -183,10 +193,10 @@ Flags: `--json`, `--layout` (1), `--name` (1).
 Access: HEADLESS. Arguments besides flags: 2.
 
 ```
-raea project new NAME [--storage inline|submodule] | raea project split NAME [--remote URL] | raea project join NAME | raea project [--json]   (a project in the workspace: its folder, brief.ts, media/, out/; split and join keep its history)
+raea project new NAME [--storage inline|submodule] [--client NAME] | raea project tag [NAME] [--client NAME] [--no-client] | raea project split NAME [--remote URL] | raea project join NAME | raea project [--json]   (a project in the workspace: its folder, brief.ts, media/, out/; its client, what raea.app files every card shown from it under (raea cloud's tags: projects don't nest); split and join keep its history)
 ```
 
-Flags: `--json`, `--remote` (1), `--storage` (1).
+Flags: `--client` (1), `--json`, `--no-client`, `--remote` (1), `--storage` (1).
 
 ## raea check
 
