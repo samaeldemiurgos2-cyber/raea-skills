@@ -21,7 +21,7 @@
     the denoiser, 4 and 2 look the same in most rooms and save time.
 - Every other choice the engine makes for the traced light is a prop too, so an A/B is two compositions, never a
   build: `denoise`, `guides`, `reflectionDepth`, `emissive` ("taa", "split", "mask"), `upscale` ("one", "two"),
-  `preexposure`, `aa`, `jitter`, `jitterFrames`, `emissiveSharpness`, `dynamic`, `firstBounce`, `confidenceCap` and `cache` (the world cache's
+  `preexposure`, `knee`, `late`, `firefly`, `aa`, `jitter`, `jitterFrames`, `emissiveSharpness`, `dynamic`, `firstBounce`, `confidenceCap` and `cache` (the world cache's
   `frames`, `lightSamples`, `reach`, `updates`, `cellSize`, `lodScale`). Each prop's TSDoc says what it changes. The
   defaults are the measured best, so leave them unless a test scene shows otherwise. A developer's environment
   variable of the same setting (`RAEA_SOLARI_DENOISE=0`, `RAEA_METALFX_PREEXPOSURE=4`) overrides the prop on every
@@ -104,6 +104,61 @@ frames path-traced (FLIP, bias, flicker, blotches, lag after a doorway opens or 
 looks wrong as a case. A take's own passes after the denoiser (a lens, a grade) aren't evidence about it: bench the
 view without them.
 
+## Boiling: soft patches that crawl
+
+Boiling is what real-time path tracing's leftover noise looks like once a denoiser has smoothed it: soft patches tens of
+pixels across that crawl over floors, walls and reflections in a shot that should hold still, each frame a little
+different. A still frame can look clean while the shot boils, so judge it held, never from one frame. It's the industry's
+word (NVIDIA's NRD and RTXDI, AMD's GI-1.0, the ReSTIR papers, Lumen's guides), and raea uses it for this alone. A toon
+look's line boil (`boil`, a drawn line wobbling on twos) is a different thing; say "light boiling" when both are about.
+
+Tell it from its neighbours:
+- **flicker**: a region's brightness jumps (a light count changing, exposure hunting), rather than patches crawling;
+- **fireflies**: lone bright pixels, from a tiny, very bright emitter;
+- **grain**: pixel-sized noise, which a denoiser removes and boiling is what it leaves;
+- **sparkle**: thin edges and fine texture aliasing under the camera's jitter.
+
+Measure it: `raea light steady FILE --composition ID --frame N --frames 150 -o DIR` holds frame N and reads its last
+75 frames square by square (32 px), each square's movement told by kind, since each has its own fix:
+- **settling**: the square's straight-line trend, the light still building. It's a note, not a fault: hold longer, or
+  give the shot a lead-in as long as it took;
+- **boiling**: what's slow once the trend is out. Limit 1.5% over the frame, and three times that in its worst square;
+- **jitter**: what repeats on a short cycle (8 frames at full size). Edges step with the camera's sub-pixel jitter
+  because something was drawn outside the denoiser's history. Limit 5% in the worst square;
+- **flicker**: fast with no cycle, such as a firefly, a sparkle in a reflection, or two faces in one plane. Limit 5%.
+`DIR/steady-kinds.png` maps them (red jitter and flicker, green boiling, blue settling). Each hold is kept in the
+project's record, so `raea check` reports what the newest hold of each frame found for a composition lit by Solari, and
+waits for one when there is none. raea check names the command.
+
+What it comes from, measured on MALL RAT's sunlit mall court (blotch 3.0 at one path a pixel), largest first:
+1. **Too few paths.** One path's bounce light at a pixel is as noisy as its mean, and ReSTIR's reuse and the denoiser
+   turn that into patches. `<SolariLighting paths={4} />` traces 4 paths a pixel and halves it, at about 1.7x the
+   frame (8 paths: a little more, at 2.2x). This is the fix to reach for first, on any sunlit interior.
+2. **ReSTIR's reuse.** Neighbouring pixels and frames share a few good samples, so their errors move together (the
+   papers' "correlation artifacts"). Its radius and confidence cap don't fix it.
+3. **The world cache's young cells.** A frozen, converged cache reads 0.1-0.3 lower than any live one; `cache.steady`
+   doesn't close the gap yet.
+4. **A firefly that lingers.** A patch jumps brighter in one frame and takes a second to fall back: one very bright
+   sample (a bounce landing beside a small lamp) kept by temporal reuse and spread by spatial reuse. Rooms lit by
+   small bulbs have them constantly. `<SolariLighting firefly={6} />` cuts a sample over 6 times the mean of its 8x8
+   pixels back to that. It costs the light those samples carried (0.3 stops in such a room at 6, half that at 12),
+   so set the exposure after it.
+Not the cause there: the denoiser (it passes the patches through), the number of small lights, the direct light's
+samples, the world cache's update rate or how long its cells live.
+
+Jitter has its own causes, measured on MALL RAT (t1 against its sky: worst square 73%, then 3.8%):
+1. **The sky and forward meshes drawn after the denoiser.** By default the denoiser runs before the main pass, which
+   then draws the Environment's background and every forward mesh with the jittered camera, unresolved. Every
+   silhouette against the sky steps a pixel a frame. `<SolariLighting late />` denoises after them.
+2. **Emitters put back frame by frame.** `emissive="split"` returns each emitter's light after the denoiser without a
+   history, so a sign's letters step. Keep the default "taa".
+3. **An emitter thinner than a pixel.** A ceiling tube seen edge-on is missed by some of the jitter's positions, and
+   its history is cut to black on those frames. `constants={{ emissiveClamp: { stillHold: 0.25 } }}` eases that for
+   thin lights (7% to 2%). It isn't the default: a bright lamp switched off in shot then leaves its rim for a few frames.
+4. **The frame's border.** The last 32 px boil about twice as much as the middle, and a wall there can show 8 px
+   blocks. There's no setting for it yet; frame a held shot so a flat lit wall doesn't end at the frame's edge.
+The first two, and paths, belong on any shot that has sky or signs in it.
+
 ## Why
 
 Solari is real-time path tracing in three parts. Direct light picks among the emissive triangles and the sun with
@@ -129,6 +184,8 @@ WESL), not a post written for an older one.
 - Walls of `Plane3d`: light leaks along their edges. Use boxes.
 - No `reset` at a cut made by moving the one camera: the new shot's first frames carry the old shot's light.
 - A tiny, very bright emitter (a 1 cm LED at 100,000): fireflies. Make it bigger and dimmer, or turn on `restir`.
+- A sunlit interior at one path a pixel: it boils (Boiling, above). Set `paths={4}` and hold a frame with
+  `raea light steady` before the whole render.
 - Judging reflections from one still. Check a moving shot for smearing.
 - A glow pitched for raster (`emissive` 2) in a traced scene: it's black. Pitch it in the traced light's units.
 - Following a 0.17 or 0.18 example: the API and the defaults have changed since.
