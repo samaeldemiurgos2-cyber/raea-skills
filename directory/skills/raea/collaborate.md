@@ -10,6 +10,7 @@ full in [reference/feed.md](reference/feed.md); this file says when to reach for
 | ...then | Use |
 |---|---|
 | know what to make, as the project stands now | `feed_brief` (the brief.ts, current); in a workspace chat, `workspace_read` for its projects and agents |
+| start a new channel for a client, a game or a show (a workspace chat, when the person asks for one) | `channel_create` with one sentence on what it is; it returns the channel's id. Check `workspace_read` first so you don't make one that exists |
 | know what's planned and what's under way | `plan_read` (the project's plan.org: open tasks by id); each turn's prompt carries the same as `raea://plan/<project>` ([plan.md](plan.md)) |
 | plan work of more than one step, or note what's left to do | `plan_add`: tasks under a stage heading, or under a task as subtasks, with checkboxes for small steps |
 | act on a round of notes the person sent on an item | plan it first: `plan_add` with the work in your words, each task `from` the notes it answers (`ITEM#COMMENT`, spaces between); `comment_task` `done` at once for a note that asks for nothing; then work the tasks ([plan.md](plan.md), "Notes from the person") |
