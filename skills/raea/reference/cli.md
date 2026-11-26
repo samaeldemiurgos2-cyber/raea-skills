@@ -319,7 +319,7 @@ Access: HEADLESS. Arguments besides flags: 2.
 
 ```
 raea scene export EDIT.tsx -o DIR [--composition ID] [--frame N | --at A-B]   (the composition's 3D as data other tools build: DIR/scene.json, each part placed (y up, metres) with its shape, material or light, and the camera; meshes/ and models/ beside it)
-raea scene lint|explain|light|stage EDIT.tsx [--composition ID] [--frame N] [--part NAME] [--from N] [--to N] [--clearance M] [--json]   (what each 3D part rests on: floating, sunk and clipping parts; light: the scene's lighting)
+raea scene lint|explain|light|stage|lod EDIT.tsx [--composition ID] [--frame N] [--part NAME] [--from N] [--to N] [--clearance M] [--json]   (what each 3D part rests on: floating, sunk and clipping parts; light: the scene's lighting)
 ```
 
 Flags: `--at` (1), `--clearance` (1), `--composition` (1), `--frame` (1), `--from` (1), `--json`, `--part` (1), `--to` (1), `-o` (1).
