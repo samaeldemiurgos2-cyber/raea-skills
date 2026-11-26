@@ -433,7 +433,8 @@ Flags: `--at` (1), `--batch` (1), `--brief` (1), `--choose` (1), `--dry`, `--eye
 Access: HEADLESS. Arguments besides flags: 5.
 
 ```
-raea make status [DIR] [--json] [--plan]   (a scene, kit or shot held to its plan, `make` on brief.ts: what's missing, each gate (renders and checks, raea ask's calibrated questions, the critic on the kind's rubric), the judge's rounds, and whether it's done, decided in code; --plan writes the gates as check lines under the job's task in plan.org; the agent's Stop hook holds it there)
+raea make status [DIR] [--json] [--plan]   (a scene, kit, shot, cut or goal held to its plan, `make` on brief.ts: what's missing, each gate (renders and checks, raea ask's calibrated questions, the critic on the kind's rubric), the judge's rounds, and whether it's done, decided in code; --plan writes the gates as check lines under the job's task in plan.org; the agent's Stop hook holds it there)
+raea make judge [DIR] [--by claude|kimi]   (a goal job: a fresh critic, which only reads, judges each `says` rule; review/goal.judge.json)
 raea make plan [DIR] [--no-review]   (the plan stop: review/plan/floor-plan.png, a grey-box blockout from the entrance and its review sheets, comparison.png beside reference 0)
 raea make refs [DIR] [--only ID,...] [--model M] [--dry]   (a kit: every object's reference from the style images, in the plan's style, then review/refs.png; --dry quotes it)
 raea make sheet refs [DIR]   (review/refs.png again: the style images, then every reference)
@@ -446,7 +447,7 @@ raea make framing [DIR] [--only NAME,...] [--out DIR]   (a shot list: each shot'
 raea make lenschart SHOT [DIR] [--out DIR]   (a shot's first frame at 18, 24, 35, 50, 85 and 135 mm on lens-SHOT.png)
 ```
 
-Flags: `--dry`, `--json`, `--meshy` (1), `--model` (1), `--name` (1), `--no-review`, `--only` (1), `--out` (1), `--plan`, `--to` (1), `--tripo` (1).
+Flags: `--by` (1), `--dry`, `--json`, `--meshy` (1), `--model` (1), `--name` (1), `--no-review`, `--only` (1), `--out` (1), `--plan`, `--to` (1), `--tripo` (1).
 
 ## raea world
 
