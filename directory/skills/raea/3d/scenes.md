@@ -111,6 +111,9 @@ and its materials as jobs (`<Mat job="steel" />`), so a note can name it and the
    - Build ONE of a repeated thing, check it, then pattern it.
    - After each object, run `raea scene lint EDIT.tsx --json --part ID`. It must show nothing floating, sunk or
      clipping. Apply its `{y, dy}` fixes in code, never by eye. Each joint in the connection map must touch.
+     A thing left in the air touching nothing is an error: lower it by the distance the lint gives. What's meant to
+     hang there (a balloon, a sign on wires that aren't modelled) takes `floating`; a part whose own material glows
+     (a lamp's panel, a neon tube) is left alone. `posed` does the same for a lean, `allowOverlap` for a clip.
 4. **Light, practicals first.** Give every practical its real kelvin, and add fills last, weak.
    - Check with `raea scene light EDIT.tsx --part HERO --json`.
    - Read the EXPOSURE line `raea render` prints for every still. It gives mean luma, the 1st and 99th percentiles,
