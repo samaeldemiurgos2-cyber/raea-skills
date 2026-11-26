@@ -156,7 +156,11 @@ Jitter has its own causes, measured on MALL RAT (t1 against its sky: worst squar
    its history is cut to black on those frames. `constants={{ emissiveClamp: { stillHold: 0.25 } }}` eases that for
    thin lights (7% to 2%). It isn't the default: a bright lamp switched off in shot then leaves its rim for a few frames.
 4. **The frame's border.** The last 32 px boil about twice as much as the middle, and a wall there can show 8 px
-   blocks. There's no setting for it yet; frame a held shot so a flat lit wall doesn't end at the frame's edge.
+   blocks. `<SolariLighting overscan={0.05}>` traces the view a twentieth wider on every side and crops the middle
+   back out, so the border has neighbours and history to gather from: a wall at the frame's edge went from 16% to 6%
+   in its worst square. It costs 1.21 times the tracing, the picture is drawn at 0.91 of its size and brought up, and
+   depth of field, motion blur and `--aov` read the wider view. More than 0.05 bought nothing. Mac only. Without it,
+   frame a held shot so a flat lit wall doesn't end at the frame's edge.
 The first two, and paths, belong on any shot that has sky or signs in it.
 
 ## Why
