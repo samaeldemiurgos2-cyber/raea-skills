@@ -1,7 +1,7 @@
 {
   "name": "raea",
   "displayName": "raea",
-  "description": "Make video, motion graphics, games and 3D scenes with raea, the Render Anything Engine: the raea skill, the video-decompiler skill (a short product film made from a good film of its kind, by James Dimachkie), and hooks that run raea's quick check on a composition after it's saved and show media in the raea app instead of the Mac's viewer.",
+  "description": "Make video, motion graphics, games and 3D scenes with raea, the Render Anything Engine: the raea skill, the video-decompiler skill (a short product film made from a good film of its kind, by James Dimachkie), skills for Bevy 0.20 (by Chris Gliddon), Blender (by EL4CTEO) and three.js (from gamedev-skills), and hooks that run raea's quick check on a composition after it's saved and show media in the raea app instead of the Mac's viewer.",
   "author": {
     "name": "raea",
     "url": "https://raea.io"
@@ -9,11 +9,28 @@
   "homepage": "https://raea.io",
   "repository": "https://github.com/shinyobjectz/raea-skills",
   "license": "Apache-2.0",
-  "keywords": ["video", "motion-graphics", "3d", "games", "rendering", "bevy", "react", "typescript"],
+  "keywords": [
+    "video",
+    "motion-graphics",
+    "3d",
+    "games",
+    "rendering",
+    "bevy",
+    "react",
+    "typescript",
+    "blender",
+    "threejs"
+  ],
   "icon": "./icon.png",
   "documentationUrl": "https://raea.io/docs/",
   "supportUrl": "https://github.com/shinyobjectz/raea-skills/issues",
   "privacyPolicyUrl": "https://raea.io/privacy/",
   "termsOfServiceUrl": "https://raea.io/terms/",
-  "skills": ["./raea", "./video-decompiler"]
+  "skills": [
+    "./raea",
+    "./video-decompiler",
+    "./bevy",
+    "./blender",
+    "./threejs"
+  ]
 }

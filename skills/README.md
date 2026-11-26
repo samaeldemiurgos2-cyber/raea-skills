@@ -14,6 +14,15 @@ a game, or renders single frames to check. This plugin teaches Claude to use rae
   launch film, a demo, a brand film) as raea code: take a good film of its kind apart, write yours on one page, build
   picture and sound on one clock, have it read blind, then show a person. Its tools are Python, in an environment of
   their own; `video-decompiler/UPSTREAM.md` says where it comes from, what it runs and how it's updated.
+- **Three skills by others for the engines underneath**, each copied unchanged at a pinned commit with its licence;
+  each folder's `UPSTREAM.md` says where it comes from and what it runs:
+  - **bevy** (`bevy/`): Chris Gliddon's bevy-skills, MIT. 31 skills for Bevy 0.20, the engine raea is built on: ECS,
+    rendering, PBR materials and WESL shaders, cameras, particles, animation, UI, physics, profiling, and moving code up
+    from Bevy 0.17-0.19.
+  - **blender** (`blender/`): EL4CTEO's Blender Agent Skills, MIT. 28 skills for Blender 5.2 and later, from modeling,
+    rigging and look-dev to baking and game export, with Python scripts that run inside Blender.
+  - **threejs** (`threejs/`): three skills from gamedev-skills' awesome-gamedev-agent-skills, Apache-2.0. three.js r187
+    scene setup, glTF loading, and materials and lighting, each with a symptom-to-fix list.
 - **Two hooks** (`hooks/`), for Claude Code and Cowork. Before Claude runs a shell command, a command that opens a
   still, a video or a sound in the Mac's viewer is stopped once and Claude is told to use `raea show`, which puts it in
   the raea app where you can answer it; the same command again goes through. This happens only while the raea app is
@@ -66,6 +75,9 @@ reads `~/.claude/settings.json` only to see whether raea's hooks are already the
 The video-decompiler skill's tools run on your computer too (Python, `ffmpeg`, `ffprobe` and `raea`) and reach no
 network; they write under `~/.vd` and in the film's folder (`video-decompiler/UPSTREAM.md`).
 
+The blender skill's scripts run inside Blender on your computer and reach no network; the bevy skill's few helpers read
+the files you give them (`blender/UPSTREAM.md`, `bevy/UPSTREAM.md`). The threejs skill runs nothing.
+
 The raea skill tells Claude to run the `raea` command, which works on your computer. A few of raea's verbs reach the
 network when you ask for them: the installer downloads raea from raea.io, `raea gen` calls the generation providers you
 set up with your own keys (and spends your money there, so the skill has Claude quote the cost first), and a review
@@ -77,5 +89,9 @@ This folder is the `skills/` folder of
 [shinyobjectz/raea-skills](https://github.com/shinyobjectz/raea-skills), where the skill is written and checked.
 Apache-2.0; the copied guides keep their notices (`raea/3d/NOTICE`, `raea/craft/NOTICE`). `video-decompiler/` is MIT,
 copied from [JimGHTB12/video-decompiler](https://github.com/JimGHTB12/video-decompiler) with its `LICENSE` and
-`NOTICE`; the fonts, pictures and sounds in its `library/` keep their own licences, listed there. Questions and bugs:
+`NOTICE`; the fonts, pictures and sounds in its `library/` keep their own licences, listed there. `bevy/` is MIT, copied
+from [chrisgliddon/bevy-skills](https://github.com/chrisgliddon/bevy-skills); `blender/` is MIT, copied from
+[EL4CTEO/blender-skills](https://github.com/EL4CTEO/blender-skills); `threejs/` is Apache-2.0, copied from
+[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) with its
+`NOTICE`. Each keeps its `LICENSE`. Questions and bugs:
 [issues](https://github.com/shinyobjectz/raea-skills/issues).
