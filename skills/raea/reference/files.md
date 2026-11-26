@@ -76,7 +76,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/library/granted.json` | `RAEA_LIBRARY_GRANTS` | apps/app/host/library/service.ts |
 | `~/.raea/library/hashes.json` | `RAEA_LIBRARY_STATE` | apps/app/host/library/scan.ts |
 | `~/.raea/library/requests.json` | `RAEA_LIBRARY_REQUESTS` | apps/app/host/library/service.ts |
-| `~/.raea/local-cloud` | `RAEA_LOCAL_CLOUD` | apps/app/host/local-cloud/run.ts, apps/app/host/local-cloud/serve.ts |
+| `~/.raea/local-cloud` |  | apps/app/host/local-cloud/home.ts, apps/app/host/local-cloud/run.ts |
 | `~/.raea/logs/js-heap-` |  | runtime/jsengine/src/upkeep.rs |
 | `~/.raea/media` |  | apps/app/host/compositions.ts |
 | `~/.raea/models` | `RAEA_MODELS` | apps/app/host/library/embed.ts, apps/app/host/library/words.ts |
