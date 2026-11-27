@@ -53,7 +53,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/Library/Caches` |  | apps/app/host/acp/fence.ts |
 | `~/.raea/account.json` | `RAEA_ACCOUNT` | apps/app/host/auth.ts |
 | `~/.raea/actions.jsonl` |  | io/shell/src/fs/mod.rs |
-| `~/.raea/app-host.json` | `RAEA_HOST_FILE` | apps/app/host/ask.ts, apps/app/host/host-file.ts, engine/cli/src/app.ts, io/clef/src/route.rs |
+| `~/.raea/app-host.json` | `RAEA_HOST_FILE` | apps/app/host/ask.ts, apps/app/host/host-file.ts, apps/app/host/server.ts, engine/cli/src/app.ts, io/clef/src/route.rs |
 | `~/.raea/app-prefs.json` | `RAEA_APP_PREFS` | apps/app/host/app-prefs.ts |
 | `~/.raea/ask` | `RAEA_ASK_DIR` | io/clef/src/cache.rs |
 | `~/.raea/avatars` | `RAEA_AVATARS` | apps/app/host/avatars.ts |
@@ -78,6 +78,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/library/requests.json` | `RAEA_LIBRARY_REQUESTS` | apps/app/host/library/service.ts |
 | `~/.raea/local-cloud` |  | apps/app/host/local-cloud/home.ts, apps/app/host/local-cloud/run.ts |
 | `~/.raea/logs/js-heap-` |  | runtime/jsengine/src/upkeep.rs |
+| `~/.raea/machine-id` |  | apps/app/host/machine.ts |
 | `~/.raea/media` |  | apps/app/host/compositions.ts |
 | `~/.raea/models` | `RAEA_MODELS` | apps/app/host/library/embed.ts, apps/app/host/library/words.ts |
 | `~/.raea/node.json` | `RAEA_NODE_FILE` | apps/app/host/link.ts, apps/app/host/reach.ts |
@@ -94,6 +95,7 @@ that moves each (when there is one) and the files that name them.
 | `~/.raea/storage-log.jsonl` | `RAEA_STORAGE_LOG` | apps/app/host/storage/trash.ts |
 | `~/.raea/storage-used.json` | `RAEA_STORAGE_USED` | apps/app/host/storage/back.ts |
 | `~/.raea/storage.json` | `RAEA_STORAGE_FILE` | apps/app/host/storage/plan.ts, apps/app/host/storage/service.ts |
+| `~/.raea/target` |  | runtime/goal-plan/src/lib.rs |
 | `~/.raea/taste` | `RAEA_TASTE` | apps/app/host/rules.ts, apps/app/host/taste.ts, engine/cli/src/spec.rs |
 | `~/.raea/taste/corrections.jsonl` |  | apps/app/host/rules-asks.ts, apps/app/host/rules-file.ts, apps/app/host/taste.ts |
 | `~/.raea/taste/taste.ts` |  | engine/cli/src/guide.rs |
@@ -315,8 +317,17 @@ rounds?: number,
 /**
  * a cut job's contract: the brief as rules (cut.rs)
  */
-cut?: MakeCut, };
-export type MakeKind = "scene" | "kit" | "shot" | "cut";
+cut?: MakeCut, 
+/**
+ * a goal job's contract: the goal and its rules (goal.rs)
+ */
+goal?: MakeGoal, 
+/**
+ * what the job shows but never delivers, relative to the brief (pictures, render tests, examples): each a file or a
+ * `dir/` (review/ and previews/ when left out). Deliverables are what it hands over; previews are how it got there
+ */
+previews?: Array<string>, };
+export type MakeKind = "scene" | "kit" | "shot" | "cut" | "goal";
 export type MakeSource = "customer" | "reference";
 export type MakeDialValue = number | string;
 export type MakeDial = MakeDialValue | { value: MakeDialValue, source?: MakeSource, 
@@ -473,6 +484,10 @@ text: string, from: string,
 every?: boolean, };
 export type MakeCta = { text: string, from: string, 
 /**
+ * the other lines a brief rotates (two host lines, a paid take's): any one lands it, each found in the brief
+ */
+also?: Array<string>, 
+/**
  * how near the end it must land, in seconds (8 when left out)
  */
 within?: number, };
@@ -485,4 +500,34 @@ about?: string,
  * the person's answer, as they gave it, and who gave it: until then the job can't be done
  */
 answer?: string, by?: string, };
+export type MakeGoal = { 
+/**
+ * the goal as the person said it
+ */
+goal: string, 
+/**
+ * what must hold before the agent may stop: every one, each checked in code or by a fresh critic
+ */
+rules?: Array<MakeGoalRule>, };
+export type MakeGoalRule = { 
+/**
+ * a short name: [a-z0-9_], how status, the critic and NOTES.md name it
+ */
+id: string, 
+/**
+ * a command that must exit 0, run in the brief's folder (`bun test`, `raea check edit.tsx`)
+ */
+run?: string, 
+/**
+ * the seconds `run` gets before it counts as failed (300 when left out)
+ */
+timeout?: number, 
+/**
+ * a file that must exist, relative to the brief (`a|b`: either; `dir/`: three or more pictures in it)
+ */
+file?: string, 
+/**
+ * words that must be true of the work, judged by a fresh critic (`raea make judge`), never by the agent that did it
+ */
+says?: string, };
 ```
